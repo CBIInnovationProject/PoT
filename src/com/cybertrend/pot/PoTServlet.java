@@ -40,11 +40,6 @@ public class PoTServlet extends HttpServlet {
 		StringBuffer url = request.getRequestURL();
 
 		String action = PoTUtil.convertUrlIntoAction(url.toString());
-		String resource = PoTUtil.convertUrlIntoResource(url.toString());
-
-		if (resource != null) {
-			action = resource;
-		}
 
 		if (action != null) {
 			if (!action.equals("")) {
@@ -58,16 +53,16 @@ public class PoTServlet extends HttpServlet {
 	 */
 	private void route(String action, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		if (action.equals("login.cbi")) {
+
+		if (action.equals("loginForm.cbi")) {
+			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		} 
+		else if (action.equals("login.cbi")) {
 			Login.execute(request, response, servletContext);
 		}
 		else if (action.equals("logout.cbi")) {
 			Logout.execute(request, response, servletContext);
 		}
-		else if (action.equals("loginForm.cbi")) {
-			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
-		} 
 		else if (action.equals("adminPage.cbi")){
 			AdminPage.execute(request, response, servletContext);
 		}
