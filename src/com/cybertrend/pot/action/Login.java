@@ -23,7 +23,7 @@ public class Login extends DefaultAction{
 			} else {
 				servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 			} 
-			request.getSession().setAttribute(Constants.USER_GA, UserDAO.getUserByUserName(username));
+			request.getSession().setAttribute(Constants.USER_GA, UserDAO.getUserByUsername(username));
 		} catch (SQLException e) {
 			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 			e.printStackTrace();

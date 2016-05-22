@@ -25,7 +25,7 @@ public class DatabaseService {
 		Connection output = null;
 
 		try {
-			String user = PropertyLooker.get("db.user");
+			String user = PropertyLooker.get("db.username");
 			String pass = PropertyLooker.get("db.password");
 			Class.forName(PropertyLooker.get("db.driver"));
 			output = DriverManager.getConnection(PropertyLooker.get("db.url"), user, pass);

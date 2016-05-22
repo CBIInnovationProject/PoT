@@ -63,8 +63,13 @@ public class PoTServlet extends HttpServlet {
 		else if (action.equals("logout.cbi")) {
 			Logout.execute(request, response, servletContext);
 		}
-		else if (action.equals("adminPage.cbi")){
-			AdminPage.execute(request, response, servletContext);
+		
+		if(request.getSession().getAttribute(Constants.USER_GA)!=null){
+			if (action.equals("adminPage.cbi")){
+				AdminPage.execute(request, response, servletContext);
+			}
+		} else {
+			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 	}
 }
