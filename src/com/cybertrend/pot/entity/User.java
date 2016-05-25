@@ -10,6 +10,7 @@ public class User extends BaseEntity{
 	private String zip;
 	private String phone;
 	private String email;
+	private String userTableau; // Username on Tableau
 	
 	public String getUsername() {
 		return username;
@@ -64,5 +65,11 @@ public class User extends BaseEntity{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getUserTableau() {
+		return userTableau;
+	}
+	public void setUserTableau(String userTableau) {
+		this.userTableau = userTableau;
 	}
 }

@@ -11,18 +11,6 @@ import com.cybertrend.pot.entity.Menu;
 import com.cybertrend.pot.service.DatabaseService;
 
 public class MenuDAO {
-	public static List<Menu> getMenusByRole(String roleId) throws SQLException {
-		List<Menu> menus = new ArrayList<>();
-		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select menu from roleMenu where role = ? ORDER BY menuOrder");
-		prep.setString(1, roleId);
-		ResultSet result = prep.executeQuery();
-		while (result.next()) {
-			Menu menu = getMenuById(result.getString("menu"));
-			menus.add(menu);
-		}
-		return menus ;
-	}
 	
 	public static List<Menu> getMenusByParentId(String parentId) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
@@ -32,17 +20,19 @@ public class MenuDAO {
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			Menu menu = new Menu();
-			menu.setName(result.getString("id"));
+			menu.setId(result.getString("id"));
 			menu.setCreateBy(result.getString("createBy"));
 			menu.setCreateDate(result.getTimestamp("createDate"));
 			menu.setUpdateBy(result.getString("updateBy"));
 			menu.setUpdateDate(result.getTimestamp("updateDate"));
+			
 			menu.setName(result.getString("name"));
 			menu.setDescription(result.getString("description"));
-			menu.setType(result.getString("type"));
+			menu.setType(result.getInt("type"));
 			menu.setParentId(result.getInt("parentId"));
 			menu.setAction(result.getString("action"));
 			menu.setUrl(result.getString("url"));
+			menu.setUrlType(result.getString("urlType"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
@@ -64,12 +54,14 @@ public class MenuDAO {
 			menu.setCreateDate(result.getTimestamp("createDate"));
 			menu.setUpdateBy(result.getString("updateBy"));
 			menu.setUpdateDate(result.getTimestamp("updateDate"));
+			
 			menu.setName(result.getString("name"));
 			menu.setDescription(result.getString("description"));
-			menu.setType(result.getString("type"));
+			menu.setType(result.getInt("type"));
 			menu.setParentId(result.getInt("parentId"));
 			menu.setAction(result.getString("action"));
 			menu.setUrl(result.getString("url"));
+			menu.setUrlType(result.getString("urlType"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));

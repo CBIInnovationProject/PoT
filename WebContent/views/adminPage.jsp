@@ -62,8 +62,7 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<h3>&nbsp;</h3>
-							<ul class="nav side-menu">
-								${treeMenu}
+							<ul class="nav side-menu">${treeMenu}
 							</ul>
 						</div>
 						<div class="menu_section">
@@ -113,12 +112,13 @@
 					<div class="sidebar-footer hidden-small">
 						<a data-toggle="tooltip" data-placement="top" title="Settings">
 							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-						</a> <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+						</a> <a onclick="toggleFullScreen();" data-toggle="tooltip" data-placement="top" title="FullScreen">
 							<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
 						</a> <a data-toggle="tooltip" data-placement="top" title="Lock"> <span
 							class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-						</a> <a data-toggle="tooltip" data-placement="top" title="Logout" href="logout.cbi">
-							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+						</a> <a data-toggle="tooltip" data-placement="top" title="Logout"
+							href="logout.cbi"> <span class="glyphicon glyphicon-off"
+							aria-hidden="true"></span>
 						</a>
 					</div>
 					<!-- /menu footer buttons -->
@@ -138,7 +138,8 @@
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"> <img
-									src="${pageContext.request.contextPath}/images/img.jpg" alt="">${user.username}&nbsp;&nbsp;<span class=" fa fa-angle-down"></span>
+									src="${pageContext.request.contextPath}/images/img.jpg" alt="">${user.username}&nbsp;&nbsp;<span
+									class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> Profile</a></li>
@@ -206,8 +207,8 @@
 			<!-- /top navigation -->
 
 			<!-- page content -->
-			
-			
+
+
 			<!-- /page content -->
 
 			<!-- footer content -->
@@ -237,6 +238,29 @@
 
 	<!-- Custom Theme Scripts -->
 	<script src="${pageContext.request.contextPath}/js/custom.js"></script>
+
+	<script type="text/javascript">
+
+	  var videoElement = document.getElementsByTagName("*");
+	    
+	  function toggleFullScreen() {
+		  for (var i=0, max=videoElement.length; i < max; i++) {
+			  if (!document.mozFullScreen && !document.webkitFullScreen) {
+			      if (videoElement[i].mozRequestFullScreen) {
+			        videoElement[i].mozRequestFullScreen();
+			      } else {
+			        videoElement[i].webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+			      }
+			    } else {
+			      if (document.mozCancelFullScreen) {
+			        document.mozCancelFullScreen();
+			      } else {
+			        document.webkitCancelFullScreen();
+			      }
+			  }
+	    }
+	  }
+	</script>
 
 </body>
 </html>

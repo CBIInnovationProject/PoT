@@ -3,6 +3,7 @@ package com.cybertrend.pot.entity;
 public class RoleMenu extends BaseEntity{
 	private Role role;
 	private Menu menu;
+	
 	public Role getRole() {
 		return role;
 	}
@@ -15,6 +16,4 @@ public class RoleMenu extends BaseEntity{
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-	
-
 }

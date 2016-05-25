@@ -64,12 +64,9 @@ public class PoTServlet extends HttpServlet {
 			Logout.execute(request, response, servletContext);
 		}
 		
-		if(request.getSession().getAttribute(Constants.USER_GA)!=null){
-			if (action.equals("adminPage.cbi")){
-				AdminPage.execute(request, response, servletContext);
-			}
-		} else {
-			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		if (action.equals("adminPage.cbi")){
+			AdminPage.execute(request, response, servletContext);
 		}
+		
 	}
 }

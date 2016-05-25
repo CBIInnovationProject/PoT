@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Constants;
 import com.cybertrend.pot.dao.UserDAO;
+import com.cybertrend.pot.entity.User;
+
+import tableau.api.rest.bindings.TableauCredentialsType;
 
 public class Login extends DefaultAction{
 	
@@ -23,7 +26,11 @@ public class Login extends DefaultAction{
 			} else {
 				servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 			} 
-			request.getSession().setAttribute(Constants.USER_GA, UserDAO.getUserByUsername(username));
+			User user = UserDAO.getUserByUsername(username);
+			TableauCredentialsType credentials = getTableauService().invokeSignIn("Cybertrend", "passcbi2015", "").getCredentials();
+			request.getSession().setAttribute(Constants.USER_GA, user);
+			request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
+			request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, 1000, 0).getWorkbooks().getWorkbook());
 		} catch (SQLException e) {
 			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 			e.printStackTrace();

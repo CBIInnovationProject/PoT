@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cybertrend.pot.entity.Role;
 import com.cybertrend.pot.entity.User;
 import com.cybertrend.pot.service.DatabaseService;
 

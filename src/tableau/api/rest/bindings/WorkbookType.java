@@ -8,10 +8,14 @@
 
 package tableau.api.rest.bindings;
 
+import java.sql.Timestamp;
+
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -65,6 +69,12 @@ public class WorkbookType {
     protected String description;
     @XmlAttribute(name = "contentUrl")
     protected String contentUrl;
+    @XmlAttribute(name = "size")@Transient
+    protected int size;
+    @XmlAttribute(name = "createdAt")@Transient
+    protected XMLGregorianCalendar createAt;
+    @XmlAttribute(name = "updatedAt")@Transient
+    protected XMLGregorianCalendar updatedAt;
 
     /**
      * Gets the value of the site property.
@@ -281,5 +291,24 @@ public class WorkbookType {
     public void setContentUrl(String value) {
         this.contentUrl = value;
     }
+    
+    public int getSize() {
+		return size;
+	}
+    public void setSize(int size) {
+		this.size = size;
+	}
+    public XMLGregorianCalendar getCreateAt() {
+		return createAt;
+	}
+    public void setCreateAt(XMLGregorianCalendar createAt) {
+		this.createAt = createAt;
+	}
+    public XMLGregorianCalendar getUpdatedAt() {
+		return updatedAt;
+	}
+    public void setUpdatedAt(XMLGregorianCalendar updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 }

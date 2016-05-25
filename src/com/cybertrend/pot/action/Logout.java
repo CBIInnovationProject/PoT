@@ -12,6 +12,8 @@ import com.cybertrend.pot.Constants;
 public class Logout extends DefaultAction{
 	public static void execute(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext)throws ServletException, IOException {
 		request.getSession().removeAttribute(Constants.USER_GA);
+		request.getSession().removeAttribute(Constants.TABLEAU_CREDENTIALS);
+		request.getSession().removeAttribute(Constants.TABLEAU_WORKBOOKS);
 		servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 	}
 }
