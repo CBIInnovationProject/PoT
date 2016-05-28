@@ -8,8 +8,6 @@
 
 package tableau.api.rest.bindings;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

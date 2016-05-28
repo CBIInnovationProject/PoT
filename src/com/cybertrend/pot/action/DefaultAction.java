@@ -16,6 +16,7 @@ import com.cybertrend.pot.dao.RoleUserDAO;
 import com.cybertrend.pot.entity.Menu;
 import com.cybertrend.pot.entity.User;
 import com.cybertrend.pot.service.TableauService;
+import com.cybertrend.pot.util.PropertyLooker;
 
 import tableau.api.rest.bindings.TableauCredentialsType;
 import tableau.api.rest.bindings.WorkbookType;
@@ -38,38 +39,46 @@ public class DefaultAction{
 		return (User) request.getSession().getAttribute(Constants.USER_GA);
 	}
 	
-	public static void treeMenu(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext)throws ServletException, IOException, SQLException {
+	public static String getHostName(){
+		return PropertyLooker.get("tableau.server.host");
+	}
+	
+	public static void treeMenu(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws ServletException, IOException, SQLException {
 		String treeMenu = "";
 		List<Menu> menus = RoleMenuDAO.getMenuByRole(RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId()));
 		for(Menu menu : menus){
-			List<Menu> menusByParent = MenuDAO.getMenusByParentId(menu.getId());
-			if(menusByParent.size()>0){
-				treeMenu = treeMenu+"<li><a><i class=\""+menu.getIcon()+"\"></i>"+menu.getName()+"<span class=\"fa fa-chevron-down\"></span></a><ul class=\"nav child_menu\">";
-				for(Menu menuChild: menusByParent){
-					if(menuIsWorkbook(menuChild, request)){
-						treeMenu = treeMenu+"<li><a href=\""+menuChild.getAction()+"\">"+menuChild.getName()+"</a></li>";
-					}
-				} treeMenu = treeMenu + "</ul></li>";
-			} else {
-				if(menuIsWorkbook(menu, request)){
-					treeMenu = treeMenu+"<li><a href=\""+menu.getAction()+"\"><i class=\""+menu.getIcon()+"\"></i>"+menu.getName()+"</a></li>";
-				}
-			}
+			treeMenu = treeMenu + leafMenu(menu, request, response, servletContext);
 		}
 		servletContext.setAttribute("treeMenu", treeMenu);
 	}
 	
 	private static boolean menuIsWorkbook(Menu menu, HttpServletRequest request) {
-		if(menu.getUrlType()!=null && menu.getUrlType().trim().equalsIgnoreCase("tableau")){
+		if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("tableau")){
 			for (WorkbookType wb : getCurrentWorkbookList(request)) {
 				if(wb.getId().equalsIgnoreCase(menu.getWorkbookId())){
 					return true;
 				}
 			}
-		} if(menu.getUrlType()!=null && menu.getUrlType().trim().equalsIgnoreCase("page")){
+		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("page")){
 			return true;
 		}
 		return false;
 	}
-
+	
+	private static String leafMenu(Menu menu, HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws SQLException{
+		String treeMenu = "";
+		List<Menu> menus = MenuDAO.getMenusByParentId(menu.getId());
+		if(menus.size()>0){
+			treeMenu = treeMenu+"<li><a><i class=\""+menu.getIcon()+"\"></i>"+menu.getName()+"<span class=\"fa fa-chevron-down\"></span></a><ul class=\"nav child_menu\">";
+			for(Menu menu2: menus){
+				treeMenu = treeMenu + leafMenu(menu2, request, response, servletContext);
+			} treeMenu = treeMenu + "</ul></li>";
+		} else {
+			if(menuIsWorkbook(menu, request)){
+				treeMenu = treeMenu+"<li><a href=\""+menu.getAction()+"\"><i class=\""+menu.getIcon()+"\"></i>"+menu.getName()+"</a></li>";
+			}
+		}
+		return treeMenu;
+	}
+	
 }

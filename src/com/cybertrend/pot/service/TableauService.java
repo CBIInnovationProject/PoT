@@ -102,7 +102,7 @@ public class TableauService {
     }
     
     private static UriBuilder getApiUriBuilder() {
-        return UriBuilder.fromPath("http://"+PropertyLooker.get("tableau.server.host") + "/api/2.0");
+        return UriBuilder.fromPath(PropertyLooker.get("tableau.server.host") + "/api/2.0");
     }
     
     public static UriBuilder getApiUriBuilder(String path){

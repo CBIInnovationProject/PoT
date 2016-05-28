@@ -1,6 +1,8 @@
 package com.cybertrend.pot;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -8,9 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cybertrend.pot.action.AdminPage;
+import com.cybertrend.pot.action.LandingPage;
 import com.cybertrend.pot.action.Login;
 import com.cybertrend.pot.action.Logout;
+import com.cybertrend.pot.action.ViewDashboard;
+import com.cybertrend.pot.dao.MenuDAO;
+import com.cybertrend.pot.entity.Menu;
 import com.cybertrend.pot.util.PoTUtil;
 
 public class PoTServlet extends HttpServlet {
@@ -53,20 +58,33 @@ public class PoTServlet extends HttpServlet {
 	 */
 	private void route(String action, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		if (action.equals("loginForm.cbi")) {
-			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
-		} 
-		else if (action.equals("login.cbi")) {
-			Login.execute(request, response, servletContext);
-		}
-		else if (action.equals("logout.cbi")) {
-			Logout.execute(request, response, servletContext);
+		try {
+			
+			if (action.equals("loginForm.cbi")) {
+				servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			} 
+			else if (action.equals("login.cbi")) {
+				Login.execute(request, response, servletContext);
+			}
+			else if (action.equals("logout.cbi")) {
+				Logout.execute(request, response, servletContext);
+			}
+			
+			else if (action.equals("landingPage.cbi")){
+				LandingPage.execute(request, response, servletContext);
+			}
+			
+			List<Menu> menus = MenuDAO.getActionsAndContents(Menu.URL_TABLEAU);
+			
+			for(Menu menu : menus){
+				if (action.equals(menu.getAction())){
+					ViewDashboard.execute(request, response, servletContext, menu.getAction(), menu.getUrl());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
-		if (action.equals("adminPage.cbi")){
-			AdminPage.execute(request, response, servletContext);
-		}
 		
 	}
 }

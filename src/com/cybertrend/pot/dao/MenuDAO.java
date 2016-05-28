@@ -28,11 +28,11 @@ public class MenuDAO {
 			
 			menu.setName(result.getString("name"));
 			menu.setDescription(result.getString("description"));
-			menu.setType(result.getInt("type"));
+			menu.setLevel(result.getInt("level"));
 			menu.setParentId(result.getInt("parentId"));
 			menu.setAction(result.getString("action"));
-			menu.setUrl(result.getString("url"));
-			menu.setUrlType(result.getString("urlType"));
+			menu.setContent(result.getString("content"));
+			menu.setContentType(result.getString("contentType"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
@@ -57,16 +57,31 @@ public class MenuDAO {
 			
 			menu.setName(result.getString("name"));
 			menu.setDescription(result.getString("description"));
-			menu.setType(result.getInt("type"));
+			menu.setLevel(result.getInt("level"));
 			menu.setParentId(result.getInt("parentId"));
 			menu.setAction(result.getString("action"));
-			menu.setUrl(result.getString("url"));
-			menu.setUrlType(result.getString("urlType"));
+			menu.setContent(result.getString("content"));
+			menu.setContentType(result.getString("contentType"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
 		} 
 		return menu;
+	}
+	
+	public static List<Menu> getActionsAndContents(String contentType) throws SQLException{
+		List<Menu> menus = new ArrayList<>();
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("select * from menu where contentType=? ORDER BY menuOrder");
+		prep.setString(1, contentType);
+		ResultSet result = prep.executeQuery();
+		while (result.next()) {
+			Menu menu = new Menu();
+			menu.setAction(result.getString("action"));
+			menu.setContent(result.getString("content"));
+			menus.add(menu);
+		}
+		return menus;
 	}
 
 }
