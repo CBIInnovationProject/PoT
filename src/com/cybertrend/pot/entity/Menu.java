@@ -9,9 +9,6 @@ public class Menu extends BaseEntity{
 	private String content ;
 	private String contentType ; // tableau or page
 	
-	public static String URL_TABLEAU = "tableau";
-	public static String URL_PAGE = "page";
-	
 	private int menuOrder;
 	private String icon;
 	private String workbookId;

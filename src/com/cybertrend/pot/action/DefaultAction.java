@@ -52,17 +52,18 @@ public class DefaultAction{
 		servletContext.setAttribute("treeMenu", treeMenu);
 	}
 	
-	private static boolean menuIsWorkbook(Menu menu, HttpServletRequest request) {
+	private static boolean authMenu(Menu menu, HttpServletRequest request) {
+		boolean authorized = false ;
 		if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("tableau")){
 			for (WorkbookType wb : getCurrentWorkbookList(request)) {
 				if(wb.getId().equalsIgnoreCase(menu.getWorkbookId())){
-					return true;
+					authorized = true;
 				}
 			}
 		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("page")){
-			return true;
+			authorized = true;
 		}
-		return false;
+		return authorized;
 	}
 	
 	private static String leafMenu(Menu menu, HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws SQLException{
@@ -74,7 +75,7 @@ public class DefaultAction{
 				treeMenu = treeMenu + leafMenu(menu2, request, response, servletContext);
 			} treeMenu = treeMenu + "</ul></li>";
 		} else {
-			if(menuIsWorkbook(menu, request)){
+			if(authMenu(menu, request)){
 				treeMenu = treeMenu+"<li><a href=\""+menu.getAction()+"\"><i class=\""+menu.getIcon()+"\"></i>"+menu.getName()+"</a></li>";
 			}
 		}

@@ -74,11 +74,13 @@ public class PoTServlet extends HttpServlet {
 				LandingPage.execute(request, response, servletContext);
 			}
 			
-			List<Menu> menus = MenuDAO.getActionsAndContents(Menu.URL_TABLEAU);
+			List<Menu> menus = MenuDAO.getActionsAndContents(Constants.CONTENT_TYPE_TABLEAU);
 			
 			for(Menu menu : menus){
 				if (action.equals(menu.getAction())){
-					ViewDashboard.execute(request, response, servletContext, menu.getAction(), menu.getUrl());
+					if(Interceptor.isAuthorized(action, request))
+						ViewDashboard.execute(request, response, servletContext, menu.getAction(), menu.getUrl());
+						
 				}
 			}
 		} catch (SQLException e) {
