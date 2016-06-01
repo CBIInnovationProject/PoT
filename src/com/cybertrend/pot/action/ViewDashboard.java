@@ -9,17 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
-import com.cybertrend.pot.dao.DashboardTableauDAO;
+import com.cybertrend.pot.dao.MenuDAO;
+import com.cybertrend.pot.entity.Menu;
 
 public class ViewDashboard extends DefaultAction{
-	public static void execute(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext, String action, String url)throws ServletException, IOException, SQLException {
+	public static void execute(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
 			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		} else { 
 			if (Interceptor.isAuthorized(action, request)){
+				Menu menu = MenuDAO.getMenuByAction(action);
 				servletContext.setAttribute("hostName", getHostName());
 				servletContext.setAttribute("siteRoot", getCurrentCredentials(request).getSite().getContentUrl().trim().equals("")?"":("/t/"+getCurrentCredentials(request).getSite().getContentUrl().trim()));
-				servletContext.setAttribute("dashboardTableau", DashboardTableauDAO.getDashboardByUrl(url));
+				servletContext.setAttribute("urlTableau", menu.getUrl());
+				servletContext.setAttribute("contentHeight", menu.getContentHeight());
+				servletContext.setAttribute("contentWidth", menu.getContentWidth());
 				servletContext.getRequestDispatcher("/views/viewDashboard.jsp").forward(request, response);
 			} 
 		} 

@@ -14,7 +14,7 @@ import com.cybertrend.pot.entity.Menu;
 public class Interceptor extends DefaultAction {
 	
 	public static boolean isLogin(HttpServletRequest request) {
-		return request.getSession().getAttribute(Constants.USER_GA)!=null ;
+		return getCurrentUser(request)!=null;
 	}
 	
 	public static boolean isAuthorized(String action, HttpServletRequest request) throws SQLException {

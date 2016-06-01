@@ -78,8 +78,7 @@ public class PoTServlet extends HttpServlet {
 			
 			for(Menu menu : menus){
 				if (action.equals(menu.getAction())){
-					if(Interceptor.isAuthorized(action, request))
-						ViewDashboard.execute(request, response, servletContext, menu.getAction(), menu.getUrl());
+					ViewDashboard.execute(request, response, servletContext, menu.getAction());
 						
 				}
 			}

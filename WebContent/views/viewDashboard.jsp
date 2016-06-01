@@ -11,7 +11,7 @@
 <%@ include file="fragments/styles-collection.jsp" %>
 </head>
 
-<body class="nav-md">
+<body class="nav-md"> 
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -173,13 +173,13 @@
 			<!-- /top navigation -->
 
 			<!-- page content -->
-			<div class="right_col" role="main">
-				<object class='tableauViz' width='100%' height="650" style='display:none;'>
+			<div class="right_col">
+				<object class='tableauViz' width='${contentWidth}' height='${contentHeight}' style='display:none;'>
 				<param name='host_url' value='${hostName}/' />
 				<param name='site_root' value='${siteRoot}' />
-				<param name='name' value='${dashboardTableau.name}' />
-				<param name='tabs' value='${dashboardTableau.tabs}' />
-				<param name='toolbar' value='${dashboardTableau.toolbar}' />
+				<param name='name' value='${urlTableau}' />
+				<param name='tabs' value='no' />
+				<param name='toolbar' value='no' />
 				</object>
 			</div>
 			<!-- /page content -->

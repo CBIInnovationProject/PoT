@@ -3,11 +3,12 @@ package com.cybertrend.pot.entity;
 public class Menu extends BaseEntity{
 	private String name ;
 	private String description;
-	private int level ; // 1 : Main Link ; 2 : Parent Menu ; 3 : Root Link
 	private int parentId ;
 	private String action ;
 	private String content ;
 	private String contentType ; // tableau or page
+	private String contentHeight;
+	private String contentWidth;
 	
 	private int menuOrder;
 	private String icon;
@@ -25,12 +26,6 @@ public class Menu extends BaseEntity{
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public int getLevel() {
-		return level;
-	}
-	public void setLevel(int level) {
-		this.level = level;
 	}
 	public int getParentId() {
 		return parentId;
@@ -55,6 +50,18 @@ public class Menu extends BaseEntity{
 	}
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+	public String getContentHeight() {
+		return contentHeight;
+	}
+	public void setContentHeight(String contentHeight) {
+		this.contentHeight = contentHeight;
+	}
+	public String getContentWidth() {
+		return contentWidth;
+	}
+	public void setContentWidth(String contentWidth) {
+		this.contentWidth = contentWidth;
 	}
 	public int getMenuOrder() {
 		return menuOrder;
