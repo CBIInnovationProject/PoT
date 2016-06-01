@@ -37,6 +37,7 @@ public class MenuDAO {
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
+			menu.setSiteId(result.getString("siteId"));
 			menus.add(menu);
 		}
 		return menus ;
@@ -67,6 +68,7 @@ public class MenuDAO {
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
+			menu.setSiteId(result.getString("siteId"));
 		} 
 		return menu;
 	}
@@ -111,6 +113,7 @@ public class MenuDAO {
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
+			menu.setSiteId(result.getString("siteId"));
 		} 
 		return menu;
 	}

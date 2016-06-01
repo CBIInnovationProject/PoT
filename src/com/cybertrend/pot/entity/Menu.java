@@ -39,7 +39,7 @@ public class Menu extends BaseEntity{
 	public void setAction(String action) {
 		this.action = action;
 	}
-	public String getUrl() {
+	public String getContent() {
 		return content;
 	}
 	public void setContent(String url) {

@@ -21,9 +21,7 @@ public class ViewDashboard extends DefaultAction{
 				Menu menu = MenuDAO.getMenuByAction(action);
 				servletContext.setAttribute("hostName", getHostName());
 				servletContext.setAttribute("siteRoot", getCurrentCredentials(request).getSite().getContentUrl().trim().equals("")?"":("/t/"+getCurrentCredentials(request).getSite().getContentUrl().trim()));
-				servletContext.setAttribute("urlTableau", menu.getUrl());
-				servletContext.setAttribute("contentHeight", menu.getContentHeight());
-				servletContext.setAttribute("contentWidth", menu.getContentWidth());
+				servletContext.setAttribute("menu", menu);
 				servletContext.getRequestDispatcher("/views/viewDashboard.jsp").forward(request, response);
 			} 
 		} 
