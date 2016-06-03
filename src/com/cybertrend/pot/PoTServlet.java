@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.cybertrend.pot.action.LandingPage;
 import com.cybertrend.pot.action.Login;
 import com.cybertrend.pot.action.Logout;
+import com.cybertrend.pot.action.MenuForm;
 import com.cybertrend.pot.action.ViewDashboard;
 import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.entity.Menu;
@@ -72,6 +73,10 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("landingPage.cbi")){
 				LandingPage.execute(request, response, servletContext);
+			}
+			
+			else if (action.equals("menuForm.cbi")){
+				MenuForm.execute(request, response, servletContext, action);
 			}
 			
 			List<Menu> menus = MenuDAO.getActionsAndContents(Constants.CONTENT_TYPE_TABLEAU);

@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Gentallela Alela! |</title>
+<title>CPoT - Cybertrend Portal of Tableau</title>
 <%@ include file="fragments/styles-collection.jsp" %>
 </head>
 
@@ -18,7 +18,7 @@
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
 						<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
-							<span>Gentellela Alela!</span></a>
+							<span>CPoT</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -78,54 +78,6 @@
 											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 								</ul></li>
 
-							<li role="presentation" class="dropdown"><a
-								href="javascript:;" class="dropdown-toggle info-number"
-								data-toggle="dropdown" aria-expanded="false"> <i
-									class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-							</a>
-								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
-									<li><a> <span class="image"> <img
-												src="${pageContext.request.contextPath}/images/user.png"
-												alt="Profile Image" />
-										</span> <span> <span>John Smith</span> <span class="time">3
-													mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"> <img
-												src="${pageContext.request.contextPath}/images/user.png"
-												alt="Profile Image" />
-										</span> <span> <span>John Smith</span> <span class="time">3
-													mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"> <img
-												src="${pageContext.request.contextPath}/images/user.png"
-												alt="Profile Image" />
-										</span> <span> <span>John Smith</span> <span class="time">3
-													mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li><a> <span class="image"> <img
-												src="${pageContext.request.contextPath}/images/user.png"
-												alt="Profile Image" />
-										</span> <span> <span>John Smith</span> <span class="time">3
-													mins ago</span>
-										</span> <span class="message"> Film festivals used to be
-												do-or-die moments for movie makers. They were where... </span>
-									</a></li>
-									<li>
-										<div class="text-center">
-											<a> <strong>See All Alerts</strong> <i
-												class="fa fa-angle-right"></i>
-											</a>
-										</div>
-									</li>
-								</ul></li>
-
 						</ul>
 					</nav>
 				</div>
@@ -139,34 +91,26 @@
 				<div class="row">
 	
 	              <div class="col-md-12 col-sm-12 col-xs-12">
-	                <div class="x_panel" style="height:${menu.contentHeight};">
+	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
 	                    <h2>${menu.name}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
 	                      <li class="dropdown">
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-download"></i>&nbsp;&nbsp;Download</a>
 	                        <ul class="dropdown-menu" role="menu">
-	                          <li><a href="#">Settings 1</a>
+	                          <li><a href="#" onclick="exportToPDF();"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;PDF</a>
 	                          </li>
-	                          <li><a href="#">Settings 2</a>
+	                          <li><a href="#"><i class="fa fa-image"></i>&nbsp;&nbsp;Image(.png)</a>
 	                          </li>
 	                        </ul>
-	                      </li>
-	                      <li><a class="close-link"><i class="fa fa-close"></i></a>
 	                      </li>
 	                    </ul>
 	                    <div class="clearfix"></div>
 	                  </div>
 	                  <div class="x_content">
-						<object class='tableauViz' width='${menu.contentWidth}' height='${menu.contentHeight}' style='display:none;'>
-						<param name='host_url' value='${hostName}/' />
-						<param name='site_root' value='${siteRoot}' />
-						<param name='name' value='${menu.content}' />
-						<param name='tabs' value='no' />
-						<param name='toolbar' value='no' />
-						</object>
+						<div id="vizContainer"></div>
 	                  </div>
 	                </div>
 	              </div>
@@ -181,5 +125,20 @@
 	</div>
 
 <%@ include file="fragments/js-collection.jsp" %>
+	                  <script type="text/javascript">
+				        var viz;
+				            var containerDiv = document.getElementById("vizContainer"),
+				                url = "${hostName}${siteRoot}/views/${menu.content}?:embed=yes&:tabs=no&:toolbar=no",
+				                options = {
+				                    hideTabs: true
+				                };
+				
+				            viz = new tableau.Viz(containerDiv, url, options); 
+				            // Create a viz object and embed it in the container div.
+				
+				        function exportToPDF() {
+				            viz.showExportPDFDialog();
+				        }
+				    </script>
 </body>
 </html>

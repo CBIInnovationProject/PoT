@@ -32,8 +32,6 @@ public class MenuDAO {
 			menu.setAction(result.getString("action"));
 			menu.setContent(result.getString("content"));
 			menu.setContentType(result.getString("contentType"));
-			menu.setContentWidth(result.getString("contentWidth"));
-			menu.setContentHeight(result.getString("contentHeight"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
@@ -63,8 +61,6 @@ public class MenuDAO {
 			menu.setAction(result.getString("action"));
 			menu.setContent(result.getString("content"));
 			menu.setContentType(result.getString("contentType"));
-			menu.setContentWidth(result.getString("contentWidth"));
-			menu.setContentHeight(result.getString("contentHeight"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
@@ -108,8 +104,6 @@ public class MenuDAO {
 			menu.setAction(result.getString("action"));
 			menu.setContent(result.getString("content"));
 			menu.setContentType(result.getString("contentType"));
-			menu.setContentWidth(result.getString("contentWidth"));
-			menu.setContentHeight(result.getString("contentHeight"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));

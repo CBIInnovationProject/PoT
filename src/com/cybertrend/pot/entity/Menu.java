@@ -7,8 +7,6 @@ public class Menu extends BaseEntity{
 	private String action ;
 	private String content ;
 	private String contentType ; // tableau or page
-	private String contentHeight;
-	private String contentWidth;
 	
 	private int menuOrder;
 	private String icon;
@@ -50,18 +48,6 @@ public class Menu extends BaseEntity{
 	}
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
-	}
-	public String getContentHeight() {
-		return contentHeight;
-	}
-	public void setContentHeight(String contentHeight) {
-		this.contentHeight = contentHeight;
-	}
-	public String getContentWidth() {
-		return contentWidth;
-	}
-	public void setContentWidth(String contentWidth) {
-		this.contentWidth = contentWidth;
 	}
 	public int getMenuOrder() {
 		return menuOrder;

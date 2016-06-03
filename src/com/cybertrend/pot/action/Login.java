@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Constants;
+import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.UserDAO;
 import com.cybertrend.pot.entity.User;
 
@@ -20,7 +21,7 @@ public class Login extends DefaultAction{
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		boolean AUTH = UserDAO.authenticateUser(username, password);
-		if (AUTH) {
+		if (AUTH && Interceptor.isLogin(request)==true) {
 			response.sendRedirect("landingPage.cbi");
 		} else {
 			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);

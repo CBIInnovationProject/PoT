@@ -38,4 +38,4 @@
 </script>
 <!-- TableauViz API -->
 <script type='text/javascript'
-	src='${hostName}/javascripts/api/viz_v1.js'></script>
+	src='${hostName}/javascripts/api/tableau-2.js'></script>
