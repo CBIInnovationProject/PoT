@@ -34,13 +34,14 @@ public class MenuForm extends DefaultAction {
 			if (RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId()).getName().equals("default")){
 				getMenuAction(action, request);
 				Menu menu = new Menu();
+				menu.setCreateBy(getCurrentUser(request).getUsername());
 				menu.setName(request.getParameter("name"));
 				menu.setAction(request.getParameter("action"));
 				menu.setParentId(request.getParameter("parentId"));
 				menu.setContent(request.getParameter("content"));
 				menu.setContentType(request.getParameter("contentType"));
 				menu.setMenuOrder(Integer.parseInt(request.getParameter("menuOrder")));
-				menu.setIcon(request.getParameter("icon"));
+				menu.setIcon("fa "+request.getParameter("icon"));
 				menu.setSiteId(getCurrentCredentials(request).getSite().getId());
 				MenuDAO.save(menu);
 				request.getRequestDispatcher("/views/success.jsp").forward(request, response);

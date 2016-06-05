@@ -21,6 +21,3 @@
 <!-- Iconpicker -->
 <link href="${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css"
 	rel="stylesheet">
-	
-<!-- bootstrap-wysiwyg -->
-<link href="${pageContext.request.contextPath}/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">

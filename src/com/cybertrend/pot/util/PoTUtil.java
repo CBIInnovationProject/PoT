@@ -13,6 +13,8 @@ public class PoTUtil {
 			if (item.contains(".cbi")) {
 
 				output = item;
+			} else {
+				output = "";
 			}
 
 		}

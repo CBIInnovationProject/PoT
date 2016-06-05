@@ -50,6 +50,8 @@ public class PoTServlet extends HttpServlet {
 		if (action != null) {
 			if (!action.equals("")) {
 				this.route(action, request, response);
+			} else {
+				servletContext.getRequestDispatcher("/views/fragments/404.jsp").forward(request, response);
 			}
 		}
 	}
@@ -62,7 +64,10 @@ public class PoTServlet extends HttpServlet {
 		try {
 			
 			if (action.equals("loginForm.cbi")) {
-				servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+				if(Interceptor.isLogin(request)!=false){
+					response.sendRedirect("landingPage.cbi");
+				} else
+					servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 			} 
 			else if (action.equals("login.cbi")) {
 				Login.execute(request, response);
@@ -81,7 +86,7 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("menuSave.cbi")){
 				MenuForm.save(request, response, action);
-			}
+			} 
 			
 			List<Menu> menus = MenuDAO.getActionsAndContents(Constants.CONTENT_TYPE_TABLEAU);
 			
