@@ -14,7 +14,7 @@
 <body class="nav-md"> 
 	<div class="container body">
 		<div class="main_container">
-			<div class="col-md-3 left_col">
+			<div class="col-md-3 left_col menu_fixed">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
 						<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
@@ -102,7 +102,9 @@
 	                        <ul class="dropdown-menu" role="menu">
 	                          <li><a href="#" onclick="exportToPDF();"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;PDF</a>
 	                          </li>
-	                          <li><a href="#"><i class="fa fa-image"></i>&nbsp;&nbsp;Image(.png)</a>
+	                          <li><a href="#" onclick="exportToImage();"><i class="fa fa-image"></i>&nbsp;&nbsp;Image(.png)</a>
+	                          </li>
+	                          <li><a href="#" onclick="exportWorkbook();"><i class="fa fa-book"></i>&nbsp;&nbsp;Workbook</a>
 	                          </li>
 	                        </ul>
 	                      </li>
@@ -110,7 +112,7 @@
 	                    <div class="clearfix"></div>
 	                  </div>
 	                  <div class="x_content">
-						<div id="vizContainer"></div>
+						<div style='width:auto' id="vizContainer"></div>
 	                  </div>
 	                </div>
 	              </div>
@@ -128,9 +130,10 @@
 	                  <script type="text/javascript">
 				        var viz;
 				            var containerDiv = document.getElementById("vizContainer"),
-				                url = "${hostName}${siteRoot}/views/${menu.content}?:embed=yes&:tabs=no&:toolbar=no",
+				                url = "${hostName}${siteRoot}/views/${menu.content}",
 				                options = {
-				                    hideTabs: true
+				                    hideTabs: true,
+				                	hideToolbar: true
 				                };
 				
 				            viz = new tableau.Viz(containerDiv, url, options); 
@@ -138,6 +141,12 @@
 				
 				        function exportToPDF() {
 				            viz.showExportPDFDialog();
+				        }
+				        function exportToImage(){
+				        	viz.showExportImageDialog();
+				        }
+				        function exportWorkbook(){
+				        	viz.showDownloadWorkbookDialog();
 				        }
 				    </script>
 </body>

@@ -65,10 +65,10 @@ public class PoTServlet extends HttpServlet {
 				servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 			} 
 			else if (action.equals("login.cbi")) {
-				Login.execute(request, response, servletContext);
+				Login.execute(request, response);
 			}
 			else if (action.equals("logout.cbi")) {
-				Logout.execute(request, response, servletContext);
+				Logout.execute(request, response);
 			}
 			
 			else if (action.equals("landingPage.cbi")){
@@ -76,15 +76,18 @@ public class PoTServlet extends HttpServlet {
 			}
 			
 			else if (action.equals("menuForm.cbi")){
-				MenuForm.execute(request, response, servletContext, action);
+				MenuForm.execute(request, response, action);
+			}
+			
+			else if (action.equals("menuSave.cbi")){
+				MenuForm.save(request, response, action);
 			}
 			
 			List<Menu> menus = MenuDAO.getActionsAndContents(Constants.CONTENT_TYPE_TABLEAU);
 			
 			for(Menu menu : menus){
 				if (action.equals(menu.getAction())){
-					ViewDashboard.execute(request, response, servletContext, menu.getAction());
-						
+					ViewDashboard.execute(request, response, menu.getAction());
 				}
 			}
 		} catch (SQLException e) {

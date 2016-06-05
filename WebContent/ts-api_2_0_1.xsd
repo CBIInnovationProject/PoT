@@ -282,6 +282,7 @@
         <xs:attribute name="siteRole" type="siteRoleType" />
         <xs:attribute name="lastLogin" type="xs:dateTime" />
         <xs:attribute name="externalAuthUserId" type="xs:string" />
+        <xs:attribute name="authSetting" type="xs:string" />
     </xs:complexType>
 
     <xs:complexType name="viewListType">

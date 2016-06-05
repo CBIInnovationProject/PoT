@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +28,14 @@ public class MenuDAO {
 			menu.setUpdateDate(result.getTimestamp("updateDate"));
 			
 			menu.setName(result.getString("name"));
-			menu.setDescription(result.getString("description"));
-			menu.setParentId(result.getInt("parentId"));
+			menu.setParentId(result.getString("parentId"));
 			menu.setAction(result.getString("action"));
 			menu.setContent(result.getString("content"));
 			menu.setContentType(result.getString("contentType"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
+			menu.setViewId(result.getString("viewId"));
 			menu.setSiteId(result.getString("siteId"));
 			menus.add(menu);
 		}
@@ -56,14 +57,14 @@ public class MenuDAO {
 			menu.setUpdateDate(result.getTimestamp("updateDate"));
 			
 			menu.setName(result.getString("name"));
-			menu.setDescription(result.getString("description"));
-			menu.setParentId(result.getInt("parentId"));
+			menu.setParentId(result.getString("parentId"));
 			menu.setAction(result.getString("action"));
 			menu.setContent(result.getString("content"));
 			menu.setContentType(result.getString("contentType"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
+			menu.setViewId(result.getString("viewId"));
 			menu.setSiteId(result.getString("siteId"));
 		} 
 		return menu;
@@ -99,17 +100,52 @@ public class MenuDAO {
 			menu.setUpdateDate(result.getTimestamp("updateDate"));
 			
 			menu.setName(result.getString("name"));
-			menu.setDescription(result.getString("description"));
-			menu.setParentId(result.getInt("parentId"));
+			menu.setParentId(result.getString("parentId"));
 			menu.setAction(result.getString("action"));
 			menu.setContent(result.getString("content"));
 			menu.setContentType(result.getString("contentType"));
 			menu.setMenuOrder(result.getInt("menuOrder"));
 			menu.setIcon(result.getString("icon"));
 			menu.setWorkbookId(result.getString("workbookId"));
+			menu.setViewId(result.getString("viewId"));
 			menu.setSiteId(result.getString("siteId"));
 		} 
 		return menu;
+	}
+	
+	public static List<Menu> getListParentMenu() throws SQLException{
+		List<Menu> menus = new ArrayList<>();
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("SELECT parentId FROM menu WHERE parentId is not null group by parentId");
+		ResultSet result = prep.executeQuery();
+		while (result.next()) {
+			Menu menu = getMenuById(result.getString("parentId"));
+			menus.add(menu);
+		}
+		return menus;
+	}
+	
+	public static void save(Menu menu) throws SQLException {
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("INSERT INTO menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		prep.setString(1, System.currentTimeMillis()+"");
+		prep.setString(2, menu.getCreateBy());
+		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+		prep.setString(4, menu.getUpdateBy());
+		prep.setTimestamp(5, menu.getUpdateDate());
+		
+		prep.setString(6, menu.getName());
+		prep.setString(7, menu.getParentId());
+		prep.setString(8, menu.getAction());
+		prep.setString(9, menu.getContent());
+		prep.setString(10, menu.getContentType());
+		prep.setInt(11, menu.getMenuOrder());
+		prep.setString(12, menu.getIcon());
+		prep.setString(13, menu.getWorkbookId());
+		prep.setString(14, menu.getViewId());
+		prep.setString(15, menu.getSiteId());
+		
+		prep.executeUpdate();
 	}
 
 }

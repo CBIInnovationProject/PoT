@@ -39,3 +39,12 @@
 <!-- TableauViz API -->
 <script type='text/javascript'
 	src='${hostName}/javascripts/api/tableau-2.js'></script>
+	
+<!-- Iconpicker -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.3.0.min.js"></script>
+<script type='text/javascript' src='${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js'></script>
+
+<!-- bootstrap-wysiwyg -->
+<script src="${pageContext.request.contextPath}/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/google-code-prettify/src/prettify.js"></script>

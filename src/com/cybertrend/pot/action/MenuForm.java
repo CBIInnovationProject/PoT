@@ -3,25 +3,47 @@ package com.cybertrend.pot.action;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.MenuDAO;
+import com.cybertrend.pot.dao.RoleUserDAO;
 import com.cybertrend.pot.entity.Menu;
 
 public class MenuForm extends DefaultAction {
-	public static void execute(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext, String action)throws ServletException, IOException, SQLException {
+	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
-				Menu menu = MenuDAO.getMenuByAction(action);
-				servletContext.setAttribute("menu", menu);
-				servletContext.getRequestDispatcher("/views/menuForm.jsp").forward(request, response);
+				getMenuAction(action, request);
+				request.setAttribute("parentMenu", MenuDAO.getListParentMenu());
+				request.getRequestDispatcher("/views/menuForm.jsp").forward(request, response);
+			}
+		}
+	}
+	
+	public static void save(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+		if(Interceptor.isLogin(request)==false){
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
+		else {
+			if (RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId()).getName().equals("default")){
+				getMenuAction(action, request);
+				Menu menu = new Menu();
+				menu.setName(request.getParameter("name"));
+				menu.setAction(request.getParameter("action"));
+				menu.setParentId(request.getParameter("parentId"));
+				menu.setContent(request.getParameter("content"));
+				menu.setContentType(request.getParameter("contentType"));
+				menu.setMenuOrder(Integer.parseInt(request.getParameter("menuOrder")));
+				menu.setIcon(request.getParameter("icon"));
+				menu.setSiteId(getCurrentCredentials(request).getSite().getId());
+				MenuDAO.save(menu);
+				request.getRequestDispatcher("/views/success.jsp").forward(request, response);
 			}
 		}
 	}

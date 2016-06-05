@@ -1,6 +1,7 @@
 package com.cybertrend.pot.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -65,6 +66,7 @@ public class TableauService {
         ADD_WORKBOOK_PERMISSIONS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/permissions")),
         DELETE_WORKBOOK_PERMISSIONS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/permissions/users/{userId}/{capabilityName}/{capabilityMode}")),
         GET_WORKBOOK_PERMISSIONS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/permissions")),
+    	QUERY_WORKBOOK_PREVIEW_IMAGE(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/previewImage")),
         SIGN_OUT(getApiUriBuilder().path("auth/signout"));
     	
         private final UriBuilder m_builder;
@@ -345,6 +347,23 @@ public class TableauService {
         granteeCapabilities.setCapabilities(capabilities);
 
         return granteeCapabilities;
+    }
+    
+    /*
+     * Query WorkbookImage
+     */
+    public static File invokeQueryWorkbookImage(TableauCredentialsType credential, String workbookId) {
+    	String url = Operation.QUERY_WORKBOOK_PREVIEW_IMAGE.getUrl(credential.getSite().getId(), workbookId);
+    	Client client = Client.create();
+        WebResource webResource = client.resource(url).queryParam("pageSize", "1000").queryParam("pageNumber", "1");
+
+        // Sets the header and makes a GET request
+        ClientResponse clientResponse = webResource.header(TABLEAU_AUTH_HEADER, credential.getToken()).get(ClientResponse.class);
+        File res= clientResponse.getEntity(File.class);
+        File downloadfile = new File("testnew.png");  
+        res.renameTo(downloadfile);
+        // Parses the response from the server into an XML string
+        return res;
     }
     
     /*

@@ -82,4 +82,10 @@ public class DefaultAction{
 		return treeMenu;
 	}
 	
+	public static Menu getMenuAction(String action, HttpServletRequest request) throws SQLException {
+		Menu menuAction = MenuDAO.getMenuByAction(action);
+		request.setAttribute("menu", menuAction);
+		return menuAction;
+	}
+	
 }

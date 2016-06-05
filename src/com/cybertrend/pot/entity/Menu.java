@@ -2,8 +2,7 @@ package com.cybertrend.pot.entity;
 
 public class Menu extends BaseEntity{
 	private String name ;
-	private String description;
-	private int parentId ;
+	private String parentId ;
 	private String action ;
 	private String content ;
 	private String contentType ; // tableau or page
@@ -11,6 +10,7 @@ public class Menu extends BaseEntity{
 	private int menuOrder;
 	private String icon;
 	private String workbookId;
+	private String viewId;
 	private String siteId;
 	
 	public String getName() {
@@ -19,16 +19,10 @@ public class Menu extends BaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public int getParentId() {
+	public String getParentId() {
 		return parentId;
 	}
-	public void setParentId(int parentId) {
+	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 	public String getAction() {
@@ -66,6 +60,12 @@ public class Menu extends BaseEntity{
 	}
 	public void setWorkbookId(String workbookId) {
 		this.workbookId = workbookId;
+	}
+	public String getViewId() {
+		return viewId;
+	}
+	public void setViewId(String viewId) {
+		this.viewId = viewId;
 	}
 	public String getSiteId() {
 		return siteId;

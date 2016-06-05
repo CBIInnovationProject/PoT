@@ -7,6 +7,7 @@
 
 package tableau.api.rest.bindings;
 
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -62,6 +63,8 @@ public class UserType {
     protected XMLGregorianCalendar lastLogin;
     @XmlAttribute(name = "externalAuthUserId")
     protected String externalAuthUserId;
+    @XmlAttribute(name = "authSetting")@Transient
+    protected String authSetting;
 
     /**
      * Gets the value of the id property.
@@ -230,5 +233,13 @@ public class UserType {
     public void setExternalAuthUserId(String value) {
         this.externalAuthUserId = value;
     }
+    
+    public String getAuthSetting() {
+		return authSetting;
+	}
+    
+    public void setAuthSetting(String authSetting) {
+		this.authSetting = authSetting;
+	}
 
 }

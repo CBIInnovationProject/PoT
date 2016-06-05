@@ -17,14 +17,14 @@ import tableau.api.rest.bindings.TableauCredentialsType;
 
 public class Login extends DefaultAction{
 	
-	public static void execute(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext)throws ServletException, IOException, SQLException {
+	public static void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		boolean AUTH = UserDAO.authenticateUser(username, password);
 		if (AUTH && Interceptor.isLogin(request)==true) {
 			response.sendRedirect("landingPage.cbi");
 		} else {
-			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		} 
 		User user = UserDAO.getUserByUsername(username);
 		TableauCredentialsType credentials = getTableauService().invokeSignIn("Cybertrend", "passcbi2015", "").getCredentials();
