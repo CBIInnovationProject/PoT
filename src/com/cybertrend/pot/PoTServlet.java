@@ -15,9 +15,11 @@ import com.cybertrend.pot.action.Login;
 import com.cybertrend.pot.action.Logout;
 import com.cybertrend.pot.action.MenuForm;
 import com.cybertrend.pot.action.ViewDashboard;
+import com.cybertrend.pot.action.WorkbookForm;
 import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.entity.Menu;
 import com.cybertrend.pot.util.PoTUtil;
+import com.cybertrend.pot.util.PropertyLooker;
 
 public class PoTServlet extends HttpServlet {
 	private ServletContext servletContext;
@@ -38,7 +40,11 @@ public class PoTServlet extends HttpServlet {
 
 	protected void service(String method, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		if(PropertyLooker.get("proxy.host")!=null&&PropertyLooker.get("proxy.host").trim().length()>0) {
+			System.setProperty("http.proxyHost", PropertyLooker.get("proxy.host"));
+	        System.setProperty("http.proxyPort", PropertyLooker.get("proxy.port"));
+		}
+		
 		if (servletContext == null) {
 			servletContext = this.getServletContext();
 		}
@@ -86,7 +92,11 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("menuSave.cbi")){
 				MenuForm.save(request, response, action);
-			} 
+			}
+			
+			else if (action.equals("workbookList.cbi")) {
+				WorkbookForm.list(request, response, action);
+			}
 			
 			List<Menu> menus = MenuDAO.getActionsAndContents(Constants.CONTENT_TYPE_TABLEAU);
 			
@@ -95,6 +105,7 @@ public class PoTServlet extends HttpServlet {
 					ViewDashboard.execute(request, response, menu.getAction());
 				}
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

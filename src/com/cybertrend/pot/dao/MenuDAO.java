@@ -147,5 +147,33 @@ public class MenuDAO {
 		
 		prep.executeUpdate();
 	}
+	
+	public static void update(Menu menu) throws SQLException {
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("UPDATE menu SET updateBy=?, updateDate=?, name=?, parentId=?, action=?, content=?, contentType=?, menuOrder=?, icon=?, workbookId=?, viewId=?, siteId=? WHERE id=?");
+		prep.setString(1, menu.getUpdateBy());
+		prep.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+		
+		prep.setString(3, menu.getName());
+		prep.setString(4, menu.getParentId());
+		prep.setString(5, menu.getAction());
+		prep.setString(6, menu.getContent());
+		prep.setString(7, menu.getContentType());
+		prep.setInt(8, menu.getMenuOrder());
+		prep.setString(9, menu.getIcon());
+		prep.setString(10, menu.getWorkbookId());
+		prep.setString(11, menu.getViewId());
+		prep.setString(12, menu.getSiteId());
+		prep.setString(13, menu.getId());
+		
+		prep.executeUpdate();
+	}
+	
+	public static void delete(Menu menu) throws SQLException {
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("DELETE FROM menu WHERE id=?");
+		prep.setString(1, menu.getId());
+		prep.executeUpdate();
+	}
 
 }

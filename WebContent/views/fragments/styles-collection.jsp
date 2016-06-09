@@ -6,13 +6,6 @@
 <link
 	href="${pageContext.request.contextPath}/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- FullCalendar -->
-<link
-	href="${pageContext.request.contextPath}/vendors/fullcalendar/dist/fullcalendar.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/vendors/fullcalendar/dist/fullcalendar.print.css"
-	rel="stylesheet" media="print">
 
 <!-- Custom styling plus plugins -->
 <link href="${pageContext.request.contextPath}/css/custom.min.css"
@@ -21,3 +14,6 @@
 <!-- Iconpicker -->
 <link href="${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css"
 	rel="stylesheet">
+
+<!-- Datatables -->
+<link href="${pageContext.request.contextPath}/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">

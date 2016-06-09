@@ -31,7 +31,7 @@ public class MenuForm extends DefaultAction {
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId()).getName().equals("default")){
+			if (RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId()).getId().equals("0")){
 				getMenuAction(action, request);
 				Menu menu = new Menu();
 				menu.setCreateBy(getCurrentUser(request).getUsername());

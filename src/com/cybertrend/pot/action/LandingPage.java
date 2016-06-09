@@ -17,6 +17,7 @@ public class LandingPage extends DefaultAction{
 		}
 		else {
 			treeMenu(request, response, servletContext);
+			
 			servletContext.setAttribute("user", getCurrentUser(request));
 			servletContext.setAttribute("hostName", getHostName());
 			servletContext.setAttribute("siteRoot", getCurrentCredentials(request).getSite().getContentUrl().trim().equals("")?"":("/t/"+getCurrentCredentials(request).getSite().getContentUrl().trim()));

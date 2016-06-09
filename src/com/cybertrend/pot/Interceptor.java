@@ -10,6 +10,7 @@ import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.dao.RoleMenuDAO;
 import com.cybertrend.pot.dao.RoleUserDAO;
 import com.cybertrend.pot.entity.Menu;
+import com.cybertrend.pot.entity.Role;
 
 public class Interceptor extends DefaultAction {
 	
@@ -18,9 +19,13 @@ public class Interceptor extends DefaultAction {
 	}
 	
 	public static boolean isAuthorized(String action, HttpServletRequest request) throws SQLException {
-		List<Menu> menus = RoleMenuDAO.getMenuByRole(RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId()));
+		Role role = RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId());
+		List<Menu> menus = RoleMenuDAO.getMenuByRole(role);
 		for (Menu menu : menus){
-			if(checkLeafAction(action, menu)){
+			if(role.getId().trim().equals("0")){
+				return true;
+			}
+			else if(checkLeafAction(action, menu)){
 				return true;
 			}
 			else {

@@ -1,39 +1,27 @@
 package com.cybertrend.pot.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Properties;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.cybertrend.pot.service.DatabaseService;
 
 public class PropertyLooker {
-	private static Properties properties = new Properties();
-	static {
+	public static String get(String propertyName) {
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep;
 		try {
-			properties.load(getResourceAsStream("config.properties"));
-		} catch (IOException e){
+			prep = conn.prepareStatement("select * from properties where name = ?");
+			prep.setString(1, propertyName);
+			ResultSet result = prep.executeQuery();
+			while (result.next()) {
+				return result.getString("value");
+			} 
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (NullPointerException npe) {
-			npe.printStackTrace();
 		}
+		return null;
 	}
-	public static String get(String propertyName){
-		return properties.getProperty(propertyName);
-	}
-	public static URL getResource(String resourceName) {
-		URL url = null;
-		url = Thread.currentThread().getContextClassLoader().getResource(
-				resourceName);
-		if (url == null) {
-			url = PropertyLooker.class.getClassLoader().getResource(resourceName);
-		}
-		return url;
-	}
-	public static InputStream getResourceAsStream(String resourceName) {
-		URL url = getResource(resourceName);
-		try {
-			return (url != null) ? url.openStream() : null;
-		} catch (IOException e) {
-			return null;
-		}
-	}
+
 }

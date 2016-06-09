@@ -7,9 +7,6 @@
 <!-- FastClick -->
 <script
 	src="${pageContext.request.contextPath}/vendors/fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script
-	src="${pageContext.request.contextPath}/vendors/nprogress/nprogress.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="${pageContext.request.contextPath}/js/custom.js"></script>
@@ -49,3 +46,7 @@
 <script type="text/javascript">
         bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
 </script>
+
+<!-- Datatables -->
+<script src="${pageContext.request.contextPath}/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>

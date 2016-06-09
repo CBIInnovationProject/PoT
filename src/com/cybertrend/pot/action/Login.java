@@ -11,6 +11,7 @@ import com.cybertrend.pot.Constants;
 import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.UserDAO;
 import com.cybertrend.pot.entity.User;
+import com.cybertrend.pot.util.PropertyLooker;
 
 import tableau.api.rest.bindings.TableauCredentialsType;
 
@@ -29,7 +30,7 @@ public class Login extends DefaultAction{
 		TableauCredentialsType credentials = getTableauService().invokeSignIn("Cybertrend", "passcbi2015", "").getCredentials();
 		request.getSession().setAttribute(Constants.USER_GA, user);
 		request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
-		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, 1000, 0).getWorkbooks().getWorkbook());
+		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(PropertyLooker.get("tableau.workbook.max").trim()), 0).getWorkbooks().getWorkbook());
 		
 	}
 

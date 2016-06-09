@@ -1,6 +1,8 @@
 package com.cybertrend.pot.service;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,9 +16,11 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import javax.xml.XMLConstants;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -352,18 +356,21 @@ public class TableauService {
     /*
      * Query WorkbookImage
      */
-    public static File invokeQueryWorkbookImage(TableauCredentialsType credential, String workbookId) {
+    public static String invokeQueryWorkbookImage(TableauCredentialsType credential, String workbookId) throws IOException {
     	String url = Operation.QUERY_WORKBOOK_PREVIEW_IMAGE.getUrl(credential.getSite().getId(), workbookId);
     	Client client = Client.create();
-        WebResource webResource = client.resource(url).queryParam("pageSize", "1000").queryParam("pageNumber", "1");
+        WebResource webResource = client.resource(url);
 
         // Sets the header and makes a GET request
         ClientResponse clientResponse = webResource.header(TABLEAU_AUTH_HEADER, credential.getToken()).get(ClientResponse.class);
         File res= clientResponse.getEntity(File.class);
-        File downloadfile = new File("testnew.png");  
-        res.renameTo(downloadfile);
-        // Parses the response from the server into an XML string
-        return res;
+        BufferedImage bimg = ImageIO.read(res);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write( bimg, "png", baos );
+		baos.flush();
+		byte[] imageInByteArray = baos.toByteArray();
+		baos.close();
+		return "data:image/png;base64, "+DatatypeConverter.printBase64Binary(imageInByteArray);
     }
     
     /*
