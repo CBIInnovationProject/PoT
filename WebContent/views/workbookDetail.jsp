@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.pot.entity.WorkbookTableau"%>
+<%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 <head>
@@ -18,11 +18,7 @@
 		<div class="main_container">
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
-					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
-							<span>CPoT</span></a>
-					</div>
-
+					
 					<div class="clearfix"></div>
 					<!-- menu profile quick info -->
 					<div class="profile">
@@ -62,7 +58,7 @@
 						<div class="nav toggle">
 							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 						</div>
-
+						<a href=#><img alt="" src="${pageContext.request.contextPath}/images/logo.png"></a>
 						<ul class="nav navbar-nav navbar-right">
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
@@ -95,7 +91,7 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2>${menu.name}</h2>
+	                    <h2><a href="workbookList.cbi">Workbook</a> <i class="fa fa-angle-double-right"></i> Workbook Detail</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
@@ -103,27 +99,72 @@
 	                    <div class="clearfix"></div>
 	                  </div>
 	                  <div class="x_content">
-	                  <% List<WorkbookTableau> workbooks=(List<WorkbookTableau>) request.getAttribute("workbookTableaus"); 
-	                  for (WorkbookTableau workbook: workbooks) { %>
-							<div class="col-md-55">
-	                        <div class="thumbnail">
-	                          <div class="image view view-first">
-	                            <img style="width: 100%; display: block;" src="<%= workbook.getImage() %>" alt="image" />
-	                            <div class="mask">
-	                              <p><%= workbook.getWorkbookType().getName() %></p>
-	                              <div class="tools tools-bottom">
-	                                <a href="#"><i class="fa fa-link"></i></a>
-	                                <a href="#"><i class="fa fa-pencil"></i></a>
-	                                <a href="#"><i class="fa fa-times"></i></a>
-	                              </div>
-	                            </div>
-	                          </div>
-	                          <div class="caption">
-	                            <p><a href="viewDahboard.cbi"><%= workbook.getWorkbookType().getName() %></p>
-	                          </div>
-	                        </div>
-	                      </div>
-	                   <%}%>
+	                            
+	                            <section class="content invoice">
+			                      <!-- title row -->
+			                      <div class="row">
+			                        <div class="col-xs-12 invoice-header">
+			                          <h1>
+			                                          <i class="fa fa-bar-chart"></i> ${workbook.workbookType.name}
+			                                      </h1>
+			                        </div>
+			                        <!-- /.col -->
+			                      </div>
+			                      <!-- info row -->
+			                      <div class="row invoice-info">
+			                        <div class="col-sm-4 invoice-col">
+			                          <!-- Isi Content -->
+			                          <br><b>Owner :</b> ${owner.name}
+			                          <br><b>Project :</b> ${workbook.workbookType.project.name}
+			                        </div>
+			                        <!-- /.col -->
+			                        <div class="col-sm-4 invoice-col">
+			                          &nbsp;
+			                          <address>
+			                                          <strong>Content Url :</strong>
+			                                          <br>${workbook.workbookType.contentUrl}
+			                                          <br>
+			                                          <br><b>Create Date :</b> ${createDate}
+			                                          <br><b>Updated Date :</b> ${updateDate}
+			                                      </address>
+			                        </div>
+			                        <!-- /.col -->
+			                        <div class="col-sm-4 invoice-col">
+			                          <img width="150" src="${workbook.image}" alt="image" />
+			                        </div>
+			                        <!-- /.col -->
+			                      </div>
+			                      <!-- /.row -->
+			
+			                      <!-- Table row -->
+			                      <div class="row">
+			                        <div class="col-xs-12 table">
+			                        &nbsp;
+			                          <table id="datatable" class="table table-striped table-bordered">
+				                      <thead>
+				                        <tr>
+				                          <th>Sheets</th>
+				                          <th>Action</th>
+				                        </tr>
+				                      </thead>
+				
+				                      <tbody>
+									 	<% List<ViewType> views=(List<ViewType>) request.getAttribute("views"); 
+			                  			for (ViewType view: views) { %>
+				                        <tr>
+				                          <td><%= view.getName()%></td>
+				                          <td><a href="workbookDetail.cbi?workbookId="><li class="fa fa-bar-chart"></li></a></td>
+				                        </tr>
+				                    	<%} %>
+				                      </tbody>
+				                    </table>
+			                        </div>
+			                        <!-- /.col -->
+			                      </div>
+	                            </section>
+	                            
+	                            
+	                            <!-- X-Content -->
 	                  </div>
 	                </div>
 	              </div>
@@ -138,5 +179,71 @@
 	</div>
 
 <%@ include file="fragments/js-collection.jsp" %>
+<!-- Datatables -->
+    <script>
+      $(document).ready(function() {
+
+          var handleDataTableButtons = function() {
+            if ($("#datatable-buttons").length) {
+              $("#datatable-buttons").DataTable({
+                dom: "Bfrtip",
+                buttons: [
+                  {
+                    extend: "copy",
+                    className: "btn-sm"
+                  },
+                  {
+                    extend: "csv",
+                    className: "btn-sm"
+                  },
+                  {
+                    extend: "excel",
+                    className: "btn-sm"
+                  },
+                  {
+                    extend: "pdfHtml5",
+                    className: "btn-sm"
+                  },
+                  {
+                    extend: "print",
+                    className: "btn-sm"
+                  },
+                ],
+                responsive: true
+              });
+            }
+          };
+          
+        TableManageButtons = function() {
+          "use strict";
+          return {
+            init: function() {
+              handleDataTableButtons();
+            }
+          };
+        }();
+
+        $('#datatable').dataTable();
+        $('#datatable-keytable').DataTable({
+          keys: true
+        });
+
+        $('#datatable-responsive').DataTable();
+
+        $('#datatable-scroller').DataTable({
+          ajax: "js/datatables/json/scroller-demo.json",
+          deferRender: true,
+          scrollY: 380,
+          scrollCollapse: true,
+          scroller: true
+        });
+
+        var table = $('#datatable-fixed-header').DataTable({
+          fixedHeader: true
+        });
+
+        TableManageButtons.init();
+      });
+    </script>
 </body>
 </html>

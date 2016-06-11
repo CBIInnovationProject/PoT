@@ -98,6 +98,10 @@ public class PoTServlet extends HttpServlet {
 				WorkbookForm.list(request, response, action);
 			}
 			
+			else if (action.equals("workbookDetail.cbi")) {
+				WorkbookForm.detail(request, response, action);
+			}
+			
 			List<Menu> menus = MenuDAO.getActionsAndContents(Constants.CONTENT_TYPE_TABLEAU);
 			
 			for(Menu menu : menus){

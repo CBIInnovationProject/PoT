@@ -19,10 +19,9 @@ public class Interceptor extends DefaultAction {
 	}
 	
 	public static boolean isAuthorized(String action, HttpServletRequest request) throws SQLException {
-		Role role = RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId());
-		List<Menu> menus = RoleMenuDAO.getMenuByRole(role);
+		List<Menu> menus = RoleMenuDAO.getMenuByRole(getCurrentRole(request));
 		for (Menu menu : menus){
-			if(role.getId().trim().equals("0")){
+			if(getCurrentRole(request).getId().trim().equals("0")){
 				return true;
 			}
 			else if(checkLeafAction(action, menu)){

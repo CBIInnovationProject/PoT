@@ -14,6 +14,7 @@ import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.dao.RoleMenuDAO;
 import com.cybertrend.pot.dao.RoleUserDAO;
 import com.cybertrend.pot.entity.Menu;
+import com.cybertrend.pot.entity.Role;
 import com.cybertrend.pot.entity.User;
 import com.cybertrend.pot.service.TableauService;
 import com.cybertrend.pot.util.PropertyLooker;
@@ -88,4 +89,7 @@ public class DefaultAction{
 		return menuAction;
 	}
 	
+	public static Role getCurrentRole(HttpServletRequest request) throws SQLException {
+		return RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId());
+	}
 }

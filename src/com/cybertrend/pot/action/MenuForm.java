@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.MenuDAO;
-import com.cybertrend.pot.dao.RoleUserDAO;
 import com.cybertrend.pot.entity.Menu;
 
 public class MenuForm extends DefaultAction {
@@ -31,7 +30,7 @@ public class MenuForm extends DefaultAction {
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId()).getId().equals("0")){
+			if (getCurrentRole(request).getId().equals("0")){
 				getMenuAction(action, request);
 				Menu menu = new Menu();
 				menu.setCreateBy(getCurrentUser(request).getUsername());

@@ -212,9 +212,9 @@ public class TableauService {
         webResource.header(TABLEAU_AUTH_HEADER, authToken).delete();
     }
     
-    public static ViewListType invokeQueryViews(TableauCredentialsType credential, String siteId, String workbookId, int pageSize, int pageNumber) {
+    public static ViewListType invokeQueryViews(TableauCredentialsType credential, String workbookId, int pageSize, int pageNumber) {
 
-        String url = Operation.QUERY_VIEWS.getUrl(siteId, workbookId);
+        String url = Operation.QUERY_VIEWS.getUrl(credential.getSite().getId(), workbookId);
         TsResponse response = get(url, credential.getToken(),pageSize,pageNumber);
 
         if (response.getViews() != null) {

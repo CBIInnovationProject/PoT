@@ -30,7 +30,7 @@ public class Login extends DefaultAction{
 		TableauCredentialsType credentials = getTableauService().invokeSignIn("Cybertrend", "passcbi2015", "").getCredentials();
 		request.getSession().setAttribute(Constants.USER_GA, user);
 		request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
-		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(PropertyLooker.get("tableau.workbook.max").trim()), 0).getWorkbooks().getWorkbook());
+		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(PropertyLooker.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 		
 	}
 
