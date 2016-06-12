@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.cybertrend.pot.dao.DashboardDAO"%>
 <%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -91,7 +92,7 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2><a href="workbookList.cbi">Workbook</a> <i class="fa fa-angle-double-right"></i> Workbook Detail</h2>
+	                    <h2><a href="workbookList.cbi">Workbook</a> <i class="fa fa-angle-double-right"></i> ${workbook.workbookType.name}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
@@ -135,11 +136,12 @@
 			                        <!-- /.col -->
 			                      </div>
 			                      <!-- /.row -->
-			
+									
 			                      <!-- Table row -->
 			                      <div class="row">
 			                        <div class="col-xs-12 table">
-			                        &nbsp;
+			                        <div class="ln_solid"></div>
+
 			                          <table id="datatable" class="table table-striped table-bordered">
 				                      <thead>
 				                        <tr>
@@ -152,8 +154,14 @@
 									 	<% List<ViewType> views=(List<ViewType>) request.getAttribute("views"); 
 			                  			for (ViewType view: views) { %>
 				                        <tr>
-				                          <td><%= view.getName()%></td>
-				                          <td><a href="workbookDetail.cbi?workbookId="><li class="fa fa-bar-chart"></li></a></td>
+				                          <td><a href=viewSheet.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "") %> ><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%= view.getName()%></a></td>
+				                          <td>
+				                          <%if(DashboardDAO.isDasboardExist(view.getId())==false) {%>
+				                          	<a class="btn btn-success btn-xs" href="workbookDetail.cbi?workbookId=${workbook.workbookType.id}&&viewId=<%= view.getId()%>&&url=<%= view.getContentUrl().replace("sheets/", "")%>"><li class="fa fa-plus"></li></a>
+				                          <% } else {%>
+				                          	<a class="btn btn-danger btn-xs" href="workbookDetail.cbi?workbookId=${workbook.workbookType.id}&&viewId=<%= view.getId()%>&&deleteAction=yes"><li class="fa fa-minus"></li></a>
+				                          <% } %>	
+				                          </td>
 				                        </tr>
 				                    	<%} %>
 				                      </tbody>

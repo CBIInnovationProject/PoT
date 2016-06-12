@@ -50,3 +50,6 @@
 <!-- Datatables -->
 <script src="${pageContext.request.contextPath}/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="${pageContext.request.contextPath}/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<!-- Bootstrap Select -->
+<script src="${pageContext.request.contextPath}/vendors/bootstrap-select/js/bootstrap-select.min.js"></script>

@@ -91,7 +91,7 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2>${menu.name}</h2>
+	                    <h2>Workbook</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
@@ -108,8 +108,8 @@
 		                        <tr>
 		                          <th>Name</th>
 		                          <th>Project</th>
-		                          <th>Modified</th>
-		                          <th>Action</th>
+		                          <th>Create Date</th>
+		                          <th>Last Updated</th>
 		                        </tr>
 		                      </thead>
 		
@@ -117,10 +117,10 @@
 							 	<% List<WorkbookType> workbooks=(List<WorkbookType>) request.getAttribute("workbooks"); 
 	                  			for (WorkbookType workbook: workbooks) { %>
 		                        <tr>
-		                          <td><%= workbook.getName()%></td>
+		                          <td><a href="workbookDetail.cbi?workbookId=<%=workbook.getId()%>"><li class="fa fa-bar-chart"></li>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
 		                          <td><%= workbook.getProject().getName()%></td>
+		                          <td><%= workbook.getCreateAt().toString().replace("Z", " ").replace("T", " ")%></td>
 		                          <td><%= workbook.getUpdatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
-		                          <td><a href="workbookDetail.cbi?workbookId=<%=workbook.getId()%>"><li class="fa fa-bar-chart"></li></a></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>

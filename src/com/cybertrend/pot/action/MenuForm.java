@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
+import com.cybertrend.pot.dao.DashboardDAO;
 import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.entity.Menu;
 
@@ -20,7 +21,7 @@ public class MenuForm extends DefaultAction {
 			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 				request.setAttribute("parentMenu", MenuDAO.getListParentMenu());
-				request.getRequestDispatcher("/views/menuForm.jsp").forward(request, response);
+				request.setAttribute("dashboards", DashboardDAO.getListDashboards());
 			}
 		}
 	}

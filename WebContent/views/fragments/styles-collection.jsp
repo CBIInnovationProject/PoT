@@ -17,3 +17,6 @@
 
 <!-- Datatables -->
 <link href="${pageContext.request.contextPath}/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+<!-- bootstrap-select -->
+<link href="${pageContext.request.contextPath}/vendors/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">

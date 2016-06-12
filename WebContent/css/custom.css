@@ -2414,6 +2414,7 @@ span.section {
 }
 
 .form-control {
+	font-family: 'FontAwesome';
 	border-radius: 0;
 	width: 100%;
 }

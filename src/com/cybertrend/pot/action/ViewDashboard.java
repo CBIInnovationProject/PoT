@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
+import com.cybertrend.pot.entity.Menu;
 
 public class ViewDashboard extends DefaultAction{
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
@@ -15,7 +16,9 @@ public class ViewDashboard extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		} else { 
 			if (Interceptor.isAuthorized(action, request)){
-				getMenuAction(action, request);
+				Menu menu = getMenuAction(action, request);
+				request.setAttribute("menuName", menu.getName());
+				request.setAttribute("url", menu.getContent());
 				request.getRequestDispatcher("/views/viewDashboard.jsp").forward(request, response);
 			} 
 		} 

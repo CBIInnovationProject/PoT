@@ -86,8 +86,19 @@ public class PoTServlet extends HttpServlet {
 				LandingPage.execute(request, response, servletContext);
 			}
 			
-			else if (action.equals("menuForm.cbi")){
+			else if (action.equals("parentMenuForm.cbi")){
 				MenuForm.execute(request, response, action);
+				request.getRequestDispatcher("/views/parentMenuForm.jsp").forward(request, response);
+			}
+			
+			else if (action.equals("pageMenuForm.cbi")){
+				MenuForm.execute(request, response, action);
+				request.getRequestDispatcher("/views/pageMenuForm.jsp").forward(request, response);
+			}
+			
+			else if (action.equals("tableauMenuForm.cbi")){
+				MenuForm.execute(request, response, action);
+				request.getRequestDispatcher("/views/tableauMenuForm.jsp").forward(request, response);
 			}
 			
 			else if (action.equals("menuSave.cbi")){
@@ -100,6 +111,10 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("workbookDetail.cbi")) {
 				WorkbookForm.detail(request, response, action);
+			}
+			
+			else if (action.equals("viewSheet.cbi")) {
+				WorkbookForm.viewDashboard(request, response, action);
 			}
 			
 			List<Menu> menus = MenuDAO.getActionsAndContents(Constants.CONTENT_TYPE_TABLEAU);

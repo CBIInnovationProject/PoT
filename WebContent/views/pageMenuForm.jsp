@@ -132,25 +132,15 @@
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
-											<select name="parentId" class="form-control">
+											<select name="parentId" class="selectpicker">
 												<option></option>
 												<% List<Menu> menus=(List<Menu>) request.getAttribute("parentMenu"); for (Menu parent: menus) { %>
-													<option value="<%= parent.getId() %>"><%= parent.getName() %></option>
+													<option data-icon="<%= parent.getIcon()%>" value="<%= parent.getId() %>"><%= parent.getName() %></option>
 												<%}%>
 											</select>
 										</div>
 									</div>
-									
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
-										<div class="col-sm-3">
-											<select name="contentType" class="form-control">
-												<option></option>
-												<option value="tableau">Tableau Dashboard</option>
-												<option value="page">Static Page</option>
-											</select>
-										</div>
-									</div>
+									<input type="hidden" name="contentType" value="page"/>
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12"
 											for="menu-order">Menu Order 
