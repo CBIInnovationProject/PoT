@@ -119,7 +119,7 @@
 		                        <tr>
 		                          <td><a href="workbookDetail.cbi?workbookId=<%=workbook.getId()%>"><li class="fa fa-bar-chart"></li>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
 		                          <td><%= workbook.getProject().getName()%></td>
-		                          <td><%= workbook.getCreateAt().toString().replace("Z", " ").replace("T", " ")%></td>
+		                          <td><%= workbook.getCreatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
 		                          <td><%= workbook.getUpdatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
 		                        </tr>
 		                    	<%} %>

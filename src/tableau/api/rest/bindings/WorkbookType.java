@@ -70,7 +70,7 @@ public class WorkbookType {
     @XmlAttribute(name = "size")@Transient
     protected int size;
     @XmlAttribute(name = "createdAt")@Transient
-    protected XMLGregorianCalendar createAt;
+    protected XMLGregorianCalendar createdAt;
     @XmlAttribute(name = "updatedAt")@Transient
     protected XMLGregorianCalendar updatedAt;
 
@@ -296,11 +296,11 @@ public class WorkbookType {
     public void setSize(int size) {
 		this.size = size;
 	}
-    public XMLGregorianCalendar getCreateAt() {
-		return createAt;
+    public XMLGregorianCalendar getCreatedAt() {
+		return createdAt;
 	}
-    public void setCreateAt(XMLGregorianCalendar createAt) {
-		this.createAt = createAt;
+    public void setCreatedAt(XMLGregorianCalendar createAt) {
+		this.createdAt = createAt;
 	}
     public XMLGregorianCalendar getUpdatedAt() {
 		return updatedAt;

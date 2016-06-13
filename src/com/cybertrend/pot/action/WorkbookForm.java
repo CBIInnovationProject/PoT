@@ -44,7 +44,7 @@ public class WorkbookForm extends DefaultAction{
 			request.setAttribute("workbook", workbook);
 			request.setAttribute("owner", user);
 			request.setAttribute("views", getTableauService().invokeQueryViews(getCurrentCredentials(request), workbookType.getId(), Integer.parseInt(PropertyLooker.get("tableau.views.max").trim()), 0).getView());
-			request.setAttribute("createDate", workbookType.getCreateAt().toString().replace("T", " ").replace("Z", " "));
+			request.setAttribute("createDate", workbookType.getCreatedAt().toString().replace("T", " ").replace("Z", " "));
 			request.setAttribute("updateDate", workbookType.getUpdatedAt().toString().replace("T", " ").replace("Z", " "));
 			
 			if(request.getParameter("viewId")!=null) {
