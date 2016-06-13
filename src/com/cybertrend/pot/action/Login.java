@@ -21,7 +21,7 @@ public class Login extends DefaultAction{
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		boolean AUTH = UserDAO.authenticateUser(username, password);
-		if (AUTH && Interceptor.isLogin(request)==true) {
+		if (AUTH || Interceptor.isLogin(request)==true) {
 			response.sendRedirect("landingPage.cbi");
 		} else {
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
