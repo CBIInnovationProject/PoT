@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.cybertrend.pot.entity.Dashboard"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.cybertrend.pot.entity.Menu"%>
@@ -11,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>CPoT - Cybertrend Portal of Tableau</title>
-<%@ include file="fragments/styles-collection.jsp"%>
+<%@ include file="../fragments/styles-collection.jsp"%>
 </head>
 
 <body class="nav-md">
@@ -47,7 +48,7 @@
 						<!-- %@ include file="fragments/admin-menu.jsp" %-->
 					</div>
 					<!-- /sidebar menu -->
-					<%@ include file="fragments/footer-buttons.jsp"%>
+					<%@ include file="../fragments/footer-buttons.jsp"%>
 				</div>
 			</div>
 
@@ -122,16 +123,37 @@
 									</div>
 									
 									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Name <span class="required">*</span>
+										</label>
+										<div class="col-sm-3">
+											<input type="text" name="action" required class="form-control col-md-7 col-xs-12">
+										</div>
+									</div>
+									
+									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
 											<select name="parentId" class="selectpicker">
 												<option></option>
-												<% List<Menu> menus=(List<Menu>) request.getAttribute("parentMenu"); for (Menu parent: menus) { %>
-													<option data-icon="<%= parent.getIcon()%>" value="<%= parent.getId() %>"><%= parent.getName() %></option>
+												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
+												for(Menu parent:parents){%>
+													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" ><%=parent.getName() %></option>
+												<% }%>
+											</select>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Dashboard URL</label>
+										<div class="col-sm-3">
+											<select name="dashboard" class="selectpicker">
+												<% List<Dashboard> dashboards=(List<Dashboard>) request.getAttribute("dashboards"); for (Dashboard dashboard: dashboards) { %>
+													<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%= dashboard.getUrl() %></option>
 												<%}%>
 											</select>
 										</div>
 									</div>
+									<input type="hidden" name="contentType" value="tableau"/>
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12"
 											for="menu-order">Menu Order 
@@ -167,9 +189,9 @@
 		</div>
 		<!-- /page content -->
 
-		<%@ include file="fragments/footer.jsp"%>
+		<%@ include file="../fragments/footer.jsp"%>
 	</div>
 
-	<%@ include file="fragments/js-collection.jsp"%>
+	<%@ include file="../fragments/js-collection.jsp"%>
 </body>
 </html>

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>CPoT - Cybertrend Portal of Tableau</title>
-<%@ include file="fragments/styles-collection.jsp" %>
+<%@ include file="../fragments/styles-collection.jsp" %>
 </head>
 
 <body class="nav-md"> 
@@ -44,7 +44,7 @@
 						<!-- %@ include file="fragments/admin-menu.jsp" %-->
 					</div>
 					<!-- /sidebar menu -->
-					<%@ include file="fragments/footer-buttons.jsp" %>
+					<%@ include file="../fragments/footer-buttons.jsp" %>
 				</div>
 			</div>
 
@@ -118,11 +118,11 @@
 			</div>
 			<!-- /page content -->
 
-		<%@ include file="fragments/footer.jsp" %>
+		<%@ include file="../fragments/footer.jsp" %>
 		</div>
 	</div>
 
-<%@ include file="fragments/js-collection.jsp" %>
+<%@ include file="../fragments/js-collection.jsp" %>
 	                  <script type="text/javascript">
 				        var viz;
 				            var containerDiv = document.getElementById("vizContainer"),

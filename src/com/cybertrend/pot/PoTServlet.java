@@ -88,17 +88,17 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("parentMenuForm.cbi")){
 				MenuForm.execute(request, response, action);
-				request.getRequestDispatcher("/views/parentMenuForm.jsp").forward(request, response);
+				request.getRequestDispatcher("/views/menu/parentMenuForm.jsp").forward(request, response);
 			}
 			
 			else if (action.equals("pageMenuForm.cbi")){
 				MenuForm.execute(request, response, action);
-				request.getRequestDispatcher("/views/pageMenuForm.jsp").forward(request, response);
+				request.getRequestDispatcher("/views/menu/pageMenuForm.jsp").forward(request, response);
 			}
 			
 			else if (action.equals("tableauMenuForm.cbi")){
 				MenuForm.execute(request, response, action);
-				request.getRequestDispatcher("/views/tableauMenuForm.jsp").forward(request, response);
+				request.getRequestDispatcher("/views/menu/tableauMenuForm.jsp").forward(request, response);
 			}
 			
 			else if (action.equals("menuSave.cbi")){

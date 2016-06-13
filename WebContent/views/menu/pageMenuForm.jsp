@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.pot.entity.Dashboard"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.cybertrend.pot.entity.Menu"%>
@@ -12,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>CPoT - Cybertrend Portal of Tableau</title>
-<%@ include file="fragments/styles-collection.jsp"%>
+<%@ include file="../fragments/styles-collection.jsp"%>
 </head>
 
 <body class="nav-md">
@@ -48,7 +47,7 @@
 						<!-- %@ include file="fragments/admin-menu.jsp" %-->
 					</div>
 					<!-- /sidebar menu -->
-					<%@ include file="fragments/footer-buttons.jsp"%>
+					<%@ include file="../fragments/footer-buttons.jsp"%>
 				</div>
 			</div>
 
@@ -135,24 +134,14 @@
 										<div class="col-sm-3">
 											<select name="parentId" class="selectpicker">
 												<option></option>
-												<% List<Menu> menus=(List<Menu>) request.getAttribute("parentMenu"); for (Menu parent: menus) { %>
-													<option data-icon="<%= parent.getIcon()%>" value="<%= parent.getId() %>"><%= parent.getName() %></option>
-												<%}%>
+												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
+												for(Menu parent:parents){%>
+													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" ><%=parent.getName() %></option>
+												<% }%>
 											</select>
 										</div>
 									</div>
-									
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Dashboard URL</label>
-										<div class="col-sm-3">
-											<select name="content" class="selectpicker">
-												<% List<Dashboard> dashboards=(List<Dashboard>) request.getAttribute("dashboards"); for (Dashboard dashboard: dashboards) { %>
-													<option data-icon="fa fa-bar-chart" value="<%= dashboard.getUrl() %>"><%= dashboard.getUrl() %></option>
-												<%}%>
-											</select>
-										</div>
-									</div>
-									<input type="hidden" name="contentType" value="tableau"/>
+									<input type="hidden" name="contentType" value="page"/>
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12"
 											for="menu-order">Menu Order 
@@ -169,6 +158,9 @@
 										</div>
 									</div>
 									
+									
+									<div class="ln_solid"></div>
+									<textarea name="content" style="width: 100%;height: 150px;"></textarea>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
@@ -188,9 +180,9 @@
 		</div>
 		<!-- /page content -->
 
-		<%@ include file="fragments/footer.jsp"%>
+		<%@ include file="../fragments/footer.jsp"%>
 	</div>
 
-	<%@ include file="fragments/js-collection.jsp"%>
+	<%@ include file="../fragments/js-collection.jsp"%>
 </body>
 </html>

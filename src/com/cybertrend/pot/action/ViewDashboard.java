@@ -19,7 +19,7 @@ public class ViewDashboard extends DefaultAction{
 				Menu menu = getMenuAction(action, request);
 				request.setAttribute("menuName", menu.getName());
 				request.setAttribute("url", menu.getContent());
-				request.getRequestDispatcher("/views/viewDashboard.jsp").forward(request, response);
+				request.getRequestDispatcher("/views/workbook/viewDashboard.jsp").forward(request, response);
 			} 
 		} 
 	}

@@ -63,6 +63,8 @@ public class DefaultAction{
 			}
 		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("page")){
 			authorized = true;
+		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("admin")){
+			authorized = true;
 		}
 		return authorized;
 	}

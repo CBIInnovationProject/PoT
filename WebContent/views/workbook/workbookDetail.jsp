@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<%@page import="tableau.api.rest.bindings.WorkbookType"%>
+<%@page import="com.cybertrend.pot.dao.DashboardDAO"%>
+<%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>CPoT - Cybertrend Portal of Tableau</title>
-<%@ include file="fragments/styles-collection.jsp" %>
+<%@ include file="../fragments/styles-collection.jsp" %>
 </head>
 
 <body class="nav-md"> 
@@ -46,7 +47,7 @@
 						<!-- %@ include file="fragments/admin-menu.jsp" %-->
 					</div>
 					<!-- /sidebar menu -->
-					<%@ include file="fragments/footer-buttons.jsp" %>
+					<%@ include file="../fragments/footer-buttons.jsp" %>
 				</div>
 			</div>
 
@@ -91,7 +92,7 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2>Workbook</h2>
+	                    <h2><a href="workbookList.cbi">Workbook</a> <i class="fa fa-angle-double-right"></i> ${workbook.workbookType.name}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
@@ -99,32 +100,79 @@
 	                    <div class="clearfix"></div>
 	                  </div>
 	                  <div class="x_content">
-							<!-- X-Content -->
-							<p class="text-muted font-13 m-b-30">
-		                      DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
-		                    </p>
-		                    <table id="datatable" class="table table-striped table-bordered">
-		                      <thead>
-		                        <tr>
-		                          <th>Name</th>
-		                          <th>Project</th>
-		                          <th>Create Date</th>
-		                          <th>Last Updated</th>
-		                        </tr>
-		                      </thead>
-		
-		                      <tbody>
-							 	<% List<WorkbookType> workbooks=(List<WorkbookType>) request.getAttribute("workbooks"); 
-	                  			for (WorkbookType workbook: workbooks) { %>
-		                        <tr>
-		                          <td><a href="workbookDetail.cbi?workbookId=<%=workbook.getId()%>"><li class="fa fa-bar-chart"></li>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
-		                          <td><%= workbook.getProject().getName()%></td>
-		                          <td><%= workbook.getCreateAt().toString().replace("Z", " ").replace("T", " ")%></td>
-		                          <td><%= workbook.getUpdatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
-		                        </tr>
-		                    	<%} %>
-		                      </tbody>
-		                    </table>
+	                            
+	                            <section class="content invoice">
+			                      <!-- title row -->
+			                      <div class="row">
+			                        <div class="col-xs-12 invoice-header">
+			                          <h1>
+			                                          <i class="fa fa-bar-chart"></i> ${workbook.workbookType.name}
+			                                      </h1>
+			                        </div>
+			                        <!-- /.col -->
+			                      </div>
+			                      <!-- info row -->
+			                      <div class="row invoice-info">
+			                        <div class="col-sm-4 invoice-col">
+			                          <!-- Isi Content -->
+			                          <br><b>Owner :</b> ${owner.name}
+			                          <br><b>Project :</b> ${workbook.workbookType.project.name}
+			                        </div>
+			                        <!-- /.col -->
+			                        <div class="col-sm-4 invoice-col">
+			                          &nbsp;
+			                          <address>
+			                                          <strong>Content Url :</strong>
+			                                          <br>${workbook.workbookType.contentUrl}
+			                                          <br>
+			                                          <br><b>Create Date :</b> ${createDate}
+			                                          <br><b>Updated Date :</b> ${updateDate}
+			                                      </address>
+			                        </div>
+			                        <!-- /.col -->
+			                        <div class="col-sm-4 invoice-col">
+			                          <img width="150" src="${workbook.image}" alt="image" />
+			                        </div>
+			                        <!-- /.col -->
+			                      </div>
+			                      <!-- /.row -->
+									
+			                      <!-- Table row -->
+			                      <div class="row">
+			                        <div class="col-xs-12 table">
+			                        <div class="ln_solid"></div>
+
+			                          <table id="datatable" class="table table-striped table-bordered">
+				                      <thead>
+				                        <tr>
+				                          <th>Sheets</th>
+				                          <th>Action</th>
+				                        </tr>
+				                      </thead>
+				
+				                      <tbody>
+									 	<% List<ViewType> views=(List<ViewType>) request.getAttribute("views"); 
+			                  			for (ViewType view: views) { %>
+				                        <tr>
+				                          <td><a href=viewSheet.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "") %> ><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%= view.getName()%></a></td>
+				                          <td>
+				                          <%if(DashboardDAO.isDasboardExist(view.getId())==false) {%>
+				                          	<a class="btn btn-success btn-xs" href="workbookDetail.cbi?workbookId=${workbook.workbookType.id}&&viewId=<%= view.getId()%>&&url=<%= view.getContentUrl().replace("sheets/", "")%>"><li class="fa fa-plus"></li></a>
+				                          <% } else {%>
+				                          	<a class="btn btn-danger btn-xs" href="workbookDetail.cbi?workbookId=${workbook.workbookType.id}&&viewId=<%= view.getId()%>&&deleteAction=yes"><li class="fa fa-minus"></li></a>
+				                          <% } %>	
+				                          </td>
+				                        </tr>
+				                    	<%} %>
+				                      </tbody>
+				                    </table>
+			                        </div>
+			                        <!-- /.col -->
+			                      </div>
+	                            </section>
+	                            
+	                            
+	                            <!-- X-Content -->
 	                  </div>
 	                </div>
 	              </div>
@@ -134,13 +182,12 @@
 			</div>
 			<!-- /page content -->
 
-		<%@ include file="fragments/footer.jsp" %>
+		<%@ include file="../fragments/footer.jsp" %>
 		</div>
 	</div>
 
-<%@ include file="fragments/js-collection.jsp" %>
-
-    <!-- Datatables -->
+<%@ include file="../fragments/js-collection.jsp" %>
+<!-- Datatables -->
     <script>
       $(document).ready(function() {
 

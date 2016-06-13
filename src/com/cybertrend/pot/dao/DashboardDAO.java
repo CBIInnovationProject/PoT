@@ -13,12 +13,13 @@ import com.cybertrend.pot.service.DatabaseService;
 public class DashboardDAO {
 	public static void add (Dashboard dashboard) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("INSERT INTO dashboard(id, createDate, createBy, url, siteId) VALUES (?,?,?,?,?)");
+		PreparedStatement prep = conn.prepareStatement("INSERT INTO dashboard(id, createDate, createBy, url, workbookId, siteId) VALUES (?,?,?,?,?,?)");
 		prep.setString(1, dashboard.getId());
 		prep.setTimestamp(2, dashboard.getCreateDate());
 		prep.setString(3, dashboard.getCreateBy());
 		prep.setString(4, dashboard.getUrl());
-		prep.setString(5, dashboard.getSiteId());
+		prep.setString(5, dashboard.getWorkbookId());
+		prep.setString(6, dashboard.getSiteId());
 		prep.executeUpdate();
 	}
 	
@@ -30,15 +31,8 @@ public class DashboardDAO {
 	}
 	
 	public static boolean isDasboardExist(String id) throws SQLException {
-		String url = null;
-		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT * FROM dashboard WHERE id=?");
-		prep.setString(1, id);
-		ResultSet result = prep.executeQuery();
-		while(result.next()){
-			url = result.getString("url");
-		}
-		if (url!=null)
+		Dashboard dashboard = getDashboardById(id);
+		if (dashboard!=null)
 			return true;
 		else
 			return false;
@@ -55,10 +49,29 @@ public class DashboardDAO {
 			dashboard.setCreateBy(result.getString("createBy"));
 			dashboard.setCreateDate(result.getTimestamp("createDate"));
 			dashboard.setUrl(result.getString("url"));
+			dashboard.setWorkbookId(result.getString("workbookId"));
 			dashboard.setSiteId(result.getString("siteId"));
 			dashboards.add(dashboard);
 		}
 		return dashboards;
+	}
+	
+	public static Dashboard getDashboardById(String id) throws SQLException {
+		Dashboard dash = null;
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("SELECT * FROM dashboard WHERE id=?");
+		prep.setString(1, id);
+		ResultSet result = prep.executeQuery();
+		while(result.next()){
+			dash = new Dashboard();
+			dash.setId(id);
+			dash.setCreateBy(result.getString("createBy"));
+			dash.setCreateDate(result.getTimestamp("createDate"));
+			dash.setUrl(result.getString("url"));
+			dash.setWorkbookId(result.getString("workbookId"));
+			dash.setSiteId(result.getString("siteId"));
+		}
+		return dash;
 	}
 	
 }
