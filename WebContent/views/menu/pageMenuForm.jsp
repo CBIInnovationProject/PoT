@@ -93,31 +93,18 @@
 						<div class="x_panel">
 							<div class="x_title">
 								<h2>${menu.name}</h2>
-								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
-								</ul>
+								
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
 								<!-- Fill with Content -->
-								<form action="menuSave.cbi" data-parsley-validate
-									class="form-horizontal form-label-left">
+								<form  method="post" class="form-horizontal form-label-left">
 
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Menu Name <span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
-											<input type="text" name="name" required class="form-control col-md-7 col-xs-12">
+											<input type="text" name="name" id="menu_name" class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
 									
@@ -125,14 +112,14 @@
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Name <span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
-											<input type="text" name="action" required class="form-control col-md-7 col-xs-12">
+											<input type="text" id="action_name" name="action" class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
 									
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
-											<select name="parentId" class="selectpicker">
+											<select name="parentId" id="parent_name" class="selectpicker">
 												<option></option>
 												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
 												for(Menu parent:parents){%>
@@ -141,30 +128,41 @@
 											</select>
 										</div>
 									</div>
-									<input type="hidden" name="contentType" value="page"/>
+									<input type="hidden" name="contentType" id="contentType" value="page"/>
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12"
 											for="menu-order">Menu Order 
 										</label>
 										<div class="col-sm-1">
-											<input type="number" name="menuOrder" value="0" class="form-control col-md-3">
+											<input type="number" name="menuOrder" id="menuOrder" value="0" class="form-control col-md-3">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12" >Type Icon
+										</label>
+										<div class="col-sm-3">
+											<select name="icontype" id="icontype1" class="selectpicker">
+												<option value="classfontawesome">fontawesome</option>
+												<option value="classidglyphicon">glyphicon</option>
+												</select>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12" >Icon
 										</label>
 										<div class="col-sm-2">
-											<button name="icon" class="btn btn-default" data-iconset="fontawesome" role="iconpicker"></button>
+											<button style="display: inline-block;" name="icon" class="btn btn-default ownicon1 classfontawesome" data-iconset="fontawesome" role="iconpicker"></button>
+											<button style="display: none;" name="icon" class="btn btn-default ownicon1 classidglyphicon" data-iconset="glyphicon"  role="iconpicker"></button>
 										</div>
 									</div>
 									
 									
 									<div class="ln_solid"></div>
-									<textarea name="content" style="width: 100%;height: 150px;"></textarea>
+									<textarea name="content" id="content_text" style="width: 100%;height: 150px;"></textarea>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
-											<button type="submit" class="btn btn-success">Submit</button>
+											<button  class="btn btn-success submit-menu">Submit</button>
 							
 										</div>
 									</div>
@@ -184,5 +182,34 @@
 	</div>
 
 	<%@ include file="../fragments/js-collection.jsp"%>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(".submit-menu").on('click',function(){
+    		$.ajax({
+    			type:'post',
+    			url:'menuSave.cbi',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
+                datatype:'json',
+                data:{
+                    name:$("#menu_name").val(),
+                    action:$("#action_name").val(),
+                    parentId:$('#parent_name :selected').val(),
+                    content:$("#content_text").val(),
+                    contentType:$("#contentType").val(),
+                    menuOrder:$("#menuOrder").val(),
+                    icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
+                    actionsave:1
+                },
+                success:function(data){
+                	alert(data);
+                },
+                error: function(xhr, resp, text) {
+                alert(xhr, resp, text);
+                      }
+    		});
+    	});
+	});
+	</script>
 </body>
 </html>

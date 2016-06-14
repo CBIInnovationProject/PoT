@@ -1,12 +1,14 @@
 package com.cybertrend.pot.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cybertrend.pot.Constants;
 import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.DashboardDAO;
 import com.cybertrend.pot.dao.MenuDAO;
@@ -23,15 +25,16 @@ public class MenuForm extends DefaultAction {
 				getMenuAction(action, request);
 				request.setAttribute("parentMenus", MenuDAO.getListParentMenu());
 				request.setAttribute("dashboards", DashboardDAO.getListDashboards());
+				if(request.getParameter("actionsave")!=null){
+					save(request, response, action);
+				}
+				
 			}
 		}
 	}
 	
-	public static void save(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
-		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
-		}
-		else {
+	private static void save(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException {
+		try{
 			if (getCurrentRole(request).getId().equals("0")){
 				getMenuAction(action, request);
 				Menu menu = new Menu();
@@ -43,13 +46,19 @@ public class MenuForm extends DefaultAction {
 				menu.setContent(request.getParameter("content"));
 				menu.setContentType(request.getParameter("contentType"));
 				menu.setMenuOrder(Integer.parseInt(request.getParameter("menuOrder")));
-				menu.setIcon("fa "+request.getParameter("icon"));
+				menu.setIcon(request.getParameter("icon").split("-")[0]+" "+request.getParameter("icon"));
 				menu.setWorkbookId(dashboard!=null?dashboard.getWorkbookId():null);
 				menu.setViewId(dashboard!=null?dashboard.getId():null);
 				menu.setSiteId(getCurrentCredentials(request).getSite().getId());
 				MenuDAO.save(menu);
-				request.getRequestDispatcher("/views/success.jsp").forward(request, response);
+				PrintWriter out = response.getWriter();
+			    out.println(Constants.SUCCESS);
 			}
+		}
+		catch(SQLException se){
+			PrintWriter out = response.getWriter();
+		    out.println(Constants.SUCCESS);
+			se.printStackTrace();
 		}
 	}
 }

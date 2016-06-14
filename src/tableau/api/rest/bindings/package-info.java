@@ -5,6 +5,6 @@
 // Generated on: 2015.01.30 at 12:49:43 PM PST
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://tableausoftware.com/api", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://tableau.com/api", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package tableau.api.rest.bindings;
 

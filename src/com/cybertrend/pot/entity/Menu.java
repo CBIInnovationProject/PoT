@@ -9,6 +9,7 @@ public class Menu extends BaseEntity{
 	
 	private int menuOrder;
 	private String icon;
+	private String icon2;
 	private String workbookId;
 	private String viewId;
 	private String siteId;
@@ -73,5 +74,10 @@ public class Menu extends BaseEntity{
 	public void setSiteId(String siteId) {
 		this.siteId = siteId;
 	}
-	
+	public String getIcon2() {
+		return icon2;
+	}
+	public void setIcon2(String icon2) {
+		this.icon2 = icon2;
+	}
 }

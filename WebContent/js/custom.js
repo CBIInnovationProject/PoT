@@ -14,6 +14,8 @@ var CURRENT_URL = window.location.href.split('?')[0],
     $NAV_MENU = $('.nav_menu'),
     $FOOTER = $('footer');
 
+
+
 // Sidebar
 $(document).ready(function() {
     // TODO: This is some kind of easy fix, maybe we can improve this
@@ -95,6 +97,19 @@ $(document).ready(function() {
             mouseWheel:{ preventDefault: true }
         });
     }
+    
+    //get name of icon1
+    $('#icontype1').on('change', function() {
+    	  $(".ownicon1").css("display","none");
+    	  $("."+this.value).css("display","inline-block");
+    	 
+    	})
+  
+    	//post data static menu
+    	
+    	  
+    	 
+    	 
 });
 // /Sidebar
 
