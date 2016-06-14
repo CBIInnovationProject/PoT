@@ -119,7 +119,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
-											<select name="parentId" id="parent_name" class="selectpicker">
+											<select name="parentId" id="parent_id" class="selectpicker">
 												<option></option>
 												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
 												for(Menu parent:parents){%>
@@ -194,7 +194,7 @@
                 data:{
                     name:$("#menu_name").val(),
                     action:$("#action_name").val(),
-                    parentId:$('#parent_name :selected').val(),
+                    parentId:$('#parent_id :selected').val(),
                     content:$("#content_text").val(),
                     contentType:$("#contentType").val(),
                     menuOrder:$("#menuOrder").val(),
@@ -205,8 +205,8 @@
                 	alert(data);
                 },
                 error: function(xhr, resp, text) {
-                alert(xhr, resp, text);
-                      }
+                	alert("Error Bro");
+                }
     		});
     	});
 	});

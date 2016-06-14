@@ -101,6 +101,10 @@ public class PoTServlet extends HttpServlet {
 				request.getRequestDispatcher("/views/menu/tableauMenuForm.jsp").forward(request, response);
 			}
 			
+			else if (action.equals("menuSave.cbi")){
+				MenuForm.save(request, response, action);
+			}
+			
 			else if (action.equals("workbookList.cbi")) {
 				WorkbookForm.list(request, response, action);
 			}
