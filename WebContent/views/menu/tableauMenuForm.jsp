@@ -52,38 +52,7 @@
 				</div>
 			</div>
 
-			<!-- top navigation -->
-			<div class="top_nav">
-
-				<div class="nav_menu">
-					<nav class="" role="navigation">
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-						<a href=#><img alt="" src="${pageContext.request.contextPath}/images/logo.png"></a>
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img
-									src="${pageContext.request.contextPath}/images/user.png" alt="">${user.username}&nbsp;&nbsp;<span
-									class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="logout.cbi"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-						</ul>
-					</nav>
-				</div>
-
-			</div>
-			<!-- /top navigation -->
+			<%@ include file="../fragments/top-navigation.jsp"%>
 
 			<!-- page content -->
 			<div class="right_col" role="main">
@@ -111,14 +80,13 @@
 							</div>
 							<div class="x_content">
 								<!-- Fill with Content -->
-								<form action="menuSave.cbi" data-parsley-validate
-									class="form-horizontal form-label-left">
+								<form method="post" class="form-horizontal form-label-left">
 
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Menu Name <span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
-											<input type="text" name="name" required class="form-control col-md-7 col-xs-12">
+											<input type="text" name="name" id="name" required class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
 									
@@ -126,14 +94,14 @@
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Name <span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
-											<input type="text" name="action" required class="form-control col-md-7 col-xs-12">
+											<input type="text" name="action" id="action" required class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
 									
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
-											<select name="parentId" class="selectpicker">
+											<select name="parentId" id="parentId" class="selectpicker">
 												<option></option>
 												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
 												for(Menu parent:parents){%>
@@ -146,35 +114,28 @@
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Dashboard URL</label>
 										<div class="col-sm-3">
-											<select name="dashboard" class="selectpicker">
+											<select name="dashboard" id="dashboard" class="selectpicker">
 												<% List<Dashboard> dashboards=(List<Dashboard>) request.getAttribute("dashboards"); for (Dashboard dashboard: dashboards) { %>
 													<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%= dashboard.getUrl() %></option>
 												<%}%>
 											</select>
 										</div>
 									</div>
-									<input type="hidden" name="contentType" value="tableau"/>
+									<input type="hidden" name="contentType" id="contentType" value="tableau"/>
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12"
 											for="menu-order">Menu Order 
 										</label>
 										<div class="col-sm-1">
-											<input type="number" name="menuOrder" value="0" class="form-control col-md-3">
+											<input type="number" name="menuOrder" id="menuOrder" value="0" class="form-control col-md-3">
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12" >Icon
-										</label>
-										<div class="col-sm-2">
-											<button name="icon" class="btn btn-default" data-iconset="fontawesome" role="iconpicker"></button>
-										</div>
-									</div>
+									<%@ include file="../fragments/icon-picker-list.jsp"%>
 									
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
-											<button type="submit" class="btn btn-success">Submit</button>
-							
+											<button class="btn btn-success submit-menu">Submit</button>
 										</div>
 									</div>
 
@@ -193,5 +154,34 @@
 	</div>
 
 	<%@ include file="../fragments/js-collection.jsp"%>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(".submit-menu").on('click',function(){
+    		$.ajax({
+    			type:'post',
+    			url:'menuSave.cbi',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
+                datatype:'json',
+                data:{
+                    name:$("#name").val(),
+                    action:$("#action").val(),
+                    parentId:$('#parentId :selected').val(),
+                    dashboard:$('#dashboard :selected').val(),
+                    menuOrder:$("#menuOrder").val(),
+                    contentType:$("#contentType").val(),
+                    icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
+                    actionsave:1
+                },
+                success:function(data){
+                	alert(data);
+                },
+                error: function(xhr, resp, text) {
+                	alert("Error Bro");
+                }
+    		});
+    	});
+	});
+	</script>
 </body>
 </html>

@@ -48,38 +48,7 @@
 				</div>
 			</div>
 
-			<!-- top navigation -->
-			<div class="top_nav">
-
-				<div class="nav_menu">
-					<nav class="" role="navigation">
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-						</div>
-						<a href=#><img alt="" src="${pageContext.request.contextPath}/images/logo.png"></a>
-						<ul class="nav navbar-nav navbar-right">
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img
-									src="${pageContext.request.contextPath}/images/user.png" alt="">${user.username}&nbsp;&nbsp;<span
-									class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="logout.cbi"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-								</ul></li>
-
-						</ul>
-					</nav>
-				</div>
-
-			</div>
-			<!-- /top navigation -->
+			<%@ include file="../fragments/top-navigation.jsp"%>
 
 			<!-- page content -->
 			<div class="right_col">
@@ -123,27 +92,27 @@
 	</div>
 
 <%@ include file="../fragments/js-collection.jsp" %>
-	                  <script type="text/javascript">
-				        var viz;
-				            var containerDiv = document.getElementById("vizContainer"),
-				                url = "${hostName}${siteRoot}/views/${url}",
-				                options = {
-				                    hideTabs: true,
-				                	hideToolbar: true
-				                };
-				
-				            viz = new tableau.Viz(containerDiv, url, options); 
-				            // Create a viz object and embed it in the container div.
-				
-				        function exportToPDF() {
-				            viz.showExportPDFDialog();
-				        }
-				        function exportToImage(){
-				        	viz.showExportImageDialog();
-				        }
-				        function exportWorkbook(){
-				        	viz.showDownloadWorkbookDialog();
-				        }
-				    </script>
+<script type="text/javascript">
+var viz;
+    var containerDiv = document.getElementById("vizContainer"),
+        url = "${hostName}${siteRoot}/views/${url}",
+        options = {
+            hideTabs: true,
+        	hideToolbar: true
+        };
+
+    viz = new tableau.Viz(containerDiv, url, options); 
+    // Create a viz object and embed it in the container div.
+
+function exportToPDF() {
+    viz.showExportPDFDialog();
+}
+function exportToImage(){
+	viz.showExportImageDialog();
+}
+function exportWorkbook(){
+	viz.showDownloadWorkbookDialog();
+}
+</script>
 </body>
 </html>
