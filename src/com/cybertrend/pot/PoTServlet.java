@@ -69,6 +69,14 @@ public class PoTServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			
+			List<Menu> menus = MenuDAO.getMenusByContentType(Constants.CONTENT_TYPE_TABLEAU);
+			
+			for(Menu menu : menus){
+				if (action.equals(menu.getAction())){
+					ViewDashboard.execute(request, response, menu.getAction());
+				}
+			}
+			
 			if (action.equals("loginForm.cbi")) {
 				if(Interceptor.isLogin(request)!=false){
 					response.sendRedirect("landingPage.cbi");
@@ -115,14 +123,10 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("viewSheet.cbi")) {
 				WorkbookForm.viewDashboard(request, response, action);
-			}
+			} 
 			
-			List<Menu> menus = MenuDAO.getActionsAndContents(Constants.CONTENT_TYPE_TABLEAU);
-			
-			for(Menu menu : menus){
-				if (action.equals(menu.getAction())){
-					ViewDashboard.execute(request, response, menu.getAction());
-				}
+			else {
+				servletContext.getRequestDispatcher("/views/fragments/404.jsp").forward(request, response);
 			}
 			
 		} catch (SQLException e) {

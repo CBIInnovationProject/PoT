@@ -16,27 +16,11 @@ public class MenuDAO {
 	public static List<Menu> getMenusByParentId(String parentId) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from menu where parentId = ? ORDER BY menuOrder");
+		PreparedStatement prep = conn.prepareStatement("select id from menu where parentId = ? ORDER BY menuOrder");
 		prep.setString(1, parentId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
-			Menu menu = new Menu();
-			menu.setId(result.getString("id"));
-			menu.setCreateBy(result.getString("createBy"));
-			menu.setCreateDate(result.getTimestamp("createDate"));
-			menu.setUpdateBy(result.getString("updateBy"));
-			menu.setUpdateDate(result.getTimestamp("updateDate"));
-			
-			menu.setName(result.getString("name"));
-			menu.setParentId(result.getString("parentId"));
-			menu.setAction(result.getString("action"));
-			menu.setContent(result.getString("content"));
-			menu.setContentType(result.getString("contentType"));
-			menu.setMenuOrder(result.getInt("menuOrder"));
-			menu.setIcon(result.getString("icon"));
-			menu.setWorkbookId(result.getString("workbookId"));
-			menu.setViewId(result.getString("viewId"));
-			menu.setSiteId(result.getString("siteId"));
+			Menu menu = getMenuById(result.getString("id"));
 			menus.add(menu);
 		}
 		return menus ;
@@ -70,16 +54,14 @@ public class MenuDAO {
 		return menu;
 	}
 	
-	public static List<Menu> getActionsAndContents(String contentType) throws SQLException{
+	public static List<Menu> getMenusByContentType(String contentType) throws SQLException{
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from menu where contentType=? ORDER BY menuOrder");
+		PreparedStatement prep = conn.prepareStatement("select id from menu where contentType=? ORDER BY menuOrder");
 		prep.setString(1, contentType);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
-			Menu menu = new Menu();
-			menu.setAction(result.getString("action"));
-			menu.setContent(result.getString("content"));
+			Menu menu = getMenuById(result.getString("id"));
 			menus.add(menu);
 		}
 		return menus;
@@ -88,27 +70,11 @@ public class MenuDAO {
 	public static Menu getMenuByAction(String action) throws SQLException {
 		Menu menu = null ;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from menu where action = ?");
+		PreparedStatement prep = conn.prepareStatement("select id from menu where action = ?");
 		prep.setString(1, action);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
-			menu = new Menu();
-			menu.setId(result.getString("id"));
-			menu.setCreateBy(result.getString("createBy"));
-			menu.setCreateDate(result.getTimestamp("createDate"));
-			menu.setUpdateBy(result.getString("updateBy"));
-			menu.setUpdateDate(result.getTimestamp("updateDate"));
-			
-			menu.setName(result.getString("name"));
-			menu.setParentId(result.getString("parentId"));
-			menu.setAction(result.getString("action"));
-			menu.setContent(result.getString("content"));
-			menu.setContentType(result.getString("contentType"));
-			menu.setMenuOrder(result.getInt("menuOrder"));
-			menu.setIcon(result.getString("icon"));
-			menu.setWorkbookId(result.getString("workbookId"));
-			menu.setViewId(result.getString("viewId"));
-			menu.setSiteId(result.getString("siteId"));
+			menu = getMenuById(result.getString("id"));
 		} 
 		return menu;
 	}
@@ -116,10 +82,10 @@ public class MenuDAO {
 	public static List<Menu> getListParentMenu() throws SQLException{
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT parentId FROM menu WHERE parentId is not null group by parentId");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE contentType IS null");
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
-			Menu menu = getMenuById(result.getString("parentId"));
+			Menu menu = getMenuById(result.getString("id"));
 			menus.add(menu);
 		}
 		return menus;
@@ -175,5 +141,5 @@ public class MenuDAO {
 		prep.setString(1, menu.getId());
 		prep.executeUpdate();
 	}
-
+	
 }

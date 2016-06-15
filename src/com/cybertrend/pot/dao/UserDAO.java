@@ -14,26 +14,11 @@ public class UserDAO {
 	public static User getUserByUsername(String username) throws SQLException {
 		User output = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from user where username = ?");
+		PreparedStatement prep = conn.prepareStatement("select id from user where username = ?");
 		prep.setString(1, username);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
-			output = new User();
-			output.setId(result.getString("id"));
-			output.setCreateBy(result.getString("createBy"));
-			output.setCreateDate(result.getTimestamp("createDate"));
-			output.setUpdateBy(result.getString("updateBy"));
-			output.setUpdateDate(result.getTimestamp("updateDate"));
-			
-			output.setUsername(result.getString("username"));
-			output.setPassword(result.getString("password"));
-			output.setFullName(result.getString("fullName"));
-			output.setAddress1(result.getString("address1"));
-			output.setAddress2(result.getString("address2"));
-			output.setAddress3(result.getString("address3"));
-			output.setZip(result.getString("zip"));
-			output.setPhone(result.getString("phone"));
-			output.setEmail(result.getString("email"));
+			output = getUserById(result.getString("id"));
 		}
 		return output;
 	}
@@ -98,25 +83,10 @@ public class UserDAO {
 	public static List<User> getUsers() throws SQLException{
 		List<User> users = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from user");
+		PreparedStatement prep = conn.prepareStatement("select id from user");
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
-			User output =  new User();
-			output.setId(result.getString("id"));
-			output.setCreateBy(result.getString("createBy"));
-			output.setCreateDate(result.getTimestamp("createDate"));
-			output.setUpdateBy(result.getString("updateBy"));
-			output.setUpdateDate(result.getTimestamp("updateDate"));
-			
-			output.setUsername(result.getString("username"));
-			output.setPassword(result.getString("password"));
-			output.setFullName(result.getString("fullName"));
-			output.setAddress1(result.getString("address1"));
-			output.setAddress2(result.getString("address2"));
-			output.setAddress3(result.getString("address3"));
-			output.setZip(result.getString("zip"));
-			output.setPhone(result.getString("phone"));
-			output.setEmail(result.getString("email"));
+			User output =  getUserById(result.getString("id"));
 			users.add(output);
 		}
 		return users;

@@ -41,16 +41,10 @@ public class DashboardDAO {
 	public static List<Dashboard> getListDashboards() throws SQLException {
 		List<Dashboard> dashboards = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT * FROM dashboard");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM dashboard");
 		ResultSet result = prep.executeQuery();
 		while(result.next()){
-			Dashboard dashboard = new Dashboard();
-			dashboard.setId(result.getString("id"));
-			dashboard.setCreateBy(result.getString("createBy"));
-			dashboard.setCreateDate(result.getTimestamp("createDate"));
-			dashboard.setUrl(result.getString("url"));
-			dashboard.setWorkbookId(result.getString("workbookId"));
-			dashboard.setSiteId(result.getString("siteId"));
+			Dashboard dashboard = getDashboardById(result.getString("id"));
 			dashboards.add(dashboard);
 		}
 		return dashboards;

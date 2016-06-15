@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.cybertrend.pot.entity.Role;
-import com.cybertrend.pot.entity.User;
 import com.cybertrend.pot.service.DatabaseService;
 
 public class RoleDAO {
