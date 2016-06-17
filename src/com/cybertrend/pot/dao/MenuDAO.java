@@ -98,7 +98,7 @@ public class MenuDAO {
 		prep.setString(2, menu.getCreateBy());
 		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 		prep.setString(4, menu.getUpdateBy());
-		prep.setTimestamp(5, menu.getUpdateDate());
+		prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
 		
 		prep.setString(6, menu.getName());
 		prep.setString(7, menu.getParentId());
@@ -140,6 +140,18 @@ public class MenuDAO {
 		PreparedStatement prep = conn.prepareStatement("DELETE FROM menu WHERE id=?");
 		prep.setString(1, menu.getId());
 		prep.executeUpdate();
+	}
+	
+	public static List<Menu> getList() throws SQLException {
+		List<Menu> menus = new ArrayList<>();
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE contentType <> 'admin'");
+		ResultSet result = prep.executeQuery();
+		while (result.next()) {
+			Menu menu = getMenuById(result.getString("id"));
+			menus.add(menu);
+		}
+		return menus;
 	}
 	
 }

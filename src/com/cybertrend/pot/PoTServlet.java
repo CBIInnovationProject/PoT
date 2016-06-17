@@ -14,6 +14,7 @@ import com.cybertrend.pot.action.LandingPage;
 import com.cybertrend.pot.action.Login;
 import com.cybertrend.pot.action.Logout;
 import com.cybertrend.pot.action.MenuForm;
+import com.cybertrend.pot.action.RoleForm;
 import com.cybertrend.pot.action.ViewDashboard;
 import com.cybertrend.pot.action.WorkbookForm;
 import com.cybertrend.pot.dao.MenuDAO;
@@ -104,13 +105,32 @@ public class PoTServlet extends HttpServlet {
 				request.getRequestDispatcher("/views/menu/pageMenuForm.jsp").forward(request, response);
 			}
 			
-			else if (action.equals("tableauMenuForm.cbi")){
-				MenuForm.execute(request, response, action);
-				request.getRequestDispatcher("/views/menu/tableauMenuForm.jsp").forward(request, response);
+			else if(action.equals("menuList.cbi")) {
+				MenuForm.list(request, response, action);
+				request.getRequestDispatcher("/views/menu/menuList.jsp").forward(request, response);
 			}
 			
 			else if (action.equals("menuSave.cbi")){
 				MenuForm.save(request, response, action);
+			}
+			
+			else if(action.equals("roleForm.cbi")) {
+				RoleForm.execute(request, response, action);
+				request.getRequestDispatcher("/views/role/roleForm.jsp").forward(request, response);
+			}
+			
+			else if(action.equals("roleList.cbi")) {
+				RoleForm.list(request, response, action);
+				request.getRequestDispatcher("/views/role/roleList.jsp").forward(request, response);
+			}
+			
+			else if(action.equals("roleSave.cbi")) {
+				RoleForm.save(request, response, action);
+			}
+			
+			else if (action.equals("tableauMenuForm.cbi")){
+				MenuForm.execute(request, response, action);
+				request.getRequestDispatcher("/views/menu/tableauMenuForm.jsp").forward(request, response);
 			}
 			
 			else if (action.equals("workbookList.cbi")) {
