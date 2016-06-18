@@ -134,6 +134,8 @@
 			
     		posting.done(function(data) {
                 $(".tambahan").replaceWith("Hallloo");
+                $(".name").prop('disabled', true);
+                $(".description").prop('disabled', true);
     		});
 		});
 	});

@@ -15,7 +15,7 @@ public class RoleMenuDAO {
 	public static List<Menu> getMenuByRole(Role role) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select menu from roleMenu where role = ?");
+		PreparedStatement prep = conn.prepareStatement("select menu from roleMenu where role = ? ORDER BY menuOrder");
 		prep.setString(1, role.getId());
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
