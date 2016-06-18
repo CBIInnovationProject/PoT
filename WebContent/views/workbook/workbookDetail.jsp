@@ -61,7 +61,7 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2><a href="workbookList.cbi">Workbook</a> <i class="fa fa-angle-double-right"></i> ${workbook.workbookType.name}</h2>
+	                    <h2><a href="workbook.cbi">Workbook</a> <i class="fa fa-angle-double-right"></i> ${workbook.workbookType.name}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
@@ -123,12 +123,12 @@
 									 	<% List<ViewType> views=(List<ViewType>) request.getAttribute("views"); 
 			                  			for (ViewType view: views) { %>
 				                        <tr>
-				                          <td><a href=viewSheet.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "") %> ><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%= view.getName()%></a></td>
-				                          <td>
+				                          <td><a href=workbook.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "") %> ><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%= view.getName()%></a></td>
+				                          <td id="dashboardAction">
 				                          <%if(DashboardDAO.isDasboardExist(view.getId())==false) {%>
-				                          	<a class="btn btn-success btn-xs" href="workbookDetail.cbi?workbookId=${workbook.workbookType.id}&&viewId=<%= view.getId()%>&&url=<%= view.getContentUrl().replace("sheets/", "")%>"><li class="fa fa-plus"></li></a>
+				                          	<a class="btn btn-success btn-xs" href="workbook.cbi?workbookId=${workbook.workbookType.id}&&viewId=<%= view.getId()%>&&url=<%= view.getContentUrl().replace("sheets/", "")%>"><li class="fa fa-plus"></li></a>
 				                          <% } else {%>
-				                          	<a class="btn btn-danger btn-xs" href="workbookDetail.cbi?workbookId=${workbook.workbookType.id}&&viewId=<%= view.getId()%>&&deleteAction=yes"><li class="fa fa-minus"></li></a>
+				                          	<a class="btn btn-danger btn-xs" href="workbook.cbi?workbookId=${workbook.workbookType.id}&&viewId=<%= view.getId()%>&&deleteAction=yes"><li class="fa fa-minus"></li></a>
 				                          <% } %>	
 				                          </td>
 				                        </tr>
@@ -221,6 +221,7 @@
 
         TableManageButtons.init();
       });
+      
     </script>
 </body>
 </html>

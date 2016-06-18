@@ -95,7 +95,7 @@
 <script type="text/javascript">
 var viz;
     var containerDiv = document.getElementById("vizContainer"),
-        url = "${hostName}${siteRoot}/views/${url}",
+        url = "${hostName}${siteRoot}/views/${url}?&",
         options = {
             hideTabs: true,
         	hideToolbar: true

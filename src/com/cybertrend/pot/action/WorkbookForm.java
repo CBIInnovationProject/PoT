@@ -19,7 +19,7 @@ import tableau.api.rest.bindings.UserType;
 import tableau.api.rest.bindings.WorkbookType;
 
 public class WorkbookForm extends DefaultAction{
-	public static void list(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
@@ -27,11 +27,35 @@ public class WorkbookForm extends DefaultAction{
 			List<WorkbookType> workbookTypes = getCurrentWorkbookList(request);
 			request.setAttribute("workbooks", workbookTypes);
 			request.setAttribute("credential", getCurrentCredentials(request));
-			request.getRequestDispatcher("/views/workbook/workbookList.jsp").forward(request, response);
+			if(request.getParameter("workbookId")!=null){
+				if(request.getParameter("url")!=null){
+					if(request.getParameter("viewId")!=null){
+						detail(request, response, action);
+						addToPortal(request, response, action);
+						request.getRequestDispatcher("/views/workbook/workbookDetail.jsp").forward(request, response);
+					} else {
+						viewDashboard(request, response, action);
+					}
+				} else {
+					if(request.getParameter("deleteAction")!=null){
+						detail(request, response, action);
+						removeFromPortal(request, response, action);
+						request.getRequestDispatcher("/views/workbook/workbookDetail.jsp").forward(request, response);
+					} else{
+						detail(request, response, action);
+						request.getRequestDispatcher("/views/workbook/workbookDetail.jsp").forward(request, response);
+					}
+				}
+			} else{ 
+				request.getRequestDispatcher("/views/workbook/workbookList.jsp").forward(request, response);
+			}
 		}
 	}
 	
-	public static void detail(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+	/*
+	 * View Detail of Workbook include sheets 
+	 */
+	private static void detail(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
@@ -47,32 +71,55 @@ public class WorkbookForm extends DefaultAction{
 			request.setAttribute("createDate", workbookType.getCreatedAt().toString().replace("T", " ").replace("Z", " "));
 			request.setAttribute("updateDate", workbookType.getUpdatedAt().toString().replace("T", " ").replace("Z", " "));
 			
-			if(request.getParameter("viewId")!=null) {
-				if(request.getParameter("url")!=null) {
-					Dashboard dashboard = new Dashboard();
-					dashboard.setId(request.getParameter("viewId"));
-					dashboard.setCreateBy(getCurrentUser(request).getUsername());
-					dashboard.setCreateDate(new Timestamp(System.currentTimeMillis()));
-					dashboard.setUrl(request.getParameter("url"));
-					dashboard.setSiteId(getCurrentCredentials(request).getSite().getId());
-					dashboard.setWorkbookId(request.getParameter("workbookId"));
-					DashboardDAO.add(dashboard);
-				} else if(request.getParameter("deleteAction").equals("yes"))
-					DashboardDAO.delete(request.getParameter("viewId"));
-			}
-			
-			request.getRequestDispatcher("/views/workbook/workbookDetail.jsp").forward(request, response);
 		}
 	}
 	
-	public static void viewDashboard(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+	/*
+	 * View Dashboard 
+	 */
+	private static void viewDashboard(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			request.setAttribute("menuName", "<a href=\"workbookList.cbi\">Workbook</a> <i class=\"fa fa-angle-double-right\"></i> <a href=\"workbookDetail.cbi?workbookId="+request.getParameter("workbookId")+"\"> "+request.getParameter("url").split("/")[0]+"</a> <i class=\"fa fa-angle-double-right\"></i> "+request.getParameter("url").split("/")[1]+"");
+			request.setAttribute("menuName", "<a href=\"workbook.cbi\">Workbook</a> <i class=\"fa fa-angle-double-right\"></i> <a href=\"workbook.cbi?workbookId="+request.getParameter("workbookId")+"\"> "+request.getParameter("url").split("/")[0]+"</a> <i class=\"fa fa-angle-double-right\"></i> "+request.getParameter("url").split("/")[1]+"");
 			request.setAttribute("url", request.getParameter("url"));
 			request.getRequestDispatcher("/views/workbook/viewDashboard.jsp").forward(request, response);
+		}
+	}
+	
+	/*
+	 * Add Dashboard To Portal
+	 */
+	private static void addToPortal(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+		if(Interceptor.isLogin(request)==false){
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
+		else {
+			if(getCurrentRole(request).getId().equals("0")){
+				Dashboard dashboard = new Dashboard();
+				dashboard.setId(request.getParameter("viewId"));
+				dashboard.setCreateBy(getCurrentUser(request).getUsername());
+				dashboard.setCreateDate(new Timestamp(System.currentTimeMillis()));
+				dashboard.setUrl(request.getParameter("url"));
+				dashboard.setSiteId(getCurrentCredentials(request).getSite().getId());
+				dashboard.setWorkbookId(request.getParameter("workbookId"));
+				DashboardDAO.add(dashboard);
+			}
+		}
+	}
+	
+	/*
+	 * Remove Dashboard from Portal
+	 */
+	private static void removeFromPortal(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+		if(Interceptor.isLogin(request)==false){
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
+		else {
+			if(getCurrentRole(request).getId().equals("0")){
+				DashboardDAO.delete(request.getParameter("viewId"));
+			}
 		}
 	}
 }

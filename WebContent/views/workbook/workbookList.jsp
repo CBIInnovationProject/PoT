@@ -86,7 +86,7 @@
 							 	<% List<WorkbookType> workbooks=(List<WorkbookType>) request.getAttribute("workbooks"); 
 	                  			for (WorkbookType workbook: workbooks) { %>
 		                        <tr>
-		                          <td><a href="workbookDetail.cbi?workbookId=<%=workbook.getId()%>"><li class="fa fa-bar-chart"></li>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
+		                          <td><a href="workbook.cbi?workbookId=<%=workbook.getId()%>"><li class="fa fa-bar-chart"></li>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
 		                          <td><%= workbook.getProject().getName()%></td>
 		                          <td><%= workbook.getCreatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
 		                          <td><%= workbook.getUpdatedAt().toString().replace("Z", " ").replace("T", " ")%></td>

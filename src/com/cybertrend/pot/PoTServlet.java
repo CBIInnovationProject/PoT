@@ -133,17 +133,9 @@ public class PoTServlet extends HttpServlet {
 				request.getRequestDispatcher("/views/menu/tableauMenuForm.jsp").forward(request, response);
 			}
 			
-			else if (action.equals("workbookList.cbi")) {
-				WorkbookForm.list(request, response, action);
+			else if (action.equals("workbook.cbi")) {
+				WorkbookForm.execute(request, response, action);
 			}
-			
-			else if (action.equals("workbookDetail.cbi")) {
-				WorkbookForm.detail(request, response, action);
-			}
-			
-			else if (action.equals("viewSheet.cbi")) {
-				WorkbookForm.viewDashboard(request, response, action);
-			} 
 			
 			else {
 				servletContext.getRequestDispatcher("/views/fragments/404.jsp").forward(request, response);

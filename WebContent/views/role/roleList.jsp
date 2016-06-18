@@ -86,8 +86,8 @@
 	                  			for (Role role: roles) { %>
 		                        <tr>
 		                          <td><a href="roleDetail.cbi?roleId=<%=role.getId()%>"><%= role.getName()%></a></td>
-		                          <td><%= role.getCreateDate()%></td>
-		                          <td><%= role.getUpdateDate()%></td>
+		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
+		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>

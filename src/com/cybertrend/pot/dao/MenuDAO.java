@@ -145,7 +145,7 @@ public class MenuDAO {
 	public static List<Menu> getList() throws SQLException {
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE contentType <> 'admin'");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE contentType <> 'admin' OR contentType IS NULL");
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			Menu menu = getMenuById(result.getString("id"));

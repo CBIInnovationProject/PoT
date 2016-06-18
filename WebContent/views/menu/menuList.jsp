@@ -86,10 +86,10 @@
 							 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
 	                  			for (Menu menu: menus) { %>
 		                        <tr>
-		                          <td><a href="menuDetail.cbi?menuId=<%=menu.getId()%>"><li class="<%=menu.getIcon()%>"></li>&nbsp;&nbsp;<%= menu.getName()%></a></td>
+		                          <td><a href="menuDetail.cbi?menuId=<%=menu.getId()%>"><i class="<%=menu.getIcon()%>"></i>&nbsp;&nbsp;<%= menu.getName()%></a></td>
 		                          <td><%= menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT"%></td>
-		                          <td><%= menu.getCreateDate()%></td>
-		                          <td><%= menu.getUpdateDate()%></td>
+		                          <td><%= menu.getCreateDate()!=null?menu.getCreateDate():""%></td>
+		                          <td><%= menu.getUpdateDate()!=null?menu.getUpdateDate():""%></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>

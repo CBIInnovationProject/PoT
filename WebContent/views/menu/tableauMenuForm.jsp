@@ -110,18 +110,6 @@
 											</select>
 										</div>
 									</div>
-									
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Dashboard URL</label>
-										<div class="col-sm-3">
-											<select name="dashboard" id="dashboard" class="selectpicker">
-												<% List<Dashboard> dashboards=(List<Dashboard>) request.getAttribute("dashboards"); for (Dashboard dashboard: dashboards) { %>
-													<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%= dashboard.getUrl() %></option>
-												<%}%>
-											</select>
-										</div>
-									</div>
-									<input type="hidden" name="contentType" id="contentType" value="tableau"/>
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12"
 											for="menu-order">Menu Order 
@@ -131,7 +119,29 @@
 										</div>
 									</div>
 									<%@ include file="../fragments/icon-picker-list.jsp"%>
+									<div class="ln_solid"></div>
 									
+									<input type="hidden" name="contentType" id="contentType" value="tableau"/>
+									
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Tableau URL</label>
+										<div class="col-sm-3">
+											<select name="dashboard" id="dashboard" class="selectpicker">
+												<% List<Dashboard> dashboards=(List<Dashboard>) request.getAttribute("dashboards"); for (Dashboard dashboard: dashboards) { %>
+													<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%= dashboard.getUrl() %></option>
+												<%}%>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="menu-order">Tableau Parameters
+										</label>
+										<div class="col-sm-4">
+											<input type="text" name="customParams" id="customParams" value="" class="form-control col-md-3">
+											<input type="checkbox" name="usernameParam" id="usernameParam" value="yes">&nbsp;Include Username Parameter
+										</div>
+									</div>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
