@@ -79,7 +79,8 @@
 							</div>
 							<div class="x_content">
 								<!-- Fill with Content -->
-								<form method="post" class="form-horizontal form-label-left">
+								<div class="tambahan"></div>
+								<form id="formid" method="post" action="menuSave.cbi" class="form-horizontal form-label-left">
 
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Menu Name <span class="required">*</span>
@@ -115,7 +116,7 @@
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
-											<button  class="btn btn-success submit-menu">Submit</button>
+											<input  class="btn btn-success submit-menu" type="submit" name="submitButton" value="Submit">
 										</div>
 									</div>
 
@@ -136,28 +137,27 @@
 	<%@ include file="../fragments/js-collection.jsp"%>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		$(".submit-menu").on('click',function(){
-    		$.ajax({
-    			type:'post',
-    			url:'menuSave.cbi',
-                cache: false,
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
-                datatype:'json',
-                data:{
-                    name:$("#name").val(),
-                    parentId:$('#parentId :selected').val(),
-                    menuOrder:$("#menuOrder").val(),
-                    icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
-                    actionsave:1
-                },
-                success:function(data){
-                	alert(data);
-                },
-                error: function(xhr, resp, text) {
-                	alert("Error Bro");
-                }
+		$("#formid").submit(function(event){
+			event.preventDefault();
+			var $form = $( this ),
+	          url = $form.attr( 'action' );
+			var posting = $.post(url, 
+					{ 
+						name:$("#name").val(),
+		                parentId:$('#parentId :selected').val(),
+		                menuOrder:$("#menuOrder").val(),
+		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
+		                actionsave:1
+					} );
+			
+    		posting.done(function(data) {
+                $(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
+                        "</button> "+new Date().toUTCString()+" - Menu <strong>"+$("#name").val()+"</strong> was successfully added to record"+
+                      "</div>");
+                document.getElementById("formid").reset();
     		});
-    	});
+		});
 	});
 	</script>
 </body>
