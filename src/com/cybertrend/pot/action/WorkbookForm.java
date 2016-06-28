@@ -1,6 +1,7 @@
 package com.cybertrend.pot.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cybertrend.pot.Constants;
 import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.DashboardDAO;
 import com.cybertrend.pot.entity.Dashboard;
@@ -32,7 +34,8 @@ public class WorkbookForm extends DefaultAction{
 					if(request.getParameter("viewId")!=null){
 						detail(request, response, action);
 						addToPortal(request, response, action);
-						request.getRequestDispatcher("/views/workbook/workbookDetail.jsp").forward(request, response);
+						PrintWriter out = response.getWriter();
+					    out.println(Constants.SUCCESS);
 					} else {
 						viewDashboard(request, response, action);
 					}

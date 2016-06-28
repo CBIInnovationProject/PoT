@@ -79,6 +79,7 @@
 							</div>
 							<div class="x_content">
 								<!-- Fill with Content -->
+								<div class="tambahan"></div>
 								<form id="formid" method="post" action="roleSave.cbi" class="form-horizontal form-label-left">
 
 									<div class="form-group">
@@ -96,7 +97,6 @@
 											<input type="text" id="description" name="description" required class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
-									<div class="tambahan"></div>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
@@ -133,9 +133,11 @@
 					} );
 			
     		posting.done(function(data) {
-                $(".tambahan").replaceWith("Hallloo");
-                $(".name").prop('disabled', true);
-                $(".description").prop('disabled', true);
+    			$(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
+                        "</button> "+new Date().toUTCString()+" - Role <strong>"+$("#name").val()+"</strong> was successfully added to record"+
+                      "</div>");
+                document.getElementById("formid").reset();
     		});
 		});
 	});

@@ -79,6 +79,7 @@
 		                          <th>Content Type</th>
 		                          <th>Create Date</th>
 		                          <th>Last Updated</th>
+		                          <th>Action</th>
 		                        </tr>
 		                      </thead>
 		
@@ -86,10 +87,15 @@
 							 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
 	                  			for (Menu menu: menus) { %>
 		                        <tr>
-		                          <td><a href="menuDetail.cbi?menuId=<%=menu.getId()%>"><i class="<%=menu.getIcon()%>"></i>&nbsp;&nbsp;<%= menu.getName()%></a></td>
+		                          <td><a href="menuDetail.cbi?menuId=<%=menu.getId()%>"><i class="<%=menu.getIcon()%>"></i>&nbsp;&nbsp;<%=menu.getName()%></a></td>
 		                          <td><%= menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT"%></td>
 		                          <td><%= menu.getCreateDate()!=null?menu.getCreateDate():""%></td>
 		                          <td><%= menu.getUpdateDate()!=null?menu.getUpdateDate():""%></td>
+		                          <td>
+		                          	<%if(menu.getContentType()==null) {%><a href="parentMenuForm.cbi?menuId=<%=menu.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>&nbsp;Edit</a><%} 
+		                          	else if(menu.getContentType().equals("page")) {%><a href="pageMenuForm.cbi?menuId=<%=menu.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>&nbsp;Edit</a><%} 
+		                          	else if(menu.getContentType().equals("tableau")) {%><a href="tableauMenuForm.cbi?menuId=<%=menu.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>&nbsp;Edit</a><%} %>
+		                          </td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>

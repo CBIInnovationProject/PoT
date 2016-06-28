@@ -73,26 +73,19 @@
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Menu Name <span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
-											<input type="text" name="name" id="menu_name" class="form-control col-md-7 col-xs-12" required="required">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Name <span class="required">*</span>
-										</label>
-										<div class="col-sm-3">
-											<input type="text" id="action_name" name="action" class="form-control col-md-7 col-xs-12" required="required">
+											<input type="text" name="name" id="menu_name" value="${menuView.name}" class="form-control col-md-7 col-xs-12" required="required">
 										</div>
 									</div>
 									
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
-											<select name="parentId" id="parent_id" class="selectpicker">
+											<select  id="parentId" name="parentId" class="selectpicker">
 												<option></option>
 												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
+												Menu menuView = (Menu) request.getAttribute("menuView");
 												for(Menu parent:parents){%>
-													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" ><%=parent.getName() %></option>
+													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" <%if(menuView!=null) { if(menuView.getId().equals(parent.getId())) {%>selected<% } }%>><%=parent.getName() %></option>
 												<% }%>
 											</select>
 										</div>
@@ -103,7 +96,7 @@
 											for="menu-order">Menu Order 
 										</label>
 										<div class="col-sm-1">
-											<input type="number" name="menuOrder" id="menuOrder" value="0" class="form-control col-md-3">
+											<input type="number" name="menuOrder" id="menuOrder" value="0${menuView.menuOrder}" class="form-control col-md-3">
 										</div>
 									</div>
 									
@@ -111,7 +104,7 @@
 									
 									
 									<div class="ln_solid"></div>
-									<textarea name="content" id="content_text" style="width: 100%;height: 150px;"></textarea>
+									<textarea name="content" id="content_text" style="width: 100%;height: 150px;">${menuView.content}</textarea>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
@@ -140,13 +133,13 @@
 		$("#formid").submit(function(event){
 			event.preventDefault();
 			var $form = $( this ),
-	          url = $form.attr( 'action' );
+	        url = $form.attr( 'action' );
+			var content_text = document.getElementById("content_text").value;
 			var posting = $.post(url, 
 					{ 
 						name:$("#menu_name").val(),
-		                action:$("#action_name").val(),
 		                parentId:$('#parent_id :selected').val(),
-		                content:$("#content_text").val(),
+		                content:content_text,
 		                contentType:$("#contentType").val(),
 		                menuOrder:$("#menuOrder").val(),
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),

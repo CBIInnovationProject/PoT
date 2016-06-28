@@ -81,12 +81,12 @@
 								<!-- Fill with Content -->
 								<div class="tambahan"></div>
 								<form id="formid" method="post" action="menuSave.cbi" class="form-horizontal form-label-left">
-
+									<input id="menuId" name="menuId" value="${menuView.id}" type="hidden">
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Menu Name <span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
-											<input type="text" id="name" name="name" required class="form-control col-md-7 col-xs-12">
+											<input type="text" id="name" name="name" value="${menuView.name}" required class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
 									
@@ -96,8 +96,9 @@
 											<select  id="parentId" name="parentId" class="selectpicker">
 												<option></option>
 												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
+												Menu menuView = (Menu) request.getAttribute("menuView");
 												for(Menu parent:parents){%>
-													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" ><%=parent.getName() %></option>
+													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" <%if(menuView!=null) { if(menuView.getId().equals(parent.getId())) {%>selected<% } }%>><%=parent.getName() %></option>
 												<% }%>
 											</select>
 										</div>
@@ -107,7 +108,7 @@
 											for="menu-order">Menu Order 
 										</label>
 										<div class="col-sm-1">
-											<input type="number" name="menuOrder" id="menuOrder" value="0" class="form-control col-md-3">
+											<input type="number" name="menuOrder" id="menuOrder" value="0${menuView.menuOrder}" class="form-control col-md-3">
 										</div>
 									</div>
 									
@@ -147,6 +148,7 @@
 		                parentId:$('#parentId :selected').val(),
 		                menuOrder:$("#menuOrder").val(),
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
+		                menuId:$("#menuId").val(),
 		                actionsave:1
 					} );
 			

@@ -26,6 +26,10 @@ public class MenuForm extends DefaultAction {
 				getMenuAction(action, request);
 				request.setAttribute("parentMenus", MenuDAO.getListParentMenu());
 				request.setAttribute("dashboards", DashboardDAO.getListDashboards());
+				if(request.getParameter("menuId")!=null) {
+					Menu menu = MenuDAO.getMenuById(request.getParameter("menuId"));
+					request.setAttribute("menuView", menu);
+				}
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
@@ -41,7 +45,7 @@ public class MenuForm extends DefaultAction {
 			menu.setCreateBy(getCurrentUser(request).getUsername());
 			menu.setUpdateBy(getCurrentUser(request).getUsername());
 			menu.setName(request.getParameter("name"));
-			menu.setAction(request.getParameter("action"));
+			menu.setAction(request.getParameter("name").trim().toLowerCase().replace(" ", "_")+".cbi");
 			menu.setParentId((request.getParameter("parentId")==null||request.getParameter("parentId").trim().equals(""))?null:request.getParameter("parentId"));
 			menu.setContent(request.getParameter("content"));
 			menu.setContentType(request.getParameter("contentType"));
@@ -50,7 +54,11 @@ public class MenuForm extends DefaultAction {
 			menu.setWorkbookId(dashboard!=null?dashboard.getWorkbookId():null);
 			menu.setViewId(dashboard!=null?dashboard.getId():null);
 			menu.setSiteId(getCurrentCredentials(request).getSite().getId());
-			MenuDAO.save(menu);
+			if(request.getParameter("menuId")!=null&&!"".equalsIgnoreCase(request.getParameter("menuId").trim())) {
+				menu.setId(request.getParameter("menuId"));
+				MenuDAO.update(menu);
+			}else
+				MenuDAO.save(menu);
 			PrintWriter out = response.getWriter();
 		    out.println(Constants.SUCCESS);
 		}
