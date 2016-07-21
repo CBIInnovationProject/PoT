@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Gentallela Alela! |</title>
+<title>Cybertrend Portal of Tableau</title>
 
 <!-- Bootstrap -->
 <link href="${pageContext.request.contextPath}/vendors/bootstrap/dist/css/bootstrap.min.css"
@@ -29,7 +29,8 @@
 			<div id="login" class=" form">
 				<section class="login_content">
 					<form action="login.cbi" method="post">
-						<h1>Login Form</h1>
+						<h1><img alt=""
+				src="${pageContext.request.contextPath}/images/logo.png"></h1>
 						<div>
 							<input type="text" name="username" class="form-control"
 								placeholder="Username" required />
@@ -52,13 +53,7 @@
 							<div class="clearfix"></div>
 							<br />
 							<div>
-								<h1>
-									<i class="fa fa-paw" style="font-size: 26px;"></i> Gentelella
-									Alela!
-								</h1>
-
-								<p>©2015 All Rights Reserved. Gentelella Alela! is a
-									Bootstrap 3 template. Privacy and Terms</p>
+								<p>Copyright © 2016 PT Cybertrend Intrabuana</p>
 							</div>
 						</div>
 					</form>
@@ -94,13 +89,7 @@
 							<div class="clearfix"></div>
 							<br />
 							<div>
-								<h1>
-									<i class="fa fa-paw" style="font-size: 26px;"></i> Gentelella
-									Alela!
-								</h1>
-
-								<p>©2015 All Rights Reserved. Gentelella Alela! is a
-									Bootstrap 3 template. Privacy and Terms</p>
+								<p>Copyright © 2016 PT Cybertrend Intrabuana</p>
 							</div>
 						</div>
 					</form>

@@ -7,7 +7,7 @@
 			<div class="nav toggle">
 				<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 			</div>
-			<a href=#><img alt=""
+			<a href="${pageContext.request.contextPath}"><img alt=""
 				src="${pageContext.request.contextPath}/images/logo.png"></a>
 			<ul class="nav navbar-nav navbar-right">
 				<li class=""><a href="javascript:;"
@@ -18,7 +18,7 @@
 				</a>
 					<ul class="dropdown-menu dropdown-usermenu pull-right">
 						<li><a href="javascript:;"> Profile</a></li>
-						<li><a href="javascript:;"> <span
+						<li><a href="settings.cbi"> <span
 								class="badge bg-red pull-right">50%</span> <span>Settings</span>
 						</a></li>
 						<li><a href="javascript:;">Help</a></li>

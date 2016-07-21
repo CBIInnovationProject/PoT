@@ -75,7 +75,9 @@ public class DefaultAction{
 		if(menus.size()>0){
 			treeMenu = treeMenu+"<li><a><i class=\""+menu.getIcon()+"\"></i>"+menu.getName()+"<span class=\"fa fa-chevron-down\"></span></a><ul class=\"nav child_menu\">";
 			for(Menu menu2: menus){
-				treeMenu = treeMenu + leafMenu(menu2, request, response, servletContext);
+				if(authMenu(menu2, request)){
+					treeMenu = treeMenu + leafMenu(menu2, request, response, servletContext);
+				}
 			} treeMenu = treeMenu + "</ul></li>";
 		} else {
 			if(authMenu(menu, request)){

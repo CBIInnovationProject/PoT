@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cybertrend.pot.action.AccountForm;
 import com.cybertrend.pot.action.LandingPage;
 import com.cybertrend.pot.action.Login;
 import com.cybertrend.pot.action.Logout;
@@ -135,6 +136,16 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("workbook.cbi")) {
 				WorkbookForm.execute(request, response, action);
+			} 
+			
+			else if (action.equals("settings.cbi")) {
+				AccountForm.execute(request, response, action);
+				request.getRequestDispatcher("/views/settings/account.jsp").forward(request, response);
+			}
+			
+			else if (action.equals("settings_password.cbi")) {
+				AccountForm.execute(request, response, action);
+				request.getRequestDispatcher("/views/settings/password.jsp").forward(request, response);
 			}
 			
 			else {
