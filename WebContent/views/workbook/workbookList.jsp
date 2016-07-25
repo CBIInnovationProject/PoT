@@ -69,10 +69,17 @@
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
-							<p class="text-muted font-13 m-b-30">
-		                      DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
-		                    </p>
-		                    <table id="datatable" class="table table-striped table-bordered">
+							<form id="formid" method="post" action="publishWorkbook.cbi" class="form-horizontal form-label-left">
+								<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">New Workbook<span class="required">*</span>
+										</label>
+										<div class="col-sm-3">
+											<input name="workbookFile" class="form-control col-md-7 col-xs-12" type="file"><input class="btn btn-success submit-menu" value="Publish" type="submit">
+										</div>
+									</div>
+								 
+		                    </form>
+							<table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
 		                          <th>Name</th>
@@ -174,6 +181,27 @@
 
         TableManageButtons.init();
       });
-    </script>
+
+      $(document).ready(function(){
+		$("#formid").submit(function(event){
+			event.preventDefault();
+			var $form = $( this ),
+	          url = $form.attr( 'action' );
+			var posting = $.post(url, 
+					{ 
+						name:$("#workbookFile").val(),
+		                actionsave:1
+					} );
+			
+    		posting.done(function(data) {
+    			$(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
+                        "</button> "+new Date().toUTCString()+" - Role <strong>"+$("#name").val()+"</strong> was successfully added to record"+
+                      "</div>");
+                document.getElementById("formid").reset();
+    		});
+		});
+	});
+	</script>
 </body>
 </html>

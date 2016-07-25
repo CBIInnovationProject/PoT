@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -15,6 +17,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
+import com.google.common.io.Files;
 
 import javax.imageio.ImageIO;
 import javax.ws.rs.core.MediaType;
@@ -35,11 +38,19 @@ import com.cybertrend.pot.util.PropertyLooker;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.multipart.BodyPart;
+import com.sun.jersey.multipart.FormDataBodyPart;
+import com.sun.jersey.multipart.MultiPart;
+import com.sun.jersey.multipart.MultiPartMediaTypes;
+import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 import tableau.api.rest.bindings.CapabilityType;
+import tableau.api.rest.bindings.FileUploadType;
 import tableau.api.rest.bindings.GranteeCapabilitiesType;
 import tableau.api.rest.bindings.ObjectFactory;
 import tableau.api.rest.bindings.PermissionsType;
+import tableau.api.rest.bindings.ProjectListType;
+import tableau.api.rest.bindings.ProjectType;
 import tableau.api.rest.bindings.SiteRoleType;
 import tableau.api.rest.bindings.SiteType;
 import tableau.api.rest.bindings.TableauCredentialsType;
@@ -50,6 +61,8 @@ import tableau.api.rest.bindings.ViewListType;
 import tableau.api.rest.bindings.WorkbookType;
 
 public class TableauService {
+
+    private final static String TABLEAU_PAYLOAD_NAME = "request_payload";
 
 	/*
 	 * Initialize Tableau REST API
@@ -65,18 +78,26 @@ public class TableauService {
         QUERY_VIEWS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/views")),
         GET_USER(getApiUriBuilder().path("sites/{siteId}/users/{userId}")),
         GET_WORKBOOK(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}")),
+        QUERY_PROJECTS(getApiUriBuilder().path("sites/{siteId}/projects")),
         QUERY_USERS_ON_SITE(getApiUriBuilder().path("sites/{siteId}/users")),
         UPDATE_USER(getApiUriBuilder().path("sites/{siteId}/users/{userId}")),
         ADD_WORKBOOK_PERMISSIONS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/permissions")),
         DELETE_WORKBOOK_PERMISSIONS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/permissions/users/{userId}/{capabilityName}/{capabilityMode}")),
         GET_WORKBOOK_PERMISSIONS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/permissions")),
     	QUERY_WORKBOOK_PREVIEW_IMAGE(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/previewImage")),
-        SIGN_OUT(getApiUriBuilder().path("auth/signout"));
+        SIGN_OUT(getApiUriBuilder().path("auth/signout")),
+        APPEND_FILE_UPLOAD(getApiUriBuilder().path("sites/{siteId}/fileUploads/{uploadSessionId}")),
+        INITIATE_FILE_UPLOAD(getApiUriBuilder().path("sites/{siteId}/fileUploads")),
+    	PUBLISH_WORKBOOK(getApiUriBuilder().path("sites/{siteId}/workbooks"));
     	
         private final UriBuilder m_builder;
 
         Operation(UriBuilder builder) {
             m_builder = builder;
+        }
+
+        UriBuilder getUriBuilder() {
+            return m_builder;
         }
 
         String getUrl(Object... values) {
@@ -170,6 +191,14 @@ public class TableauService {
         ClientResponse clientResponse = webResource.header(TABLEAU_AUTH_HEADER, authToken)
                 .type(MediaType.TEXT_XML_TYPE).post(ClientResponse.class, payload);
 
+        String responseXML = clientResponse.getEntity(String.class);
+        return unmarshalResponse(responseXML);
+    }
+    
+    private static TsResponse post(String url, String authToken) {
+        Client client = Client.create();
+        WebResource webResource = client.resource(url);
+        ClientResponse clientResponse = webResource.header(TABLEAU_AUTH_HEADER, authToken).post(ClientResponse.class);
         String responseXML = clientResponse.getEntity(String.class);
         return unmarshalResponse(responseXML);
     }
@@ -435,4 +464,161 @@ public class TableauService {
 
 	}
     
+    /*
+     * Publish Workbook Chunked
+     * 
+     */
+    private static WorkbookType invokePublishWorkbookChunked(TableauCredentialsType credential, String siteId,
+            String projectId, String workbookName, File workbookFile) {
+        FileUploadType fileUpload = invokeInitiateFileUpload(credential, siteId);
+        UriBuilder builder = Operation.PUBLISH_WORKBOOK.getUriBuilder()
+                .queryParam("uploadSessionId", fileUpload.getUploadSessionId())
+                .queryParam("workbookType", Files.getFileExtension(workbookFile.getName()));
+        String url = builder.build(siteId, fileUpload.getUploadSessionId()).toString();
+        byte[] buffer = new byte[100000];
+        try  {
+        	FileInputStream inputStream = new FileInputStream(workbookFile.getAbsolutePath());
+        	while (inputStream.read(buffer) != -1) {
+                invokeAppendFileUpload(credential, siteId, fileUpload.getUploadSessionId(), buffer);
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to read the workbook file.");
+        }
+        TsRequest payload = createPayloadToPublishWorkbook(workbookName, projectId);
+        TsResponse response = postMultipart(url, credential.getToken(), payload, null);
+        if (response.getWorkbook() != null) {
+            return response.getWorkbook();
+        }
+        return null;
+    }
+    
+    /*
+     * Publish Workbook Simple
+     */
+    private static WorkbookType invokePublishWorkbookSimple(TableauCredentialsType credential, String siteId,
+            String projectId, String workbookName, File workbookFile) {
+        String url = Operation.PUBLISH_WORKBOOK.getUrl(siteId);
+        TsRequest payload = createPayloadToPublishWorkbook(workbookName, projectId);
+        BodyPart filePart = new FileDataBodyPart("tableau_workbook", workbookFile,
+                MediaType.APPLICATION_OCTET_STREAM_TYPE);
+        TsResponse response = postMultipart(url, credential.getToken(), payload, filePart);
+        if (response.getWorkbook() != null) {
+            return response.getWorkbook();
+        }
+        return null;
+    }
+    
+    /*
+     * Publish Workbook
+     */
+    public static WorkbookType invokePublishWorkbook(TableauCredentialsType credential, String siteId, String projectId,
+            String workbookName, File workbookFile, boolean chunkedPublish) {
+        if (chunkedPublish) {
+            return invokePublishWorkbookChunked(credential, siteId, projectId, workbookName, workbookFile);
+        } else {
+            return invokePublishWorkbookSimple(credential, siteId, projectId, workbookName, workbookFile);
+        }
+    }
+    
+    
+    /*
+     * Initiate Upload
+     */
+    private static FileUploadType invokeInitiateFileUpload(TableauCredentialsType credential, String siteId) {
+        String url = Operation.INITIATE_FILE_UPLOAD.getUrl(siteId);
+        TsResponse response = post(url, credential.getToken());
+        if (response.getFileUpload() != null) {
+            return response.getFileUpload();
+        }
+        return null;
+    }
+    
+    /*
+     * 
+     */
+    private static TsResponse postMultipart(String url, String authToken, TsRequest requestPayload, BodyPart filePart) {
+        StringWriter writer = new StringWriter();
+        if (requestPayload != null) {
+            try {
+                s_jaxbMarshaller.marshal(requestPayload, writer);
+            } catch (JAXBException ex) {
+                ex.printStackTrace();
+            }
+        }
+        String payload = writer.toString();
+        BodyPart payloadPart = new FormDataBodyPart(TABLEAU_PAYLOAD_NAME, payload);
+        MultiPart multipart = new MultiPart();
+        multipart.bodyPart(payloadPart);
+        if(filePart != null) {
+            multipart.bodyPart(filePart);
+        }
+        Client client = Client.create();
+        WebResource webResource = client.resource(url);
+        ClientResponse clientResponse = webResource.header(TABLEAU_AUTH_HEADER, authToken)
+                .type(MultiPartMediaTypes.createMixed()).post(ClientResponse.class, multipart);
+        String responseXML = clientResponse.getEntity(String.class);
+        return unmarshalResponse(responseXML);
+    }
+    
+    private static void invokeAppendFileUpload(TableauCredentialsType credential, String siteId, String uploadSessionId,
+            byte[] chunk) {
+        String url = Operation.APPEND_FILE_UPLOAD.getUrl(siteId, uploadSessionId);
+        try {
+        	FileOutputStream outputStream = new FileOutputStream("appendFileUpload.temp");
+            outputStream.write(chunk);
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to create temporary file to append to file upload");
+        }
+        BodyPart filePart = new FileDataBodyPart("tableau_file", new File("appendFileUpload.temp"),
+                MediaType.APPLICATION_OCTET_STREAM_TYPE);
+        putMultipart(url, credential.getToken(), null, filePart);
+    }
+    
+    private static TsResponse putMultipart(String url, String authToken, TsRequest requestPayload, BodyPart filePart) {
+        StringWriter writer = new StringWriter();
+        if (requestPayload != null) {
+            try {
+                s_jaxbMarshaller.marshal(requestPayload, writer);
+            } catch (JAXBException ex) {
+                ex.printStackTrace();
+            }
+        }
+        String payload = writer.toString();
+        BodyPart payloadPart = new FormDataBodyPart(TABLEAU_PAYLOAD_NAME, payload);
+        MultiPart multipart = new MultiPart();
+        multipart.bodyPart(payloadPart);
+
+        if(filePart != null) {
+            multipart.bodyPart(filePart);
+        }
+        Client client = Client.create();
+        WebResource webResource = client.resource(url);
+        ClientResponse clientResponse = webResource.header(TABLEAU_AUTH_HEADER, authToken)
+                .type(MultiPartMediaTypes.createMixed()).put(ClientResponse.class, multipart);
+        String responseXML = clientResponse.getEntity(String.class);
+        return unmarshalResponse(responseXML);
+    }
+    
+    private static TsRequest createPayloadToPublishWorkbook(String workbookName, String projectId) {
+        TsRequest requestPayload = m_objectFactory.createTsRequest();
+        WorkbookType workbook = m_objectFactory.createWorkbookType();
+        ProjectType project = m_objectFactory.createProjectType();
+        project.setId(projectId);
+        workbook.setName(workbookName);
+        workbook.setProject(project);
+        requestPayload.setWorkbook(workbook);
+        return requestPayload;
+    }
+    
+    /*
+     * Query Projects
+     */
+    public static ProjectListType invokeQueryProjects(TableauCredentialsType credential, String siteId) {
+        String url = Operation.QUERY_PROJECTS.getUrl(siteId);
+        TsResponse response = get(url, credential.getToken());
+        if (response.getProjects() != null) {
+            return response.getProjects();
+        }
+        return null;
+    }
 }

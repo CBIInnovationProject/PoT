@@ -1,5 +1,6 @@
 package com.cybertrend.pot.action;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -9,14 +10,17 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.cybertrend.pot.Constants;
 import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.DashboardDAO;
 import com.cybertrend.pot.entity.Dashboard;
 import com.cybertrend.pot.entity.WorkbookTableau;
+import com.cybertrend.pot.service.TableauService;
 import com.cybertrend.pot.util.PropertyLooker;
 
+import tableau.api.rest.bindings.ProjectType;
 import tableau.api.rest.bindings.UserType;
 import tableau.api.rest.bindings.WorkbookType;
 
@@ -26,8 +30,7 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			List<WorkbookType> workbookTypes = getCurrentWorkbookList(request);
-			request.setAttribute("workbooks", workbookTypes);
+			request.setAttribute("workbooks", TableauService.invokeQueryWorkbooks(getCurrentCredentials(request), Integer.parseInt(PropertyLooker.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 			request.setAttribute("credential", getCurrentCredentials(request));
 			if(request.getParameter("workbookId")!=null){
 				if(request.getParameter("url")!=null){
@@ -122,6 +125,49 @@ public class WorkbookForm extends DefaultAction{
 		else {
 			if(getCurrentRole(request).getId().equals("0")){
 				DashboardDAO.delete(request.getParameter("viewId"));
+			}
+		}
+	}
+	
+	/*
+	 * publish Workbook
+	 */
+	public static void publishWorkbook(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+		String SAVE_DIR = "uploadWorkbook";
+		String appPath = request.getServletContext().getRealPath("");
+		String savePath = appPath + File.separator + SAVE_DIR;
+		String project = request.getParameter("project");
+		String workbookName = request.getParameter("workbookName");
+		
+		// creates the save directory if it does not exists
+		File workbookFile = new File(savePath);
+		if (!workbookFile.exists()) {
+			workbookFile.mkdir();
+		}
+	
+		for (Part part : request.getParts()) {
+			String fileName = "tableauwb"+System.currentTimeMillis()+ ".twbx";
+			part.write(savePath + File.separator + fileName);
+		}
+		
+		boolean chunkedPublish = true;
+
+        // Publishes the workbook as a multipart request
+        WorkbookType publishedWorkbook = TableauService.invokePublishWorkbook(getCurrentCredentials(request), getCurrentCredentials(request).getSite().getId(),
+                project, workbookName, workbookFile, chunkedPublish);
+	}
+	
+	/*
+	 * publish Workbook Form
+	 */
+	public static void publishWorkbookForm(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+		if(Interceptor.isLogin(request)==false){
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
+		else {
+			if(getCurrentRole(request).getId().equals("0")){
+				List<ProjectType> projects = TableauService.invokeQueryProjects(getCurrentCredentials(request), getCurrentCredentials(request).getSite().getId()).getProject();
+				request.setAttribute("projects", projects);
 			}
 		}
 	}
