@@ -92,14 +92,6 @@
 									</div>
 									
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Name <span class="required">*</span>
-										</label>
-										<div class="col-sm-3">
-											<input type="text" name="action" id="action" required class="form-control col-md-7 col-xs-12">
-										</div>
-									</div>
-									
-									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
 											<select name="parentId" id="parentId" class="selectpicker">

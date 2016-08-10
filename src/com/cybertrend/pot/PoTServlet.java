@@ -120,6 +120,16 @@ public class PoTServlet extends HttpServlet {
 				request.getRequestDispatcher("/views/role/roleForm.jsp").forward(request, response);
 			}
 			
+			else if(action.equals("menuPrivilege.cbi")) {
+				RoleForm.list(request, response, action);
+				request.getRequestDispatcher("/views/role/menuPrivilege.jsp").forward(request, response);
+			}
+			
+			else if(action.equals("menuPrivilegeForm.cbi")) {
+				RoleForm.menuPrivilegeForm(request, response, action);
+				request.getRequestDispatcher("/views/role/menuPrivilegeForm.jsp").forward(request, response);
+			}
+			
 			else if(action.equals("roleList.cbi")) {
 				RoleForm.list(request, response, action);
 				request.getRequestDispatcher("/views/role/roleList.jsp").forward(request, response);

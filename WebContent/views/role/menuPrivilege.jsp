@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@page import="tableau.api.rest.bindings.WorkbookType"%>
+<%@page import="com.cybertrend.pot.entity.Role"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 <head>
@@ -60,7 +60,7 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2>Workbook</h2>
+	                    <h2>${menu.name}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
@@ -69,25 +69,20 @@
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
-							
-							<table id="datatable" class="table table-striped table-bordered">
+		                    <table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
-		                          <th>Name</th>
-		                          <th>Project</th>
-		                          <th>Create Date</th>
-		                          <th>Last Updated</th>
+		                          <th>Role Name</th>
+		                          <th>Action</th>
 		                        </tr>
 		                      </thead>
 		
 		                      <tbody>
-							 	<% List<WorkbookType> workbooks=(List<WorkbookType>) request.getAttribute("workbooks"); 
-	                  			for (WorkbookType workbook: workbooks) { %>
+							 	<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
+	                  			for (Role role: roles) { %>
 		                        <tr>
-		                          <td><a href="workbook.cbi?workbookId=<%=workbook.getId()%>"><li class="fa fa-bar-chart"></li>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
-		                          <td><%= workbook.getProject().getName()%></td>
-		                          <td><%= workbook.getCreatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
-		                          <td><%= workbook.getUpdatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
+		                          <td><%= role.getName()%></td>
+		                          <td><a href="menuPrivilegeForm.cbi?roleId=<%=role.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>&nbsp;Set Menu Privilege</a></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>
@@ -172,27 +167,6 @@
 
         TableManageButtons.init();
       });
-
-      $(document).ready(function(){
-		$("#formid").submit(function(event){
-			event.preventDefault();
-			var $form = $( this ),
-	          url = $form.attr( 'action' );
-			var posting = $.post(url, 
-					{ 
-						name:$("#workbookFile").val(),
-		                actionsave:1
-					} );
-			
-    		posting.done(function(data) {
-    			$(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
-                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-                        "</button> "+new Date().toUTCString()+" - Role <strong>"+$("#name").val()+"</strong> was successfully added to record"+
-                      "</div>");
-                document.getElementById("formid").reset();
-    		});
-		});
-	});
-	</script>
+    </script>
 </body>
 </html>
