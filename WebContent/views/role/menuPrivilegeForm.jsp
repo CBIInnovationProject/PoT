@@ -65,7 +65,7 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2><a href="menuPrivilege.cbi">Menu Privilege</a> <i class="fa fa-angle-double-right"></i> Set Menu Privilege</h2>
+	                    <h2><a href="roleList.cbi">Role List</a> <i class="fa fa-angle-double-right"></i> Set Menu Privilege</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
@@ -79,7 +79,7 @@
 			                      <div class="row">
 			                        <div class="col-xs-12 invoice-header">
 			                          <h1>
-			                                          <i class="fa fa-bar-chart"></i> ${role.name}
+			                                          <i class="fa fa-gears"></i> ${role.name}
 			                                      </h1>
 			                        </div>
 			                        <!-- /.col -->

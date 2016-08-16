@@ -74,7 +74,7 @@ public class MenuForm extends DefaultAction {
 		else {
 			if (getCurrentRole(request).getId().equals("0")){
 				getMenuAction(action, request);
-				List<Menu> menus = MenuDAO.getList();
+				List<Menu> menus = MenuDAO.getList(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("menus", menus);
 			}
 			else {

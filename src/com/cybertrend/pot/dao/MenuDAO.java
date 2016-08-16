@@ -142,10 +142,24 @@ public class MenuDAO {
 		prep.executeUpdate();
 	}
 	
-	public static List<Menu> getList() throws SQLException {
+	public static List<Menu> getList(String siteId) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE contentType <> 'admin' OR contentType IS NULL");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE siteId=? AND (contentType <> 'admin' OR contentType IS NULL)");
+		prep.setString(1, siteId);
+		ResultSet result = prep.executeQuery();
+		while (result.next()) {
+			Menu menu = getMenuById(result.getString("id"));
+			menus.add(menu);
+		}
+		return menus;
+	}
+	
+	public static List<Menu> getMenuParents(String siteId) throws SQLException {
+		List<Menu> menus = new ArrayList<>();
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE siteId=? AND parentId IS NULL AND (contentType <> 'admin' OR contentType IS NULL)");
+		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			Menu menu = getMenuById(result.getString("id"));

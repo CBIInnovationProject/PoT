@@ -69,15 +69,13 @@
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
-							<p class="text-muted font-13 m-b-30">
-		                      DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
-		                    </p>
 		                    <table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
-		                          <th>Name</th>
+		                          <th>Role Name</th>
 		                          <th>Create Date</th>
 		                          <th>Last Updated</th>
+		                          <th>Action</th>
 		                        </tr>
 		                      </thead>
 		
@@ -85,9 +83,10 @@
 							 	<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
 	                  			for (Role role: roles) { %>
 		                        <tr>
-		                          <td><a href="roleDetail.cbi?roleId=<%=role.getId()%>"><%= role.getName()%></a></td>
+		                          <td><%= role.getName()%></td>
 		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
 		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
+		                          <td><a href="menuPrivilegeForm.cbi?roleId=<%=role.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>&nbsp;Set Menu Privilege</a></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>

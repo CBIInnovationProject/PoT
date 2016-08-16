@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="com.cybertrend.pot.dao.RoleDAO"%>
+<%@page import="com.cybertrend.pot.entity.User"%>
 <%@page import="com.cybertrend.pot.entity.Role"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -72,17 +74,23 @@
 		                    <table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
-		                          <th>Role Name</th>
+		                          <th>Username</th>
+		                          <th>Role</th>
+		                          <th>Create Date</th>
+		                          <th>Last Updated</th>
 		                          <th>Action</th>
 		                        </tr>
 		                      </thead>
 		
 		                      <tbody>
-							 	<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
-	                  			for (Role role: roles) { %>
+							 	<% List<User> users=(List<User>) request.getAttribute("users"); 
+	                  			for (User user: users) { %>
 		                        <tr>
-		                          <td><%= role.getName()%></td>
-		                          <td><a href="menuPrivilegeForm.cbi?roleId=<%=role.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>&nbsp;Set Menu Privilege</a></td>
+		                          <td><i class="fa fa-user"></i>&nbsp;&nbsp;<%= user.getUsername()%></td>
+		                          <td><%=RoleDAO.getRoleById(user.getRoleId())!=null?RoleDAO.getRoleById(user.getRoleId()).getName():"" %></td>
+		                          <td><%= user.getCreateDate()!=null?user.getCreateDate():""%></td>
+		                          <td><%= user.getUpdateDate()!=null?user.getUpdateDate():""%></td>
+		                          <td><a href="menuPrivilegeForm.cbi?roleId=<%=user.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>&nbsp;&nbsp;Role</a></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>

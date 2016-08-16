@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class UserDAO {
 			output.setZip(result.getString("zip"));
 			output.setPhone(result.getString("phone"));
 			output.setEmail(result.getString("email"));
+			output.setRoleId(result.getString("roleId"));
 		}
 		return output;
 	}
@@ -63,27 +65,33 @@ public class UserDAO {
 	
 	public static void save(User user) throws SQLException{
 		Connection conn = DatabaseService.getConnection();
-		String sql = "INSERT INTO user (id, username, password, fullName, address1, address2, address3, zip, phone, email, createBy, createDate) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO user (id, createBy, createDate, updateBy, updateDate, username, password, fullName, address1, address2, address3, zip, phone, email, siteId, roleId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement prep = conn.prepareStatement(sql);
-		prep.setString(1, user.getId());
-		prep.setString(2, user.getUsername());
-		prep.setString(3, user.getPassword());
-		prep.setString(4, user.getFullName());
-		prep.setString(5, user.getAddress1());
-		prep.setString(6, user.getAddress2());
-		prep.setString(7, user.getAddress3());
-		prep.setString(8, user.getZip());
-		prep.setString(9, user.getPhone());
-		prep.setString(10, user.getEmail());
-		prep.setString(11, user.getCreateBy());
-		prep.setTimestamp(12, user.getCreateDate());
+		prep.setString(1, System.currentTimeMillis()+"");
+		prep.setString(2, user.getCreateBy());
+		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+		prep.setString(4, user.getUpdateBy());
+		prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+		
+		prep.setString(6, user.getUsername());
+		prep.setString(7, user.getPassword());
+		prep.setString(8, user.getFullName());
+		prep.setString(9, user.getAddress1());
+		prep.setString(10, user.getAddress2());
+		prep.setString(11, user.getAddress3());
+		prep.setString(12, user.getZip());
+		prep.setString(13, user.getPhone());
+		prep.setString(14, user.getEmail());
+		prep.setString(15, user.getSiteId());
+		prep.setString(16, user.getRoleId());
 		prep.executeUpdate();
 	}
 	
-	public static List<User> getUsers() throws SQLException{
+	public static List<User> getList(String siteId) throws SQLException{
 		List<User> users = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from user");
+		PreparedStatement prep = conn.prepareStatement("select id from user WHERE siteId=?");
+		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			User output =  getUserById(result.getString("id"));

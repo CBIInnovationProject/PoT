@@ -63,7 +63,7 @@ public class RoleForm extends DefaultAction{
 		else {
 			if (getCurrentRole(request).getId().equals("0")){
 				getMenuAction(action, request);
-				List<Role> roles = RoleDAO.getList();
+				List<Role> roles = RoleDAO.getList(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("roles", roles);
 			}
 			else {
@@ -79,7 +79,7 @@ public class RoleForm extends DefaultAction{
 		else {
 			if (getCurrentRole(request).getId().equals("0")){
 				Role role = RoleDAO.getRoleById(request.getParameter("roleId"));
-				List<Menu> menus = MenuDAO.getList();
+				List<Menu> menus = MenuDAO.getMenuParents(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("menus", menus);
 				request.setAttribute("role", role);
 				if(request.getParameter("menuId")!=null&&request.getParameter("menuId").length()>0){

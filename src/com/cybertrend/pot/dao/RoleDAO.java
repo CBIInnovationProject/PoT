@@ -49,10 +49,11 @@ public class RoleDAO {
 		prep.executeUpdate();
 	}
 	
-	public static List<Role> getList() throws SQLException {
+	public static List<Role> getList(String siteId) throws SQLException {
 		List<Role> roles = new ArrayList<Role>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM role");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM role WHERE id <> '0' AND siteId=?");
+		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			Role role = getRoleById(result.getString("id"));

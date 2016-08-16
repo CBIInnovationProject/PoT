@@ -16,6 +16,7 @@ import com.cybertrend.pot.action.Login;
 import com.cybertrend.pot.action.Logout;
 import com.cybertrend.pot.action.MenuForm;
 import com.cybertrend.pot.action.RoleForm;
+import com.cybertrend.pot.action.UserForm;
 import com.cybertrend.pot.action.ViewDashboard;
 import com.cybertrend.pot.action.WorkbookForm;
 import com.cybertrend.pot.dao.MenuDAO;
@@ -120,11 +121,6 @@ public class PoTServlet extends HttpServlet {
 				request.getRequestDispatcher("/views/role/roleForm.jsp").forward(request, response);
 			}
 			
-			else if(action.equals("menuPrivilege.cbi")) {
-				RoleForm.list(request, response, action);
-				request.getRequestDispatcher("/views/role/menuPrivilege.jsp").forward(request, response);
-			}
-			
 			else if(action.equals("menuPrivilegeForm.cbi")) {
 				RoleForm.menuPrivilegeForm(request, response, action);
 				request.getRequestDispatcher("/views/role/menuPrivilegeForm.jsp").forward(request, response);
@@ -137,6 +133,20 @@ public class PoTServlet extends HttpServlet {
 			
 			else if(action.equals("roleSave.cbi")) {
 				RoleForm.save(request, response, action);
+			}
+			
+			else if(action.equals("userForm.cbi")) {
+				UserForm.execute(request, response, action);
+				request.getRequestDispatcher("/views/user/userForm.jsp").forward(request, response);
+			}
+			
+			else if(action.equals("userSave.cbi")) {
+				UserForm.save(request, response, action);
+			}
+			
+			else if(action.equals("userList.cbi")) {
+				UserForm.list(request, response, action);
+				request.getRequestDispatcher("/views/user/userList.jsp").forward(request, response);
 			}
 			
 			else if (action.equals("tableauMenuForm.cbi")){

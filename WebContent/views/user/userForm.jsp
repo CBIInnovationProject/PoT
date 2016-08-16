@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.pot.entity.Dashboard"%>
+<%@page import="com.cybertrend.pot.entity.Role"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.cybertrend.pot.entity.Menu"%>
@@ -81,64 +81,90 @@
 							<div class="x_content">
 								<!-- Fill with Content -->
 								<div class="tambahan"></div>
-								<form id="formid" method="post" action="menuSave.cbi" class="form-horizontal form-label-left">
+								<form id="formid" method="post" action="userSave.cbi" class="form-horizontal form-label-left">
 
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Menu Name <span class="required">*</span>
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Username <span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
-											<input type="text" name="name" id="name" required class="form-control col-md-7 col-xs-12">
+											<input type="text" id="username" name="username" required class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
 									
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
-										<div class="col-sm-3">
-											<select name="parentId" id="parentId" class="selectpicker">
-												<option></option>
-												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
-												for(Menu parent:parents){%>
-													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" ><%=parent.getName() %></option>
-												<% }%>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12"
-											for="menu-order">Menu Order 
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Password <span class="required">*</span>
 										</label>
-										<div class="col-sm-1">
-											<input type="number" name="menuOrder" id="menuOrder" value="0" class="form-control col-md-3">
+										<div class="col-sm-3">
+											<input type="password" id="password" name="password" required class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
-									<%@ include file="../fragments/icon-picker-list.jsp"%>
-									<div class="ln_solid"></div>
-									
-									<input type="hidden" name="contentType" id="contentType" value="tableau"/>
 									
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Tableau URL <span class="required">*</span></label>
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Role <span class="required">*</span>
+										</label>
 										<div class="col-sm-3">
-											<select name="dashboard" id="dashboard" class="selectpicker" required>
-												<% List<Dashboard> dashboards=(List<Dashboard>) request.getAttribute("dashboards"); for (Dashboard dashboard: dashboards) { %>
-													<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%= dashboard.getUrl() %></option>
-												<%}%>
-											</select>
+										<select name="role" id="role" required class="selectpicker">
+											<option></option>
+											<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
+				                  			for (Role role: roles) { %>
+												<option data-icon="fa fa-gears" value="<%= role.getId() %>" ><%=role.getName() %></option>
+											<%} %>
+										</select>	
 										</div>
 									</div>
+
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12"
-											for="menu-order">Tableau Parameters
-										</label>
-										<div class="col-sm-4">
-											<input type="text" name="customParams" id="customParams" value="" class="form-control col-md-3">
-											<input type="checkbox" name="usernameParam" id="usernameParam" value="yes">&nbsp;Include Username Parameter
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Full Name</label>
+										<div class="col-sm-6">
+											<input type="text" id="fullName" name="fullName" class="form-control col-md-7 col-xs-12">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Address 1</label>
+										<div class="col-sm-6">
+											<input type="text" id="address1" name="address1" class="form-control col-md-7 col-xs-12">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Address 2</label>
+										<div class="col-sm-6">
+											<input type="text" id="address2" name="address2" class="form-control col-md-7 col-xs-12">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Address 3</label>
+										<div class="col-sm-6">
+											<input type="text" id="address3" name="address3" class="form-control col-md-7 col-xs-12">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Zip</label>
+										<div class="col-sm-3">
+											<input type="text" id="zip" name="zip" class="form-control col-md-7 col-xs-12">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
+										<div class="col-sm-3">
+											<input type="email" id="email" name="email" class="form-control col-md-7 col-xs-12">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Phone</label>
+										<div class="col-sm-3">
+											<input type="phone" id="phone" name="phone" class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
-											<input  class="btn btn-success submit-menu" type="submit" name="submitButton" value="Submit">
+											 <input  class="btn btn-success submit-menu" type="submit" name="submitButton" value="Submit">
 										</div>
 									</div>
 
@@ -165,20 +191,23 @@
 	          url = $form.attr( 'action' );
 			var posting = $.post(url, 
 					{ 
-						name:$("#name").val(),
-		                action:$("#action").val(),
-		                parentId:$('#parentId :selected').val(),
-		                dashboard:$('#dashboard :selected').val(),
-		                menuOrder:$("#menuOrder").val(),
-		                contentType:$("#contentType").val(),
-		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
+						username:$("#username").val(),
+						password:$("#password").val(),
+		                role:$('#role :selected').val(),
+						fullName:$("#fullName").val(),
+						address1:$("#address1").val(),
+						address2:$("#address2").val(),
+						address3:$("#address3").val(),
+						email:$("#email").val(),
+						phone:$("#phone").val(),
+						zip:$("#zip").val(),
 		                actionsave:1
 					} );
 			
     		posting.done(function(data) {
-                $(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+    			$(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-                        "</button> "+new Date().toUTCString()+" - Menu <strong>"+$("#name").val()+"</strong> was successfully added to record"+
+                        "</button> "+new Date().toUTCString()+" - User <strong>"+$("#username").val()+"</strong> was successfully added to record"+
                       "</div>");
                 document.getElementById("formid").reset();
     		});
