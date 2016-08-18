@@ -149,6 +149,11 @@ public class PoTServlet extends HttpServlet {
 				request.getRequestDispatcher("/views/user/userList.jsp").forward(request, response);
 			}
 			
+			else if(action.equals("addTableauCredentials.cbi")) {
+				UserForm.addTableauCredentials(request, response, action);
+				request.getRequestDispatcher("/views/user/addTableauCredentials.jsp").forward(request, response);
+			}
+			
 			else if (action.equals("tableauMenuForm.cbi")){
 				MenuForm.execute(request, response, action);
 				request.getRequestDispatcher("/views/menu/tableauMenuForm.jsp").forward(request, response);

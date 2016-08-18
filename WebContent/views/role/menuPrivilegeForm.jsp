@@ -79,7 +79,7 @@
 			                      <div class="row">
 			                        <div class="col-xs-12 invoice-header">
 			                          <h1>
-			                                          <i class="fa fa-gears"></i> ${role.name}
+			                                          <i class="fa fa-user-secret"></i> ${role.name}
 			                                      </h1>
 			                        </div>
 			                        <!-- /.col -->

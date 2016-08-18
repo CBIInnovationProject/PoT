@@ -107,7 +107,7 @@
 											<option></option>
 											<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
 				                  			for (Role role: roles) { %>
-												<option data-icon="fa fa-gears" value="<%= role.getId() %>" ><%=role.getName() %></option>
+												<option data-icon="fa fa-user-secret" value="<%= role.getId() %>" ><%=role.getName() %></option>
 											<%} %>
 										</select>	
 										</div>

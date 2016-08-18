@@ -12,6 +12,7 @@ import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.RoleDAO;
 import com.cybertrend.pot.dao.UserDAO;
 import com.cybertrend.pot.entity.User;
+import com.cybertrend.pot.service.TableauService;
 
 public class UserForm extends DefaultAction{
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
@@ -36,8 +37,8 @@ public class UserForm extends DefaultAction{
 		else {
 			if (getCurrentRole(request).getId().equals("0")){
 				User user = new User();
-				user.setCreateBy(getCurrentUser(request).getUsername());
-				user.setUpdateBy(getCurrentUser(request).getUsername());
+				user.setCreateBy(getCurrentUser(request).getId());
+				user.setUpdateBy(getCurrentUser(request).getId());
 				user.setUsername(request.getParameter("username"));
 				user.setPassword(request.getParameter("password"));
 				user.setRoleId(request.getParameter("role"));
@@ -69,6 +70,18 @@ public class UserForm extends DefaultAction{
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
+			}
+		}
+	}
+
+	public static void addTableauCredentials(HttpServletRequest request, HttpServletResponse response, String action) throws ServletException, IOException, SQLException {
+		if(Interceptor.isLogin(request)==false){
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
+		else {
+			if (getCurrentRole(request).getId().equals("0")){
+				request.setAttribute("user", UserDAO.getUserById(request.getParameter("userId")));
+				request.setAttribute("siteName", TableauService.invokeGetSite(getCurrentCredentials(request), getCurrentCredentials(request).getSite().getId()).getContentUrl());
 			}
 		}
 	}

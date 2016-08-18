@@ -41,8 +41,8 @@ public class RoleForm extends DefaultAction{
 			if (getCurrentRole(request).getId().equals("0")){
 				getMenuAction(action, request);
 				Role role = new Role();
-				role.setCreateBy(getCurrentUser(request).getUsername());
-				role.setUpdateBy(getCurrentUser(request).getUsername());
+				role.setCreateBy(getCurrentUser(request).getId());
+				role.setUpdateBy(getCurrentUser(request).getId());
 				role.setName(request.getParameter("name"));
 				role.setDescription(request.getParameter("description"));
 				role.setSiteId(getCurrentCredentials(request).getSite().getId());

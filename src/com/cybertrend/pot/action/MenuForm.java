@@ -42,8 +42,8 @@ public class MenuForm extends DefaultAction {
 			getMenuAction(action, request);
 			Menu menu = new Menu();
 			Dashboard dashboard = DashboardDAO.getDashboardById(request.getParameter("dashboard"));
-			menu.setCreateBy(getCurrentUser(request).getUsername());
-			menu.setUpdateBy(getCurrentUser(request).getUsername());
+			menu.setCreateBy(getCurrentUser(request).getId());
+			menu.setUpdateBy(getCurrentUser(request).getId());
 			menu.setName(request.getParameter("name"));
 			menu.setAction(request.getParameter("name").trim().toLowerCase().replace(" ", "_")+".cbi");
 			menu.setParentId((request.getParameter("parentId")==null||request.getParameter("parentId").trim().equals(""))?null:request.getParameter("parentId"));

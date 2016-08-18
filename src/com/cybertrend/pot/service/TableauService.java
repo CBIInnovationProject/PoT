@@ -78,6 +78,7 @@ public class TableauService {
         QUERY_VIEWS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/views")),
         GET_USER(getApiUriBuilder().path("sites/{siteId}/users/{userId}")),
         GET_WORKBOOK(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}")),
+        GET_SITE(getApiUriBuilder().path("sites/{siteId}")),
         QUERY_PROJECTS(getApiUriBuilder().path("sites/{siteId}/projects")),
         QUERY_USERS_ON_SITE(getApiUriBuilder().path("sites/{siteId}/users")),
         UPDATE_USER(getApiUriBuilder().path("sites/{siteId}/users/{userId}")),
@@ -341,6 +342,15 @@ public class TableauService {
     	TsResponse response = get(url, credential.getToken());
     	if(response.getWorkbook() != null) {
     		return response.getWorkbook();
+    	}
+    	return null;
+    }
+    
+    public static SiteType invokeGetSite(TableauCredentialsType credential, String siteId){
+    	String url = Operation.GET_WORKBOOK.getUrl(siteId);
+    	TsResponse response = get(url, credential.getToken());
+    	if(response.getSite() != null) {
+    		return response.getSite();
     	}
     	return null;
     }

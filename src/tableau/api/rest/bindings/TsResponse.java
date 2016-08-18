@@ -65,7 +65,8 @@ import javax.xml.bind.annotation.XmlType;
     "permissions",
     "workbook",
     "view",
-    "user"
+    "user",
+    "site"
 })
 @XmlRootElement(name = "tsResponse")
 public class TsResponse {
@@ -85,6 +86,7 @@ public class TsResponse {
     protected WorkbookType workbook;
     protected ViewType view;
     protected UserType user;
+    protected SiteType site;
 
     /**
      * Gets the value of the pagination property.
@@ -387,4 +389,11 @@ public class TsResponse {
 		this.user = user;
 	}
 
+	public SiteType getSite() {
+		return site;
+	}
+
+	public void setSiteType(SiteType site) {
+		this.site = site;
+	}
 }

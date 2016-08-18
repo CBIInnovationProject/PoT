@@ -83,7 +83,7 @@
 							 	<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
 	                  			for (Role role: roles) { %>
 		                        <tr>
-		                          <td><%= role.getName()%></td>
+		                          <td><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></td>
 		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
 		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
 		                          <td><a href="menuPrivilegeForm.cbi?roleId=<%=role.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>&nbsp;Set Menu Privilege</a></td>
