@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cybertrend.pot.entity.Dashboard;
 import com.cybertrend.pot.entity.Menu;
 import com.cybertrend.pot.entity.Role;
 import com.cybertrend.pot.entity.RoleMenu;

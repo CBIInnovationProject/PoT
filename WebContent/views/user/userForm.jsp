@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.cybertrend.pot.entity.UserTableau"%>
 <%@page import="com.cybertrend.pot.entity.Role"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -100,6 +101,20 @@
 									</div>
 									
 									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">User Tableau<span class="required">*</span>
+										</label>
+										<div class="col-sm-3">
+										<select name="userTableau" id="userTableau" required class="selectpicker">
+											<option></option>
+											<% List<UserTableau> userTableaus=(List<UserTableau>) request.getAttribute("userTableaus"); 
+				                  			for (UserTableau userTableau: userTableaus) { %>
+												<option data-icon="fa fa-user-secret" value="<%= userTableau.getId() %>" ><%=userTableau.getUsername() %></option>
+											<%}%>
+										</select>	
+										</div>
+									</div>
+									
+									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Role <span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
@@ -194,6 +209,7 @@
 						username:$("#username").val(),
 						password:$("#password").val(),
 		                role:$('#role :selected').val(),
+		                userTableau:$('#userTableau :selected').val(),
 						fullName:$("#fullName").val(),
 						address1:$("#address1").val(),
 						address2:$("#address2").val(),

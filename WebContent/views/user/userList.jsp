@@ -76,7 +76,6 @@
 		                          <th>Username</th>
 		                          <th>Create Date</th>
 		                          <th>Last Updated</th>
-		                          <th>Action</th>
 		                        </tr>
 		                      </thead>
 		
@@ -87,7 +86,6 @@
 		                          <td><i class="fa fa-user"></i>&nbsp;&nbsp;<%= user.getUsername()%></td>
 		                          <td><%= user.getCreateDate()!=null?user.getCreateDate():""%></td>
 		                          <td><%= user.getUpdateDate()!=null?user.getUpdateDate():""%></td>
-		                          <td><a href="addTableauCredentials.cbi?userId=<%=user.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>&nbsp;&nbsp;Role</a></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>

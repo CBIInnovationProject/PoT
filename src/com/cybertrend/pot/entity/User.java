@@ -11,8 +11,9 @@ public class User extends BaseEntity{
 	private String phone;
 	private String email;
 	private String siteId;
-	private String roleId;
+	private Role role;
 	private String photo ;
+	private UserTableau userTableau ;
 	
 	public String getUsername() {
 		return username;
@@ -68,11 +69,11 @@ public class User extends BaseEntity{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getRoleId() {
-		return roleId;
+	public Role getRole() {
+		return role;
 	}
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	public String getSiteId() {
 		return siteId;
@@ -85,5 +86,11 @@ public class User extends BaseEntity{
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	public UserTableau getUserTableau(){
+		return userTableau;
+	}
+	public void setUserTableau(UserTableau userTableau) {
+		this.userTableau = userTableau;
 	}
 }

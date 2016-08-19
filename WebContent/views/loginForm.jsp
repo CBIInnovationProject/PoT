@@ -28,7 +28,7 @@
 		<div id="wrapper">
 			<div id="login" class=" form">
 				<section class="login_content">
-					<form action="login.cbi" method="post">
+					<form action="selectSite.cbi" method="post">
 						<h1><img alt=""
 				src="${pageContext.request.contextPath}/images/logo.png"></h1>
 						<div>

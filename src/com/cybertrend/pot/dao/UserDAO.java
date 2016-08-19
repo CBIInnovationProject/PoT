@@ -12,11 +12,12 @@ import com.cybertrend.pot.entity.User;
 import com.cybertrend.pot.service.DatabaseService;
 
 public class UserDAO {
-	public static User getUserByUsername(String username) throws SQLException {
+	public static User getUserByUsernameAndSite(String username, String siteId) throws SQLException {
 		User output = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from user where username = ?");
+		PreparedStatement prep = conn.prepareStatement("select id from user where username = ? AND siteId=?");
 		prep.setString(1, username);
+		List<User> users = new ArrayList<User>();
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			output = getUserById(result.getString("id"));
@@ -47,25 +48,29 @@ public class UserDAO {
 			output.setZip(result.getString("zip"));
 			output.setPhone(result.getString("phone"));
 			output.setEmail(result.getString("email"));
-			output.setRoleId(result.getString("roleId"));
+			output.setRole(RoleDAO.getRoleById(result.getString("roleId")));
+			output.setUserTableau(UserTableauDAO.getUserTableauById(result.getString("userTableauId")));
 		}
 		return output;
 	}
 	
-	public static boolean authenticateUser(String username, String password) throws SQLException {
+	public static boolean authenticateUser(String userId) throws SQLException {
 		boolean output = false;
-		User temp = getUserByUsername(username);
-		if (temp != null) {
-			if (temp.getPassword().equals(password)) {
-				output = true;
-			}
+		User user = null;
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("select id from user where id = ?");
+		prep.setString(1, userId);
+		ResultSet result = prep.executeQuery();
+		while (result.next()) {
+			user =  getUserById(result.getString("id"));
+			output = true;
 		}
 		return output;
 	}
 	
 	public static void save(User user) throws SQLException{
 		Connection conn = DatabaseService.getConnection();
-		String sql = "INSERT INTO user (id, createBy, createDate, updateBy, updateDate, username, password, fullName, address1, address2, address3, zip, phone, email, siteId, roleId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO user (id, createBy, createDate, updateBy, updateDate, username, password, fullName, address1, address2, address3, zip, phone, email, siteId, roleId, userTableauId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement prep = conn.prepareStatement(sql);
 		prep.setString(1, System.currentTimeMillis()+"");
 		prep.setString(2, user.getCreateBy());
@@ -83,7 +88,8 @@ public class UserDAO {
 		prep.setString(13, user.getPhone());
 		prep.setString(14, user.getEmail());
 		prep.setString(15, user.getSiteId());
-		prep.setString(16, user.getRoleId());
+		prep.setString(16, user.getRole().getId());
+		prep.setString(17, user.getUserTableau().getId());
 		prep.executeUpdate();
 	}
 	
@@ -92,6 +98,20 @@ public class UserDAO {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep = conn.prepareStatement("select id from user WHERE siteId=?");
 		prep.setString(1, siteId);
+		ResultSet result = prep.executeQuery();
+		while (result.next()) {
+			User output =  getUserById(result.getString("id"));
+			users.add(output);
+		}
+		return users;
+	}
+	
+	public static List<User> getUserByUsernameAndPassword(String username, String password) throws SQLException {
+		List<User> users = new ArrayList<>();
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("select id from user WHERE username=? AND password=?");
+		prep.setString(1, username);
+		prep.setString(2, password);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			User output =  getUserById(result.getString("id"));

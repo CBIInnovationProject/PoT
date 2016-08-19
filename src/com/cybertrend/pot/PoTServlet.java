@@ -89,6 +89,9 @@ public class PoTServlet extends HttpServlet {
 			else if (action.equals("login.cbi")) {
 				Login.execute(request, response);
 			}
+			else if (action.equals("selectSite.cbi")) {
+				Login.selectSite(request, response);
+			}
 			else if (action.equals("logout.cbi")) {
 				Logout.execute(request, response);
 			}
@@ -147,11 +150,6 @@ public class PoTServlet extends HttpServlet {
 			else if(action.equals("userList.cbi")) {
 				UserForm.list(request, response, action);
 				request.getRequestDispatcher("/views/user/userList.jsp").forward(request, response);
-			}
-			
-			else if(action.equals("addTableauCredentials.cbi")) {
-				UserForm.addTableauCredentials(request, response, action);
-				request.getRequestDispatcher("/views/user/addTableauCredentials.jsp").forward(request, response);
 			}
 			
 			else if (action.equals("tableauMenuForm.cbi")){
