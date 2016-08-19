@@ -27,7 +27,6 @@ public class UserTableauDAO {
 			
 			output.setUsername(result.getString("username"));
 			output.setPassword(result.getString("password"));
-			output.setSiteId(result.getString("siteId"));
 			output.setSiteContentUrl(result.getString("contentUrl"));
 			output.setCapacity(Integer.parseInt(result.getString("capacity")));
 			output.setInUse(Integer.parseInt(result.getString("inUse")));
@@ -35,11 +34,11 @@ public class UserTableauDAO {
 		return output;
 	}
 	
-	public static List<UserTableau> getList(String siteId) throws SQLException {
+	public static List<UserTableau> getList(String contentUrl) throws SQLException {
 		List<UserTableau> userTableaus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from usertableau WHERE siteId=?");
-		prep.setString(1, siteId);
+		PreparedStatement prep = conn.prepareStatement("select id from usertableau WHERE contentUrl=?");
+		prep.setString(1, contentUrl);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			UserTableau output = getUserTableauById(result.getString("id"));

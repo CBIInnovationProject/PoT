@@ -24,7 +24,7 @@ public class UserForm extends DefaultAction{
 			if (getCurrentRole(request).getId().equals("0")){
 				getMenuAction(action, request);
 				request.setAttribute("roles", RoleDAO.getList(getCurrentCredentials(request).getSite().getId()));
-				request.setAttribute("userTableaus", UserTableauDAO.getList(getCurrentCredentials(request).getSite().getId()));
+				request.setAttribute("userTableaus", UserTableauDAO.getList(getCurrentCredentials(request).getSite().getContentUrl()));
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);

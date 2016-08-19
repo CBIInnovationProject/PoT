@@ -110,11 +110,11 @@
 			                      <div id="contentTable" class="row">
 			                        <div class="col-xs-12 table">
 			                        <div class="ln_solid"></div>
-
+									<h3>Views</h3>
 			                          <table id="datatable" class="table table-striped table-bordered">
 				                      <thead>
 				                        <tr>
-				                          <th>Sheets</th>
+				                          <th>View Name</th>
 				                          <th>Action</th>
 				                        </tr>
 				                      </thead>

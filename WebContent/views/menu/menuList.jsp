@@ -69,17 +69,14 @@
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
-							<p class="text-muted font-13 m-b-30">
-		                      DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
-		                    </p>
 		                    <table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
 		                          <th>Name</th>
+		                          <th>Icon</th>
 		                          <th>Content Type</th>
 		                          <th>Create Date</th>
 		                          <th>Last Updated</th>
-		                          <th>Action</th>
 		                        </tr>
 		                      </thead>
 		
@@ -87,15 +84,12 @@
 							 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
 	                  			for (Menu menu: menus) { %>
 		                        <tr>
-		                          <td><a href="menuDetail.cbi?menuId=<%=menu.getId()%>"><i class="<%=menu.getIcon()%>"></i>&nbsp;&nbsp;<%=menu.getName()%></a></td>
+		                          <td><a href="menuDetail.cbi?menuId=<%=menu.getId()%>"><i class="fa fa-sitemap"></i>&nbsp;&nbsp;<%=menu.getName()%></a></td>
+		                          <td width="5%" align="center"><i class="<%=menu.getIcon()%>"></i></td>
 		                          <td><%= menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT"%></td>
 		                          <td><%= menu.getCreateDate()!=null?menu.getCreateDate():""%></td>
 		                          <td><%= menu.getUpdateDate()!=null?menu.getUpdateDate():""%></td>
-		                          <td>
-		                          	<%if(menu.getContentType()==null) {%><a href="parentMenuForm.cbi?menuId=<%=menu.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>&nbsp;Edit</a><%} 
-		                          	else if(menu.getContentType().equals("page")) {%><a href="pageMenuForm.cbi?menuId=<%=menu.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>&nbsp;Edit</a><%} 
-		                          	else if(menu.getContentType().equals("tableau")) {%><a href="tableauMenuForm.cbi?menuId=<%=menu.getId()%>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>&nbsp;Edit</a><%} %>
-		                          </td>
+		                          
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>

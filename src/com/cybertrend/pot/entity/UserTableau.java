@@ -3,7 +3,6 @@ package com.cybertrend.pot.entity;
 public class UserTableau extends BaseEntity{
 	private String username;
 	private String password;
-	private String siteId;
 	private String siteContentUrl;
 	private int inUse;
 	private int capacity;
@@ -25,12 +24,6 @@ public class UserTableau extends BaseEntity{
 	}
 	public void setSiteContentUrl(String siteContentUrl) {
 		this.siteContentUrl = siteContentUrl;
-	}
-	public String getSiteId() {
-		return siteId;
-	}
-	public void setSiteId(String siteId) {
-		this.siteId = siteId;
 	}
 	public int getInUse() {
 		return inUse;

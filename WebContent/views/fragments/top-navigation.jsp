@@ -8,7 +8,7 @@
 				<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 			</div>
 			<a href="${pageContext.request.contextPath}"><img alt=""
-				src="${pageContext.request.contextPath}/images/logo.png"></a>
+				width="170px" src="${pageContext.request.contextPath}/images/logo.png"></a>
 			<ul class="nav navbar-nav navbar-right">
 				<li class=""><a href="javascript:;"
 					class="user-profile dropdown-toggle" data-toggle="dropdown"

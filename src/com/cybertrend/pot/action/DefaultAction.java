@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.cybertrend.pot.Constants;
 import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.dao.RoleMenuDAO;
-import com.cybertrend.pot.dao.RoleUserDAO;
 import com.cybertrend.pot.entity.Menu;
 import com.cybertrend.pot.entity.Role;
 import com.cybertrend.pot.entity.User;
@@ -46,7 +45,7 @@ public class DefaultAction{
 	
 	public static void treeMenu(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws ServletException, IOException, SQLException {
 		String treeMenu = "";
-		List<Menu> menus = RoleMenuDAO.getMenuByRole(RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId()));
+		List<Menu> menus = RoleMenuDAO.getMenuByRole(getCurrentRole(request));
 		for(Menu menu : menus){
 			treeMenu = treeMenu + leafMenu(menu, request, response, servletContext);
 		}
@@ -94,6 +93,6 @@ public class DefaultAction{
 	}
 	
 	public static Role getCurrentRole(HttpServletRequest request) throws SQLException {
-		return RoleUserDAO.getRoleByUser(getCurrentUser(request), getCurrentCredentials(request).getSite().getId());
+		return getCurrentUser(request).getRole();
 	}
 }

@@ -134,12 +134,12 @@
 			event.preventDefault();
 			var $form = $( this ),
 	        url = $form.attr( 'action' );
-			var content_text = document.getElementById("content_text").value;
+			
 			var posting = $.post(url, 
 					{ 
 						name:$("#menu_name").val(),
 		                parentId:$('#parent_id :selected').val(),
-		                content:content_text,
+		                content:$(".nicEdit-main").text(),
 		                contentType:$("#contentType").val(),
 		                menuOrder:$("#menuOrder").val(),
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),

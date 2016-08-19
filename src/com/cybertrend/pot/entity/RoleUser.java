@@ -3,7 +3,6 @@ package com.cybertrend.pot.entity;
 public class RoleUser extends BaseEntity{
 	private User user ;
 	private Role role;
-	private String siteId;
 	
 	public User getUser() {
 		return user;
@@ -16,11 +15,5 @@ public class RoleUser extends BaseEntity{
 	}
 	public void setRole(Role role) {
 		this.role = role;
-	}
-	public String getSiteId() {
-		return siteId;
-	}
-	public void setSiteId(String siteId) {
-		this.siteId = siteId;
 	}
 }

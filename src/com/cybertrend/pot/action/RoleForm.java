@@ -72,7 +72,7 @@ public class RoleForm extends DefaultAction{
 		}
 	}
 	
-	public static void menuPrivilegeForm(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+	public static void detailRole(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}

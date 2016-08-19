@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.cybertrend.pot.action.DefaultAction;
 import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.dao.RoleMenuDAO;
-import com.cybertrend.pot.dao.RoleUserDAO;
 import com.cybertrend.pot.entity.Menu;
-import com.cybertrend.pot.entity.Role;
 
 public class Interceptor extends DefaultAction {
 	

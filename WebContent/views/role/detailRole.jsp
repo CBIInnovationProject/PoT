@@ -65,7 +65,7 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2><a href="roleList.cbi">Role List</a> <i class="fa fa-angle-double-right"></i> Set Menu Privilege</h2>
+	                    <h2><a href="roleList.cbi">Role List</a> <i class="fa fa-angle-double-right"></i> Detail Role</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                      </li>
@@ -84,14 +84,28 @@
 			                        </div>
 			                        <!-- /.col -->
 			                      </div>
-			                      
+			                      <!-- info row -->
+			                      <div class="row invoice-info">
+			                        <div class="col-sm-4 invoice-col">
+			                          <!-- Isi Content -->
+			                          <br><b>Description :</b> ${role.description}
+			                        </div>
+			                        <!-- /.col -->
+			                        <div class="col-sm-4 invoice-col">
+			                          <address>
+                                          <br><b>Create Date :</b> ${role.createDate} <b>by </b> ${role.createBy}
+                                          <br><b>Updated Date :</b> ${role.updateDate} <b>by </b> ${role.updateBy}
+                                      </address>
+			                        </div>
+			                        <!-- /.col -->
+			                      </div>
 			                      <!-- /.row -->
 									
 			                      <!-- Table row -->
 			                      <div id="contentTable" class="row">
 			                        <div class="col-xs-12 table">
 			                        <div class="ln_solid"></div>
-
+									<h3>Menu Privilege</h3>
 			                          <table id="datatable" class="table table-striped table-bordered">
 				                      <thead>
 				                        <tr>
@@ -105,7 +119,7 @@
 									 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
 			                  			for (Menu menu: menus) { %>
 				                        <tr>
-				                          <td><%=menu.getName() %></td>
+				                          <td><i class="fa fa-sitemap"></i>&nbsp;&nbsp;<%=menu.getName() %></td>
 				                          <td><%=menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT"%></td>
 				                          <td id="dashboardAction">
 				                          <%if(!RoleMenuDAO.isMenuExist(menu.getId(), ((Role)request.getAttribute("role")).getId())) {%>
@@ -145,7 +159,7 @@
        function addToRole(role,menu,event){
 		   $.ajax({
                type:'post',
-			   url:"menuPrivilegeForm.cbi",
+			   url:"detailRole.cbi",
                cache: false,
                contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
                data:{
@@ -168,7 +182,7 @@
            		
                });},
                success:function(data){
-        		   $('#contentTable').load("menuPrivilegeForm.cbi?roleId="+role+" #contentTable")
+        		   $('#contentTable').load("detailRole.cbi?roleId="+role+" #contentTable")
 
                },
                error: function(xhr, resp, text) {
@@ -180,7 +194,7 @@
        function removeFromRole(role,menu,remove,event){
 		   $.ajax({
                type:'post',
-			   url:"menuPrivilegeForm.cbi",
+			   url:"detailRole.cbi",
                cache: false,
                contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
                data:{
@@ -205,7 +219,7 @@
            		
                });},
                success:function(data){
-            	   $('#contentTable').load("menuPrivilegeForm.cbi?roleId="+role+" #contentTable")
+            	   $('#contentTable').load("detailRole.cbi?roleId="+role+" #contentTable")
                },
                error: function(xhr, resp, text) {
             	   alert(xhr.status);

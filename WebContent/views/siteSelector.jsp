@@ -38,9 +38,6 @@
 								<% List<User> users=(List<User>) request.getAttribute("users"); 
 								for (User user: users) { %>
 									<option data-icon="fa fa-bar-chart" value="<%= user.getId() %>"><%=(user.getUserTableau().getSiteContentUrl()==null||"".equalsIgnoreCase(user.getUserTableau().getSiteContentUrl().trim()))?"Default": user.getUserTableau().getSiteContentUrl()%></option>
-									<input type="hidden" name="username" value="<%= user.getUserTableau().getUsername() %>">
-									<input type="hidden" name="password" value="<%= user.getUserTableau().getPassword() %>">
-									<input type="hidden" name="siteContentUrl" value="<%= user.getUserTableau().getSiteContentUrl() %>">
 								<%}%>
 							</select></p>
 						</div>

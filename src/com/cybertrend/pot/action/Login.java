@@ -12,7 +12,6 @@ import com.cybertrend.pot.Constants;
 import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.UserDAO;
 import com.cybertrend.pot.entity.User;
-import com.cybertrend.pot.entity.UserTableau;
 import com.cybertrend.pot.util.PropertyLooker;
 
 import tableau.api.rest.bindings.TableauCredentialsType;
@@ -27,9 +26,9 @@ public class Login extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		} 
 		User user = UserDAO.getUserById(request.getParameter("userId"));
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String contentUrl = request.getParameter("siteContentUrl").trim()+"";
+		String username = user.getUserTableau().getUsername();
+		String password = user.getUserTableau().getPassword();
+		String contentUrl = (user.getUserTableau().getSiteContentUrl()+" ").trim();
 		TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
 		request.getSession().setAttribute(Constants.USER_GA, user);
 		request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
