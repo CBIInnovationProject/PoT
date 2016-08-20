@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>CPoT - Cybertrend Portal of Tableau</title>
-<%@ include file="../fragments/styles-collection.jsp" %>
+<%@ include file="fragments/styles-collection.jsp" %>
 </head>
 
 <body class="nav-md"> 
@@ -44,11 +44,11 @@
 						<!-- %@ include file="fragments/admin-menu.jsp" %-->
 					</div>
 					<!-- /sidebar menu -->
-					<%@ include file="../fragments/footer-buttons.jsp" %>
+					<%@ include file="fragments/footer-buttons.jsp" %>
 				</div>
 			</div>
 
-			<%@ include file="../fragments/top-navigation.jsp"%>
+			<%@ include file="fragments/top-navigation.jsp"%>
 
 			<!-- page content -->
 			<div class="right_col">
@@ -58,22 +58,17 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2>${menuName}</h2>
+	                    <h2>${menu.name}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
 	                      <li class="dropdown">
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-download"></i>&nbsp;&nbsp;Download</a>
-	                        <ul class="dropdown-menu" role="menu">
-	                          <li><a href="#" onclick="exportToPDF();"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;PDF</a>
-	                          </li>
-	                          <li><a href="#" onclick="exportToImage();"><i class="fa fa-image"></i>&nbsp;&nbsp;Image(.png)</a>
-	                          </li>
-	                        </ul>
+	                        
 	                      </li>
 	                    </ul>
 	                    <div class="clearfix"></div>
+	                    <font size="1.5px">${menu.createDate} <b>by</b> ${menu.createBy}</font>
 	                  </div>
 	                  <div class="x_content">
-						<div style='width:auto' id="vizContainer"></div>
+							${menu.content}
 	                  </div>
 	                </div>
 	              </div>
@@ -83,32 +78,10 @@
 			</div>
 			<!-- /page content -->
 
-		<%@ include file="../fragments/footer.jsp" %>
+		<%@ include file="fragments/footer.jsp" %>
 		</div>
 	</div>
 
-<%@ include file="../fragments/js-collection.jsp" %>
-<script type="text/javascript">
-var viz;
-    var containerDiv = document.getElementById("vizContainer"),
-        url = "${hostName}${siteRoot}/views/${url}?&",
-        options = {
-            hideTabs: true,
-        	hideToolbar: true
-        };
-
-    viz = new tableau.Viz(containerDiv, url, options); 
-    // Create a viz object and embed it in the container div.
-
-function exportToPDF() {
-    viz.showExportPDFDialog();
-}
-function exportToImage(){
-	viz.showExportImageDialog();
-}
-function exportWorkbook(){
-	viz.showDownloadWorkbookDialog();
-}
-</script>
+<%@ include file="fragments/js-collection.jsp" %>
 </body>
 </html>

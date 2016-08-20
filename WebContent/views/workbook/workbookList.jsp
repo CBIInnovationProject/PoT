@@ -16,7 +16,7 @@
 <body class="nav-md"> 
 	<div class="container body">
 		<div class="main_container">
-			<div class="col-md-3 left_col">
+			<div class="col-md-3 left_col menu_fixed">
 				<div class="left_col scroll-view">
 					
 					<div class="clearfix"></div>
@@ -62,8 +62,6 @@
 	                  <div class="x_title">
 	                    <h2>Workbook</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
-	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                      </li>
 	                    </ul>
 	                    <div class="clearfix"></div>
 	                  </div>

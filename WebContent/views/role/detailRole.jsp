@@ -21,7 +21,7 @@
 <body class="nav-md"> 
 	<div class="container body">
 		<div class="main_container">
-			<div class="col-md-3 left_col">
+			<div class="col-md-3 left_col menu_fixed">
 				<div class="left_col scroll-view">
 					
 					<div class="clearfix"></div>
@@ -105,7 +105,7 @@
 			                      <div id="contentTable" class="row">
 			                        <div class="col-xs-12 table">
 			                        <div class="ln_solid"></div>
-									<h3>Menu Privilege</h3>
+									<h3>Privilege Menu</h3>
 			                          <table id="datatable" class="table table-striped table-bordered">
 				                      <thead>
 				                        <tr>

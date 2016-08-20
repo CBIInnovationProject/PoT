@@ -138,8 +138,8 @@
 			var posting = $.post(url, 
 					{ 
 						name:$("#menu_name").val(),
-		                parentId:$('#parent_id :selected').val(),
-		                content:$(".nicEdit-main").text(),
+		                parentId:$('#parentId :selected').val(),
+		                content:$(".nicEdit-main").html(),
 		                contentType:$("#contentType").val(),
 		                menuOrder:$("#menuOrder").val(),
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),

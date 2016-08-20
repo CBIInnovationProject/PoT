@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.pot.dao.RoleDAO"%>
-<%@page import="com.cybertrend.pot.entity.User"%>
+<%@page import="tableau.api.rest.bindings.ProjectType"%>
+<%@page import="tableau.api.rest.bindings.WorkbookType"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 <head>
@@ -61,31 +61,30 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
-	                    <h2>${menu.name}</h2>
+	                    <h2>Project</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
-	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                      </li>
 	                    </ul>
 	                    <div class="clearfix"></div>
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
-		                    <table id="datatable" class="table table-striped table-bordered">
+							
+							<table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
-		                          <th>Username</th>
-		                          <th>Create Date</th>
-		                          <th>Last Updated</th>
+		                          <th>Name</th>
+		                          <th>Description</th>
+		                          <th>Owner</th>
 		                        </tr>
 		                      </thead>
 		
 		                      <tbody>
-							 	<% List<User> users=(List<User>) request.getAttribute("users"); 
-	                  			for (User user: users) { %>
+							 	<% List<ProjectType> projects=(List<ProjectType>) request.getAttribute("projects"); 
+	                  			for (ProjectType project: projects) { %>
 		                        <tr>
-		                          <td><i class="fa fa-user"></i>&nbsp;&nbsp;<%= user.getUsername()%></td>
-		                          <td><%= user.getCreateDate()!=null?user.getCreateDate():""%></td>
-		                          <td><%= user.getUpdateDate()!=null?user.getUpdateDate():""%></td>
+		                          <td><a href="project.cbi?projectId=<%=project.getId()%>"><li class="fa fa-bar-chart"></li>&nbsp;&nbsp;<%= project.getName()%></a></td>
+		                          <td><%= project.getDescription()%></td>
+		                          <td><%= project.getOwner()==null?"":project.getOwner().getName()%></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>
@@ -170,6 +169,27 @@
 
         TableManageButtons.init();
       });
-    </script>
+
+      $(document).ready(function(){
+		$("#formid").submit(function(event){
+			event.preventDefault();
+			var $form = $( this ),
+	          url = $form.attr( 'action' );
+			var posting = $.post(url, 
+					{ 
+						name:$("#workbookFile").val(),
+		                actionsave:1
+					} );
+			
+    		posting.done(function(data) {
+    			$(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
+                        "</button> "+new Date().toUTCString()+" - Role <strong>"+$("#name").val()+"</strong> was successfully added to record"+
+                      "</div>");
+                document.getElementById("formid").reset();
+    		});
+		});
+	});
+	</script>
 </body>
 </html>

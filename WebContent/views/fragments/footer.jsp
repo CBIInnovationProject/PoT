@@ -1,8 +1,7 @@
 <!-- footer content -->
 <footer>
 	<div class="pull-right">
-		Gentelella - Bootstrap Admin Template by <a
-			href="https://colorlib.com">Colorlib</a>
+		Copyright © 2016 PT Cybertrend Intrabuana
 	</div>
 	<div class="clearfix"></div>
 </footer>

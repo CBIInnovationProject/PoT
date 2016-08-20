@@ -15,9 +15,11 @@ import com.cybertrend.pot.action.LandingPage;
 import com.cybertrend.pot.action.Login;
 import com.cybertrend.pot.action.Logout;
 import com.cybertrend.pot.action.MenuForm;
+import com.cybertrend.pot.action.ProjectForm;
 import com.cybertrend.pot.action.RoleForm;
 import com.cybertrend.pot.action.UserForm;
 import com.cybertrend.pot.action.ViewDashboard;
+import com.cybertrend.pot.action.ViewStaticPage;
 import com.cybertrend.pot.action.WorkbookForm;
 import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.entity.Menu;
@@ -72,11 +74,19 @@ public class PoTServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			
-			List<Menu> menus = MenuDAO.getMenusByContentType(Constants.CONTENT_TYPE_TABLEAU);
+			List<Menu> menuTableaus = MenuDAO.getMenusByContentType(Constants.CONTENT_TYPE_TABLEAU);
 			
-			for(Menu menu : menus){
+			for(Menu menu : menuTableaus){
 				if (action.equals(menu.getAction())){
 					ViewDashboard.execute(request, response, menu.getAction());
+				}
+			}
+			
+			List<Menu> menuPages = MenuDAO.getMenusByContentType(Constants.CONTENT_TYPE_PAGE);
+			
+			for(Menu menu : menuPages){
+				if (action.equals(menu.getAction())){
+					ViewStaticPage.execute(request, response, menu.getAction());
 				}
 			}
 			
@@ -159,6 +169,10 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("workbook.cbi")) {
 				WorkbookForm.execute(request, response, action);
+			} 
+			
+			else if (action.equals("project.cbi")) {
+				ProjectForm.execute(request, response, action);
 			} 
 			
 			else if (action.equals("settings.cbi")) {

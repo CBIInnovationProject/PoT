@@ -64,17 +64,6 @@
 							<div class="x_title">
 								<h2>${menu.name}</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
@@ -95,7 +84,7 @@
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
 											<select name="parentId" id="parentId" class="selectpicker">
-												<option></option>
+												<option id="nullselect"></option>
 												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
 												for(Menu parent:parents){%>
 													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" ><%=parent.getName() %></option>
@@ -138,7 +127,7 @@
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
-											<input  class="btn btn-success submit-menu" type="submit" name="submitButton" value="Submit">
+											<input id="buttonSubmit" class="btn btn-success submit-menu" type="submit" name="submitButton" value="Submit">
 										</div>
 									</div>
 
@@ -180,6 +169,7 @@
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - Menu <strong>"+$("#name").val()+"</strong> was successfully added to record"+
                       "</div>");
+                $("select#parentId").find("option#nullselect").attr("selected", true);
                 document.getElementById("formid").reset();
     		});
 		});

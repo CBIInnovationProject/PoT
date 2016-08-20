@@ -17,7 +17,7 @@
 <body class="nav-md"> 
 	<div class="container body">
 		<div class="main_container">
-			<div class="col-md-3 left_col">
+			<div class="col-md-3 left_col menu_fixed">
 				<div class="left_col scroll-view">
 					
 					<div class="clearfix"></div>
@@ -63,8 +63,6 @@
 	                  <div class="x_title">
 	                    <h2><a href="workbook.cbi">Workbook</a> <i class="fa fa-angle-double-right"></i> ${workbook.workbookType.name}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
-	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                      </li>
 	                    </ul>
 	                    <div class="clearfix"></div>
 	                  </div>
@@ -126,9 +124,9 @@
 				                          <td><a href=workbook.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "") %> ><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%= view.getName()%></a></td>
 				                          <td id="dashboardAction">
 				                          <%if(DashboardDAO.isDasboardExist(view.getId())==false) {%>
-				                          	<a class="btn btn-success btn-xs" onclick="addToMenu('${workbook.workbookType.id}','<%= view.getId()%>','<%= view.getContentUrl().replace("sheets/", "")%>',this)"><i class="fa fa-plus"></i></a>
+				                          	<a data-toggle="tooltip" data-placement="top" title="Add to Portal" class="btn btn-success btn-xs" onclick="addToMenu('${workbook.workbookType.id}','<%= view.getId()%>','<%= view.getContentUrl().replace("sheets/", "")%>',this)"><i class="fa fa-plus"></i></a>
 				                          <% } else {%>
-				                          	<a class="btn btn-danger btn-xs" onclick="removeFromMenu('${workbook.workbookType.id}','<%= view.getId()%>','yes',this)"><i class="fa fa-minus"></i></a>
+				                          	<a data-toggle="tooltip" data-placement="top" title="Remove from Portal" class="btn btn-danger btn-xs" onclick="removeFromMenu('${workbook.workbookType.id}','<%= view.getId()%>','yes',this)"><i class="fa fa-minus"></i></a>
 				                          <% } %>	
 				                          </td>
 				                        </tr>

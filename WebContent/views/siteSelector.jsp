@@ -33,19 +33,20 @@
 					<form action="login.cbi" method="post">
 						<h1><img alt=""
 				src="${pageContext.request.contextPath}/images/logo.png"></h1>
-						<div> <p><b>Select Site : 
+						<div> <h3>Hi, ${username}</b></h3>Select Site : 
 							<select name="userId" id="userId" class="selectpicker" required>
 								<% List<User> users=(List<User>) request.getAttribute("users"); 
 								for (User user: users) { %>
 									<option data-icon="fa fa-bar-chart" value="<%= user.getId() %>"><%=(user.getUserTableau().getSiteContentUrl()==null||"".equalsIgnoreCase(user.getUserTableau().getSiteContentUrl().trim()))?"Default": user.getUserTableau().getSiteContentUrl()%></option>
 								<%}%>
-							</select></p>
+							</select>
 						</div>
 						<div class="clearfix"></div>
 						<div class="separator">
 							<div class="clearfix"></div>
 							<div>
-								<input class="btn btn-default submit" name="submit" type="submit" value="Go To Site"/> 
+								<input class="btn btn-default submit" name="submit" type="submit" value="Go To Site"/> <h3><a href="loginForm.cbi">Back</a></h3>
+								
 							</div>
 							<br />
 						</div>

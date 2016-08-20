@@ -30,7 +30,7 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			request.setAttribute("workbooks", TableauService.invokeQueryWorkbooks(getCurrentCredentials(request), Integer.parseInt(PropertyLooker.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
+			request.setAttribute("workbooks", getTableauService().invokeQueryWorkbooks(getCurrentCredentials(request), Integer.parseInt(PropertyLooker.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 			request.setAttribute("credential", getCurrentCredentials(request));
 			if(request.getParameter("workbookId")!=null){
 				if(request.getParameter("url")!=null){

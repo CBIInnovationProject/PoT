@@ -40,6 +40,11 @@ public class Login extends DefaultAction{
 		String password = request.getParameter("password");
 		List<User> users = UserDAO.getUserByUsernameAndPassword(username, password);
 		request.setAttribute("users", users );
-		request.getRequestDispatcher("/views/siteSelector.jsp").forward(request, response);
+		request.setAttribute("username", username);
+		if(users.size()>0) {
+			request.getRequestDispatcher("/views/siteSelector.jsp").forward(request, response);
+		} else {
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
 	}
 }
