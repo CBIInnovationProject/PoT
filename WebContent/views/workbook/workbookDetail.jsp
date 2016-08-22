@@ -113,7 +113,7 @@
 				                      <thead>
 				                        <tr>
 				                          <th>View Name</th>
-				                          <th>Action</th>
+				                          <th>Register as Menu</th>
 				                        </tr>
 				                      </thead>
 				
@@ -124,9 +124,9 @@
 				                          <td><a href=workbook.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "") %> ><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%= view.getName()%></a></td>
 				                          <td id="dashboardAction">
 				                          <%if(DashboardDAO.isDasboardExist(view.getId())==false) {%>
-				                          	<a data-toggle="tooltip" data-placement="top" title="Add to Portal" class="btn btn-success btn-xs" onclick="addToMenu('${workbook.workbookType.id}','<%= view.getId()%>','<%= view.getContentUrl().replace("sheets/", "")%>',this)"><i class="fa fa-plus"></i></a>
+				                          	<a data-toggle="tooltip" data-placement="top" title="Register" class="btn btn-success btn-xs" onclick="addToMenu('${workbook.workbookType.id}','<%= view.getId()%>','<%= view.getContentUrl().replace("sheets/", "")%>',this)"><i class="fa fa-plus"></i></a>
 				                          <% } else {%>
-				                          	<a data-toggle="tooltip" data-placement="top" title="Remove from Portal" class="btn btn-danger btn-xs" onclick="removeFromMenu('${workbook.workbookType.id}','<%= view.getId()%>','yes',this)"><i class="fa fa-minus"></i></a>
+				                          	<a data-toggle="tooltip" data-placement="top" title="Unregister" class="btn btn-danger btn-xs" onclick="removeFromMenu('${workbook.workbookType.id}','<%= view.getId()%>','yes',this)"><i class="fa fa-minus"></i></a>
 				                          <% } %>	
 				                          </td>
 				                        </tr>

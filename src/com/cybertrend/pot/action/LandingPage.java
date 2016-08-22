@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
+import com.cybertrend.pot.dao.ThemesDAO;
 
 public class LandingPage extends DefaultAction{
 	public static void execute(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext)throws ServletException, IOException, SQLException {
@@ -16,12 +17,11 @@ public class LandingPage extends DefaultAction{
 			servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			treeMenu(request, response, servletContext);
-			
+			servletContext.setAttribute("treeMenu", treeMenu(request));
 			servletContext.setAttribute("user", getCurrentUser(request));
 			servletContext.setAttribute("hostName", getHostName());
 			servletContext.setAttribute("siteRoot", getCurrentCredentials(request).getSite().getContentUrl().trim().equals("")?"":("/t/"+getCurrentCredentials(request).getSite().getContentUrl().trim()));
-			servletContext.getRequestDispatcher("/views/landingPage.jsp").forward(request, response);
+			servletContext.getRequestDispatcher(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getPath()+"/landingPage.jsp").forward(request, response);
 		}
 	}
 }

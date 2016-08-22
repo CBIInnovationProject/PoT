@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Constants;
 import com.cybertrend.pot.dao.MenuDAO;
 import com.cybertrend.pot.dao.RoleMenuDAO;
+import com.cybertrend.pot.dao.ThemesDAO;
 import com.cybertrend.pot.entity.Menu;
 import com.cybertrend.pot.entity.Role;
 import com.cybertrend.pot.entity.User;
@@ -43,13 +42,13 @@ public class DefaultAction{
 		return PropertyLooker.get("tableau.server.host");
 	}
 	
-	public static void treeMenu(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws ServletException, IOException, SQLException {
+	public static String treeMenu(HttpServletRequest request) throws ServletException, IOException, SQLException {
 		String treeMenu = "";
 		List<Menu> menus = RoleMenuDAO.getMenuByRole(getCurrentRole(request));
 		for(Menu menu : menus){
-			treeMenu = treeMenu + leafMenu(menu, request, response, servletContext);
+			treeMenu = treeMenu + leafMenu(menu, request);
 		}
-		servletContext.setAttribute("treeMenu", treeMenu);
+		return treeMenu;
 	}
 	
 	private static boolean authMenu(Menu menu, HttpServletRequest request) {
@@ -68,19 +67,19 @@ public class DefaultAction{
 		return authorized;
 	}
 	
-	private static String leafMenu(Menu menu, HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) throws SQLException{
+	private static String leafMenu(Menu menu, HttpServletRequest request) throws SQLException{
 		String treeMenu = "";
 		List<Menu> menus = MenuDAO.getMenusByParentId(menu.getId());
 		if(menus.size()>0){
-			treeMenu = treeMenu+"<li><a><i class=\""+menu.getIcon()+"\"></i>"+menu.getName()+"<span class=\"fa fa-chevron-down\"></span></a><ul class=\"nav child_menu\">";
+			treeMenu = treeMenu+String.format(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getUl(), menu.getIcon(),menu.getName());
 			for(Menu menu2: menus){
 				if(authMenu(menu2, request)){
-					treeMenu = treeMenu + leafMenu(menu2, request, response, servletContext);
+					treeMenu = treeMenu + leafMenu(menu2, request);
 				}
 			} treeMenu = treeMenu + "</ul></li>";
 		} else {
 			if(authMenu(menu, request)){
-				treeMenu = treeMenu+"<li><a href=\""+menu.getAction()+"\"><i class=\""+menu.getIcon()+"\"></i>"+menu.getName()+"</a></li>";
+				treeMenu = treeMenu+String.format(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getLi(), menu.getAction(), menu.getIcon(),menu.getName());
 			}
 		}
 		return treeMenu;

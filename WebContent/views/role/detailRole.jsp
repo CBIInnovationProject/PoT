@@ -111,7 +111,7 @@
 				                        <tr>
 				                          <th>Menu Name</th>
 				                          <th>Content Type</th>
-				                          <th>Action</th>
+				                          <th>Set Privilege Menu</th>
 				                        </tr>
 				                      </thead>
 				

@@ -11,7 +11,7 @@ import com.cybertrend.pot.entity.Dashboard;
 import com.cybertrend.pot.service.DatabaseService;
 
 public class DashboardDAO {
-	public static void add (Dashboard dashboard) throws SQLException {
+	public static void add(Dashboard dashboard) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep = conn.prepareStatement("INSERT INTO dashboard(id, createDate, createBy, url, workbookId, siteId) VALUES (?,?,?,?,?,?)");
 		prep.setString(1, dashboard.getId());

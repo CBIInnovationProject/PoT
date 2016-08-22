@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
+import com.cybertrend.pot.dao.ThemesDAO;
 import com.cybertrend.pot.entity.Menu;
 
 public class ViewDashboard extends DefaultAction{
@@ -19,7 +20,7 @@ public class ViewDashboard extends DefaultAction{
 				Menu menu = getMenuAction(action, request);
 				request.setAttribute("menuName", menu.getName());
 				request.setAttribute("url", menu.getContent());
-				request.getRequestDispatcher("/views/workbook/viewDashboard.jsp").forward(request, response);
+				request.getRequestDispatcher(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getPath()+"/workbook/viewDashboard.jsp").forward(request, response);
 			} 
 		} 
 	}

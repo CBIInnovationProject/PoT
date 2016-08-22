@@ -50,6 +50,7 @@ public class UserDAO {
 			output.setEmail(result.getString("email"));
 			output.setRole(RoleDAO.getRoleById(result.getString("roleId")));
 			output.setUserTableau(UserTableauDAO.getUserTableauById(result.getString("userTableauId")));
+			output.setThemes(ThemesDAO.getThemesById(result.getString("themes")));
 		}
 		return output;
 	}
@@ -70,7 +71,7 @@ public class UserDAO {
 	
 	public static void save(User user) throws SQLException{
 		Connection conn = DatabaseService.getConnection();
-		String sql = "INSERT INTO user (id, createBy, createDate, updateBy, updateDate, username, password, fullName, address1, address2, address3, zip, phone, email, siteId, roleId, userTableauId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO user (id, createBy, createDate, updateBy, updateDate, username, password, fullName, address1, address2, address3, zip, phone, email, siteId, roleId, userTableauId, themes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement prep = conn.prepareStatement(sql);
 		prep.setString(1, System.currentTimeMillis()+"");
 		prep.setString(2, user.getCreateBy());
@@ -90,6 +91,7 @@ public class UserDAO {
 		prep.setString(15, user.getSiteId());
 		prep.setString(16, user.getRole().getId());
 		prep.setString(17, user.getUserTableau().getId());
+		prep.setString(18, user.getThemes().getId());
 		prep.executeUpdate();
 	}
 	

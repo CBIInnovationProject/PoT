@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
+import com.cybertrend.pot.dao.ThemesDAO;
 import com.cybertrend.pot.entity.Menu;
 
 public class ViewStaticPage extends DefaultAction {
@@ -18,7 +19,7 @@ public class ViewStaticPage extends DefaultAction {
 			if (Interceptor.isAuthorized(action, request)){
 				Menu menu = getMenuAction(action, request);
 				request.setAttribute("menu", menu);
-				request.getRequestDispatcher("/views/viewPage.jsp").forward(request, response);
+				request.getRequestDispatcher(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getPath()+"/viewPage.jsp").forward(request, response);
 			} 
 		} 
 	}

@@ -14,6 +14,7 @@ public class User extends BaseEntity{
 	private Role role;
 	private String photo ;
 	private UserTableau userTableau ;
+	private Themes themes; 
 	
 	public String getUsername() {
 		return username;
@@ -92,5 +93,11 @@ public class User extends BaseEntity{
 	}
 	public void setUserTableau(UserTableau userTableau) {
 		this.userTableau = userTableau;
+	}
+	public Themes getThemes() {
+		return themes;
+	}
+	public void setThemes(Themes themes) {
+		this.themes = themes;
 	}
 }
