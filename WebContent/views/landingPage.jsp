@@ -59,21 +59,6 @@
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
 	                    <h2>${menu.name}</h2>
-	                    <ul class="nav navbar-right panel_toolbox">
-	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                      </li>
-	                      <li class="dropdown">
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-download"></i>&nbsp;&nbsp;Download</a>
-	                        <ul class="dropdown-menu" role="menu">
-	                          <li><a href="#" onclick="exportToPDF();"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;PDF</a>
-	                          </li>
-	                          <li><a href="#" onclick="exportToImage();"><i class="fa fa-image"></i>&nbsp;&nbsp;Image(.png)</a>
-	                          </li>
-	                          <li><a href="#" onclick="exportWorkbook();"><i class="fa fa-book"></i>&nbsp;&nbsp;Workbook</a>
-	                          </li>
-	                        </ul>
-	                      </li>
-	                    </ul>
 	                    <div class="clearfix"></div>
 	                  </div>
 	                  <div class="x_content">

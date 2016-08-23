@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.cybertrend.pot.entity.Menu;
 import com.cybertrend.pot.service.DatabaseService;
@@ -94,7 +95,7 @@ public class MenuDAO {
 	public static void save(Menu menu) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep = conn.prepareStatement("INSERT INTO menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		prep.setString(1, System.currentTimeMillis()+"");
+		prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextLong());
 		prep.setString(2, menu.getCreateBy());
 		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 		prep.setString(4, menu.getUpdateBy());

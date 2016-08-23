@@ -545,13 +545,7 @@ body {
 						<li><a href="#">Account Settings <span
 								class="glyphicon glyphicon-cog pull-right"></span></a></li>
 						<li class="divider"></li>
-						<li><a href="#">User stats <span
-								class="glyphicon glyphicon-stats pull-right"></span></a></li>
-						<li class="divider"></li>
-						<li><a href="#">Messages <span class="badge pull-right">
-									42 </span></a></li>
-						<li class="divider"></li>
-						<li><a href="#">Favourites Snippets <span
+						<li><a href="#" data-toggle="modal" data-target="#apprearance_mod">Appearance<span
 								class="glyphicon glyphicon-heart pull-right"></span></a></li>
 						<li class="divider"></li>
 						<li><a href="logout.cbi">Sign Out <span
@@ -583,13 +577,6 @@ body {
 				<div class="modal-body">
 					<form id="login-nav" class="form" role="form">
 						<div class="form-group">
-							<div id="logo" class="input-group">
-								<label for="logo_url">Logo Image</label> <input type="file"
-									class="filestyle form-control" accept="image/*"
-									data-buttonName="btn-primary">
-							</div>
-						</div>
-						<div class="form-group">
 							<label for="cp2">Body Color</label>
 							<div id="cp2" class="input-group colorpicker-component">
 								<input type="text" value="#00AABB" class="form-control" disabled />
@@ -613,13 +600,6 @@ body {
 						<div class="form-group">
 							<label for="cp7">Navigation Hover Color</label>
 							<div id="cp7" class="input-group colorpicker-component">
-								<input type="text" value="#00AABB" class="form-control" disabled />
-								<span class="input-group-addon"><i></i></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="cp5">Header Background Color</label>
-							<div id="cp5" class="input-group colorpicker-component">
 								<input type="text" value="#00AABB" class="form-control" disabled />
 								<span class="input-group-addon"><i></i></span>
 							</div>

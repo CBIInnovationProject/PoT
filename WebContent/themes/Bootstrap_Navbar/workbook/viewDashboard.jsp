@@ -10,12 +10,22 @@
 <title>CPoT - Cybertrend Portal of Tableau</title>
 <script type='text/javascript' src='${hostName}/javascripts/api/tableau-2.js'></script>
 </head>
-
+<link
+	href="${pageContext.request.contextPath}/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/custom.min.css"
+	rel="stylesheet">
 <body class="nav-md"> 
+	<div>
+		<div>
+			<div>
 
 
 			<!-- page content -->
-			<div class="right_col">
+			<div>
 			
 				<div class="row">
 	
@@ -46,6 +56,8 @@
 			
 			</div>
 			<!-- /page content -->
+			</div>
+			</div>
 
 <script type="text/javascript">
 var viz;
