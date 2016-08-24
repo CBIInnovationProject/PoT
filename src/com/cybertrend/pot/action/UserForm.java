@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cybertrend.pot.Interceptor;
 import com.cybertrend.pot.dao.RoleDAO;
+import com.cybertrend.pot.dao.ThemesDAO;
 import com.cybertrend.pot.dao.UserDAO;
 import com.cybertrend.pot.dao.UserTableauDAO;
 import com.cybertrend.pot.entity.User;
@@ -53,6 +54,7 @@ public class UserForm extends DefaultAction{
 				user.setEmail(request.getParameter("email"));
 				user.setPhone(request.getParameter("phone"));
 				user.setSiteId(getCurrentCredentials(request).getSite().getId());
+				user.setThemes(ThemesDAO.getThemesById("1"));
 				UserDAO.save(user);
 			}
 			else {

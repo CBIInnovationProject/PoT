@@ -558,7 +558,7 @@ body {
 	</nav>
 
 	<div style="border-style: none; width: 100%; height: 90%;">
-		<iframe name="mainframe" src="" frameborder="0" border="0"
+		<iframe name="mainframe" src="${pageContext.request.contextPath}/themes/Bootstrap_Navbar/welcome.html" frameborder="0" border="0"
 			cellspacing="0"
 			style="border-style: none; width: 100%; height: 100%;"></iframe>
 

@@ -63,6 +63,34 @@
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<H1>
+								<p align="center">
+									<b><font face="Arial, Helvetica, sans-serif">Welcome
+											to CPoT</font></b>
+								</p>
+							</H1>
+							<H2>
+								<p align="center">
+									<b><font color="red" face="Arial, Helvetica, sans-serif">Customizable Portal of Tableau</font></b>
+								</p>
+							</H2>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">&nbsp;</p>
+							<p align="center">
+								<b><font face="Arial, Helvetica, sans-serif" size="1">
+								Copyright &copy; 2014-2015, <b>CPoT Team</font></b>
+							</p>
 	                  </div>
 	                </div>
 	              </div>
