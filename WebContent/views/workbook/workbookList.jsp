@@ -11,7 +11,6 @@
 
 <title>CPoT - Cybertrend Portal of Tableau</title>
 <%@ include file="../fragments/styles-collection.jsp" %>
-<%@ include file="../fragments/js-collection.jsp" %>
 </head>
 
 <body class="nav-md"> 
@@ -73,7 +72,6 @@
 		                      <thead>
 		                        <tr>
 		                          <th>Name</th>
-		                          <th>Project</th>
 		                          <th>Create Date</th>
 		                          <th>Last Updated</th>
 		                        </tr>
@@ -83,8 +81,7 @@
 							 	<% List<WorkbookType> workbooks=(List<WorkbookType>) request.getAttribute("workbooks"); 
 	                  			for (WorkbookType workbook: workbooks) { %>
 		                        <tr>
-		                          <td><a href="#" onclick="popup_workbook('workbook.cbi?workbookId=<%=workbook.getId()%>')"><li class="fa fa-bar-chart"></li>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
-		                          <td><%= workbook.getProject().getName()%></td>
+		                          <td><a href="#" onclick="popup_workbook('workbook.cbi?workbookId=<%=workbook.getId()%>')"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
 		                          <td><%= workbook.getCreatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
 		                          <td><%= workbook.getUpdatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
 		                        </tr>
@@ -99,64 +96,21 @@
 			
 			</div>
 			<!-- /page content -->
+		
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true" id="myModal" >
+			  <div class="modal-dialog modal-lg">
+			    <div id="modal-content" ></div>
+			  </div>
+			</div>
 
 		<%@ include file="../fragments/footer.jsp" %>
 		</div>
-		
-	</div>
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true" id="myModal" >
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content" >
-	
-    </div>
-  </div>
-</div>
 
 
+<%@ include file="../fragments/js-collection.jsp" %>
     <!-- Datatables -->
     <script>
-	function popup_workbook(url){
-		
-		$('#myModal').on('show.bs.modal', function () {
-			$('.modal-content').empty();
-  			$('.modal-content').load(url);
-		})
-		$('#myModal').modal("show");
-		
-		
-	}
       $(document).ready(function() {
-
-          var handleDataTableButtons = function() {
-            if ($("#datatable-buttons").length) {
-              $("#datatable-buttons").DataTable({
-                dom: "Bfrtip",
-                buttons: [
-                  {
-                    extend: "copy",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "csv",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "excel",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "pdfHtml5",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "print",
-                    className: "btn-sm"
-                  },
-                ],
-                responsive: true
-              });
-            }
-          };
           
         TableManageButtons = function() {
           "use strict";
@@ -189,26 +143,16 @@
         TableManageButtons.init();
       });
 
-      $(document).ready(function(){
-		$("#formid").submit(function(event){
-			event.preventDefault();
-			var $form = $( this ),
-	          url = $form.attr( 'action' );
-			var posting = $.post(url, 
-					{ 
-						name:$("#workbookFile").val(),
-		                actionsave:1
-					} );
-			
-    		posting.done(function(data) {
-    			$(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
-                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-                        "</button> "+new Date().toUTCString()+" - Workbook <strong>"+$("#name").val()+"</strong> was successfully added to record"+
-                      "</div>");
-                document.getElementById("formid").reset();
-    		});
-		});
-	});
+  	function popup_workbook(url){
+
+  		$('#myModal').on('show.bs.modal', function () {
+  			$('#modal-content').html("<div style='text-align: center;background: #ffffff;background-position: center center;background-repeat: no-repeat;background-image: url(../images/loading.gif);'><p>&nbsp;</p><br/><br/><br/><p>&nbsp;&nbsp;Loading ...</p><p>&nbsp;</p></div>");
+    			$('#modal-content').load(url);
+  		})
+  		$('#myModal').modal("show");
+  		
+  		
+  	}
 	</script>
 </body>
 </html>

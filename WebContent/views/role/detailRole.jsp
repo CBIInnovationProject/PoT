@@ -19,50 +19,13 @@
 </head>
 
 <body class="nav-md"> 
-	<div class="container body">
-		<div class="main_container">
-			<div class="col-md-3 left_col menu_fixed">
-				<div class="left_col scroll-view">
-					
-					<div class="clearfix"></div>
-					<!-- menu profile quick info -->
-					<div class="profile">
-						<div class="profile_pic">
-							<img src="${pageContext.request.contextPath}/images/user.png"
-								alt="..." class="img-circle profile_img">
-						</div>
-						<div class="profile_info">
-							<span>Welcome,</span>
-							<h2>${user.fullName}&nbsp;&nbsp;</h2>
-						</div>
-					</div>
-					<!-- /menu profile quick info -->
-
-					<br />
-
-					<!-- sidebar menu -->
-					<div id="sidebar-menu"
-						class="main_menu_side hidden-print main_menu">
-						<div class="menu_section">
-							<h3>&nbsp;</h3>
-							<ul class="nav side-menu">${treeMenu}
-							</ul>
-						</div>
-						<!-- %@ include file="fragments/admin-menu.jsp" %-->
-					</div>
-					<!-- /sidebar menu -->
-					<%@ include file="../fragments/footer-buttons.jsp" %>
-				</div>
-			</div>
-
-			<%@ include file="../fragments/top-navigation.jsp"%>
 
 			<!-- page content -->
-			<div class="right_col">
+			<div class="main_container">
 			
-				<div class="row">
+				<div>
 	
-	              <div class="col-md-12 col-sm-12 col-xs-12">
+	              <div>
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
 	                    <h2><a href="roleList.cbi">Role List</a> <i class="fa fa-angle-double-right"></i> Detail Role</h2>
@@ -145,12 +108,7 @@
 	            </div>
 	          </div>
 			
-			</div>
 			<!-- /page content -->
-
-		<%@ include file="../fragments/footer.jsp" %>
-		</div>
-	</div>
 
 <%@ include file="../fragments/js-collection.jsp" %>
 <!-- Datatables -->

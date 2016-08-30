@@ -17,7 +17,7 @@
 <body > 
 	
 			<!-- page content -->
-			<div >
+			<div class="main_container">
 			
 				<div >
 	
@@ -109,7 +109,6 @@
 	            </div>
 	          </div>
 			
-			</div>
 			<!-- /page content -->
 
 

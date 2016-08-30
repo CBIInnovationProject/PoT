@@ -82,7 +82,7 @@
 							 	<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
 	                  			for (Role role: roles) { %>
 		                        <tr>
-		                          <td><a href="detailRole.cbi?roleId=<%=role.getId()%>"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a></td>
+		                          <td><a href="#" onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a></td>
 		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
 		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
 		                        </tr>
@@ -97,6 +97,12 @@
 			
 			</div>
 			<!-- /page content -->
+		
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true" id="myModal" >
+			  <div class="modal-dialog modal-lg">
+			    <div id="modal-content" ></div>
+			  </div>
+			</div>
 
 		<%@ include file="../fragments/footer.jsp" %>
 		</div>
@@ -169,6 +175,17 @@
 
         TableManageButtons.init();
       });
+      
+      function popup_detail(url){
+
+    		$('#myModal').on('show.bs.modal', function () {
+    			$('#modal-content').html("<div style='text-align: center;background: #ffffff;background-position: center center;background-repeat: no-repeat;background-image: url(../images/loading.gif);'><p>&nbsp;</p><br/><br/><br/><p>&nbsp;&nbsp;Loading ...</p><p>&nbsp;</p></div>");
+      			$('#modal-content').load(url);
+    		})
+    		$('#myModal').modal("show");
+    		
+    		
+    	}
     </script>
 </body>
 </html>
