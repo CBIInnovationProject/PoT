@@ -18,6 +18,11 @@
 
 <!-- Custom Theme Style -->
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
+<script>
+if(top!=self){
+   top.location.replace(document.location);
+}
+</script>
 </head>
 
 <body style="background: #F7F7F7;">

@@ -88,7 +88,7 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			request.setAttribute("menuName", "<a href=\"workbook.cbi\">Workbook</a> <i class=\"fa fa-angle-double-right\"></i> <a href=\"workbook.cbi?workbookId="+request.getParameter("workbookId")+"\"> "+request.getParameter("url").split("/")[0]+"</a> <i class=\"fa fa-angle-double-right\"></i> "+request.getParameter("url").split("/")[1]+"");
+			request.setAttribute("menuName", "<a href=\"workbook.cbi\">Workbook</a> <i class=\"fa fa-angle-double-right\"></i> "+request.getParameter("url").split("/")[1]+"");
 			request.setAttribute("url", request.getParameter("url"));
 			request.getRequestDispatcher("/views/workbook/viewDashboard.jsp").forward(request, response);
 		}

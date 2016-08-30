@@ -411,9 +411,15 @@ body {
 }
 </style>
 <script type="text/javascript">
+
+$(function() {
+		$('#cp5').colorpicker().on('changeColor', function(e) {
+			$("iframe").contents().find(".x_title").css("background-color", e.color.toHex());
+		});
+	});
 	$(function() {
 		$('#cp2').colorpicker().on('changeColor', function(e) {
-			$('body')[0].style.backgroundColor = e.color.toHex();
+			$("iframe").contents().find(".x_panel").css("background-color", e.color.toHex());
 		});
 	});
 	$(function() {
@@ -423,7 +429,7 @@ body {
 	});
 	$(function() {
 		$('#cp4').colorpicker().on('changeColor', function(e) {
-			$('.view_name')[0].style.color = e.color.toHex();
+			$("iframe").contents().find(".x_title h2").css("color", e.color.toHex());
 		});
 	});
 	$(function() {
@@ -607,6 +613,13 @@ body {
 						<div class="form-group">
 							<label for="cp4">Header Color</label>
 							<div id="cp4" class="input-group colorpicker-component">
+								<input type="text" value="#00AABB" class="form-control" disabled />
+								<span class="input-group-addon"><i></i></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="cp5">Header Background Color</label>
+							<div id="cp5" class="input-group colorpicker-component">
 								<input type="text" value="#00AABB" class="form-control" disabled />
 								<span class="input-group-addon"><i></i></span>
 							</div>

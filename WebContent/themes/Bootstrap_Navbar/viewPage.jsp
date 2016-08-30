@@ -15,7 +15,7 @@
 <link
 	href="${pageContext.request.contextPath}/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/css/custom.min.css"
+<link href="${pageContext.request.contextPath}/css/custom2.css"
 	rel="stylesheet">
 
 <body class="nav-md"> 
