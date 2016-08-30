@@ -2,17 +2,19 @@
 <%@page import="com.cybertrend.pot.dao.DashboardDAO"%>
 <%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
+<script src="${pageContext.request.contextPath}/vendors/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/fastclick/lib/fastclick.js"></script>
 <!-- page content -->
 <div class="main_container">
-
 	<div>
-
 		<div>
 			<div class="x_panel" style="">
 				<div class="x_title">
-					<h2>${workbook.workbookType.name}</h2>
+					<h2>Workbook Detail</h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><a onclick="$('#myModal').modal('toggle');"><i class="fa fa-close"></i></a>
+						<li><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button></li>
 					</ul>
 					<div class="clearfix"></div>
 				</div>
@@ -71,29 +73,18 @@
 											for (ViewType view : views) {
 										%>
 										<tr>
-											<td><a
-												href=workbook.cbi?workbookId=${workbook.workbookType.id}&&url=
-												<%=view.getContentUrl().replace("sheets/", "")%>><i
-													class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%=view.getName()%></a></td>
+											<td><a href="workbook.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "")%>"><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%=view.getName()%></a></td>
 											<td id="dashboardAction">
-												<%
-													if (DashboardDAO.isDasboardExist(view.getId()) == false) {
-												%> <a data-toggle="tooltip" data-placement="top"
-												title="Register" class="btn btn-success btn-xs"
-												onclick="addToMenu('${workbook.workbookType.id}','<%= view.getId()%>','<%= view.getContentUrl().replace("sheets/", "")%>',this)"><i
-													class="fa fa-plus"></i></a> <%
- 	} else {
- %> <a data-toggle="tooltip" data-placement="top" title="Unregister"
-												class="btn btn-danger btn-xs"
-												onclick="removeFromMenu('${workbook.workbookType.id}','<%= view.getId()%>','yes',this)"><i
-													class="fa fa-minus"></i></a> <%
- 	}
- %>
+												<% if (DashboardDAO.isDasboardExist(view.getId()) == false) { %> 
+													<a data-toggle="tooltip" data-placement="top" title="Register" class="btn btn-success btn-xs"
+														onclick="addToMenu('${workbook.workbookType.id}','<%= view.getId()%>','<%= view.getContentUrl().replace("sheets/", "")%>',this)"><i class="fa fa-plus"></i></a> 
+												<% } else { %> 
+													<a data-toggle="tooltip" data-placement="top" title="Unregister" class="btn btn-danger btn-xs"
+														onclick="removeFromMenu('${workbook.workbookType.id}','<%= view.getId()%>','yes',this)"><i class="fa fa-minus"></i></a> 
+												<% } %>
 											</td>
 										</tr>
-										<%
-											}
-										%>
+										<% } %>
 									</tbody>
 								</table>
 							</div>
@@ -110,7 +101,6 @@
 </div>
 
 <!-- /page content -->
-
 <!-- Datatables -->
 <script>
 	function addToMenu(workbook, view, link, event) {
@@ -148,8 +138,7 @@
 			},
 			success : function(data) {
 				$('#contentTable').load(
-						"workbook.cbi?workbookId=" + workbook
-								+ " #contentTable")
+						"workbook.cbi?workbookId=" + workbook + " #contentTable")
 
 			},
 			error : function(xhr, resp, text) {
@@ -193,8 +182,7 @@
 			},
 			success : function(data) {
 				$('#contentTable').load(
-						"workbook.cbi?workbookId=" + workbook
-								+ " #contentTable")
+						"workbook.cbi?workbookId=" + workbook + " #contentTable")
 			},
 			error : function(xhr, resp, text) {
 				alert(xhr.status);

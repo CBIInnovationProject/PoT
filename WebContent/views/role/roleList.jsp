@@ -77,15 +77,16 @@
 							 	<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
 	                  			for (Role role: roles) { %>
 		                        <tr>
-		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a><ul class="dropdown-menu" role="menu">
-			                          <li><a href="#">Edit</a>
-			                          </li>
-			                          <li><a onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')">Set Privilege Menu</a>
-			                          </li>
-			                          <li class="divider"></li>
-			                          <li><a href="#">Remove</a>
-			                          </li>
-			                        </ul></li></ul>
+		                          <td><ul style="list-style-type: none;padding: 0;margin:0">
+		                          	<li class="dropdown"><a href="#<%= role.getName()%>" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a>
+		                          		<ul class="dropdown-menu" role="menu">
+					                          <li role="presentation"><a href="#">Edit</a></li>
+					                          <li role="presentation"><a href="#" onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')">Set Privilege Menu</a></li>
+					                          <li class="divider"></li>
+					                          <li role="presentation"><a href="#">Remove</a></li>
+			                        	</ul>
+			                        </li>
+			                        </ul>
                         			</td>
 		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
 		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
@@ -102,7 +103,7 @@
 			</div>
 			<!-- /page content -->
 		
-			<div class="modal fade" id="myModal" >
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true" id="myModal" >
 			  <div class="modal-dialog modal-lg">
 			    <div id="modal-content" ></div>
 			  </div>
@@ -116,37 +117,6 @@
     <!-- Datatables -->
     <script>
       $(document).ready(function() {
-
-          var handleDataTableButtons = function() {
-            if ($("#datatable-buttons").length) {
-              $("#datatable-buttons").DataTable({
-                dom: "Bfrtip",
-                buttons: [
-                  {
-                    extend: "copy",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "csv",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "excel",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "pdfHtml5",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "print",
-                    className: "btn-sm"
-                  },
-                ],
-                responsive: true
-              });
-            }
-          };
           
         TableManageButtons = function() {
           "use strict";

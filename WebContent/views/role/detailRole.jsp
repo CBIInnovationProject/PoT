@@ -6,18 +6,16 @@
 <%@page import="com.cybertrend.pot.dao.DashboardDAO"%>
 <%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
-
 <!-- page content -->
 <div class="main_container">
-
 	<div>
-
 		<div>
 			<div class="x_panel" style="">
 				<div class="x_title">
-					<h2>Detail Role</h2>
+					<h2>Role Detail</h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><a onclick="$('#myModal').modal('toggle');"><i class="fa fa-close"></i></a>
+						<li><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button></li>
 					</ul>
 					<div class="clearfix"></div>
 				</div>
@@ -79,12 +77,12 @@
 												%> <a class="btn btn-success btn-xs"
 												onclick="addToRole('${role.id}','<%= menu.getId()%>',this)"><i
 													class="fa fa-plus"></i></a> <%
- 	} else {
- %> <a class="btn btn-danger btn-xs"
+ 												} else { %> 
+ 												<a class="btn btn-danger btn-xs"
 												onclick="removeFromRole('${role.id}','<%= menu.getId()%>','yes',this)"><i
 													class="fa fa-minus"></i></a> <%
- 	}
- %>
+ 												}
+ 												%>
 											</td>
 										</tr>
 										<%
@@ -109,6 +107,17 @@
 
 <!-- Datatables -->
 <script>
+
+function removejscssfile(filename, filetype){
+    var targetelement=(filetype=="js")? "script" : (filetype=="css")? "link" : "none" //determine element type to create nodelist from
+    var targetattr=(filetype=="js")? "src" : (filetype=="css")? "href" : "none" //determine corresponding attribute to test for
+    var allsuspects=document.getElementsByTagName(targetelement)
+    for (var i=allsuspects.length; i>=0; i--){ //search backwards within nodelist for matching elements to remove
+    if (allsuspects[i] && allsuspects[i].getAttribute(targetattr)!=null && allsuspects[i].getAttribute(targetattr).indexOf(filename)!=-1)
+        allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
+    }
+}
+
 	function addToRole(role, menu, event) {
 		$.ajax({
 			type : 'post',
@@ -141,8 +150,7 @@
 				});
 			},
 			success : function(data) {
-				$('#contentTable').load(
-						"detailRole.cbi?roleId=" + role + " #contentTable")
+				$('#contentTable').load("detailRole.cbi?roleId=" + role + " #contentTable");
 
 			},
 			error : function(xhr, resp, text) {
@@ -185,8 +193,8 @@
 				});
 			},
 			success : function(data) {
-				$('#contentTable').load(
-						"detailRole.cbi?roleId=" + role + " #contentTable")
+				$('#contentTable').load("detailRole.cbi?roleId=" + role + " #contentTable");
+				
 			},
 			error : function(xhr, resp, text) {
 				alert(xhr.status);

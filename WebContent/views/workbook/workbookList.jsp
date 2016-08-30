@@ -12,7 +12,6 @@
 <title>CPoT - Cybertrend Portal of Tableau</title>
 <%@ include file="../fragments/styles-collection.jsp" %>
 </head>
-
 <body class="nav-md"> 
 	<div class="container body">
 		<div class="main_container">
