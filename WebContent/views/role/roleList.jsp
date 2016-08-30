@@ -12,7 +12,6 @@
 <title>CPoT - Cybertrend Portal of Tableau</title>
 <%@ include file="../fragments/styles-collection.jsp" %>
 </head>
-
 <body class="nav-md"> 
 	<div class="container body">
 		<div class="main_container">
@@ -61,10 +60,6 @@
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
 	                    <h2>${menu.name}</h2>
-	                    <ul class="nav navbar-right panel_toolbox">
-	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                      </li>
-	                    </ul>
 	                    <div class="clearfix"></div>
 	                  </div>
 	                  <div class="x_content">
@@ -82,7 +77,16 @@
 							 	<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
 	                  			for (Role role: roles) { %>
 		                        <tr>
-		                          <td><a href="#" onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a></td>
+		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a><ul class="dropdown-menu" role="menu">
+			                          <li><a href="#">Edit</a>
+			                          </li>
+			                          <li><a onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')">Set Privilege Menu</a>
+			                          </li>
+			                          <li class="divider"></li>
+			                          <li><a href="#">Remove</a>
+			                          </li>
+			                        </ul></li></ul>
+                        			</td>
 		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
 		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
 		                        </tr>
@@ -98,7 +102,7 @@
 			</div>
 			<!-- /page content -->
 		
-			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true" id="myModal" >
+			<div class="modal fade" id="myModal" >
 			  <div class="modal-dialog modal-lg">
 			    <div id="modal-content" ></div>
 			  </div>
@@ -106,7 +110,6 @@
 
 		<%@ include file="../fragments/footer.jsp" %>
 		</div>
-	</div>
 
 <%@ include file="../fragments/js-collection.jsp" %>
 

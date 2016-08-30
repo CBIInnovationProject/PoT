@@ -81,7 +81,7 @@
 							 	<% List<WorkbookType> workbooks=(List<WorkbookType>) request.getAttribute("workbooks"); 
 	                  			for (WorkbookType workbook: workbooks) { %>
 		                        <tr>
-		                          <td><a href="#" onclick="popup_workbook('workbook.cbi?workbookId=<%=workbook.getId()%>')"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
+		                          <td><a href="#" onclick="popup_detail('workbook.cbi?workbookId=<%=workbook.getId()%>')"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;<%= workbook.getName()%></a></td>
 		                          <td><%= workbook.getCreatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
 		                          <td><%= workbook.getUpdatedAt().toString().replace("Z", " ").replace("T", " ")%></td>
 		                        </tr>
@@ -143,7 +143,7 @@
         TableManageButtons.init();
       });
 
-  	function popup_workbook(url){
+  	function popup_detail(url){
 
   		$('#myModal').on('show.bs.modal', function () {
   			$('#modal-content').html("<div style='text-align: center;background: #ffffff;background-position: center center;background-repeat: no-repeat;background-image: url(../images/loading.gif);'><p>&nbsp;</p><br/><br/><br/><p>&nbsp;&nbsp;Loading ...</p><p>&nbsp;</p></div>");

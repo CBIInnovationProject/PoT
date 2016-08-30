@@ -61,10 +61,6 @@
 	                <div class="x_panel" style="100%">
 	                  <div class="x_title">
 	                    <h2>${menu.name}</h2>
-	                    <ul class="nav navbar-right panel_toolbox">
-	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                      </li>
-	                    </ul>
 	                    <div class="clearfix"></div>
 	                  </div>
 	                  <div class="x_content">
@@ -84,7 +80,14 @@
 							 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
 	                  			for (Menu menu: menus) { %>
 		                        <tr>
-		                          <td><a href="menuDetail.cbi?menuId=<%=menu.getId()%>"><i class="fa fa-sitemap"></i>&nbsp;&nbsp;<%=menu.getName()%></a></td>
+		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-sitemap"></i>&nbsp;&nbsp;<%= menu.getName()%></a><ul class="dropdown-menu" role="menu">
+			                          <li><a href="#">Edit</a>
+			                          </li>
+			                          <li class="divider"></li>
+			                          <li><a href="#">Remove</a>
+			                          </li>
+			                        </ul></li></ul>
+		                          </td>
 		                          <td width="5%" align="center"><i class="<%=menu.getIcon()%>"></i></td>
 		                          <td><%= menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT"%></td>
 		                          <td><%= menu.getCreateDate()!=null?menu.getCreateDate():""%></td>
