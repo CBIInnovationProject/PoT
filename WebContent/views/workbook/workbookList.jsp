@@ -149,9 +149,10 @@
     			$('#modal-content').load(url);
   		})
   		$('#myModal').modal("show");
-  		
-  		
   	}
+	$("#myModal").on('hidden.bs.modal', function () {
+		$('.dropdown-toggle').dropdown();
+	});
 	</script>
 </body>
 </html>

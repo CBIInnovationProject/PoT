@@ -6,6 +6,10 @@
 <%@page import="com.cybertrend.pot.dao.DashboardDAO"%>
 <%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
+
+<script src="${pageContext.request.contextPath}/vendors/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/fastclick/lib/fastclick.js"></script>
 <!-- page content -->
 <div class="main_container">
 	<div>
@@ -107,17 +111,6 @@
 
 <!-- Datatables -->
 <script>
-
-function removejscssfile(filename, filetype){
-    var targetelement=(filetype=="js")? "script" : (filetype=="css")? "link" : "none" //determine element type to create nodelist from
-    var targetattr=(filetype=="js")? "src" : (filetype=="css")? "href" : "none" //determine corresponding attribute to test for
-    var allsuspects=document.getElementsByTagName(targetelement)
-    for (var i=allsuspects.length; i>=0; i--){ //search backwards within nodelist for matching elements to remove
-    if (allsuspects[i] && allsuspects[i].getAttribute(targetattr)!=null && allsuspects[i].getAttribute(targetattr).indexOf(filename)!=-1)
-        allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
-    }
-}
-
 	function addToRole(role, menu, event) {
 		$.ajax({
 			type : 'post',
@@ -151,7 +144,6 @@ function removejscssfile(filename, filetype){
 			},
 			success : function(data) {
 				$('#contentTable').load("detailRole.cbi?roleId=" + role + " #contentTable");
-
 			},
 			error : function(xhr, resp, text) {
 				alert(xhr.status);
@@ -194,7 +186,6 @@ function removejscssfile(filename, filetype){
 			},
 			success : function(data) {
 				$('#contentTable').load("detailRole.cbi?roleId=" + role + " #contentTable");
-				
 			},
 			error : function(xhr, resp, text) {
 				alert(xhr.status);

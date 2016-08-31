@@ -148,17 +148,18 @@
 
         TableManageButtons.init();
       });
-      
+    	
       function popup_detail(url){
-
     		$('#myModal').on('show.bs.modal', function () {
     			$('#modal-content').html("<div style='text-align: center;background: #ffffff;background-position: center center;background-repeat: no-repeat;background-image: url(../images/loading.gif);'><p>&nbsp;</p><br/><br/><br/><p>&nbsp;&nbsp;Loading ...</p><p>&nbsp;</p></div>");
       			$('#modal-content').load(url);
     		})
-    		$('#myModal').modal("show");
-    		
-    		
+
+      		$('#myModal').modal();
     	}
+		$("#myModal").on('hidden.bs.modal', function () {
+			$('.dropdown-toggle').dropdown();
+    	});
     </script>
 </body>
 </html>

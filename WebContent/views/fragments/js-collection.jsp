@@ -11,6 +11,10 @@
 <!-- Custom Theme Scripts -->
 <script src="${pageContext.request.contextPath}/js/custom.js"></script>
 
+<!-- Datatables -->
+<script src="${pageContext.request.contextPath}/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
 <script type="text/javascript">
 	var videoElement = document.getElementsByTagName("*");
 
@@ -47,10 +51,6 @@
 <script type="text/javascript">
         bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
 </script>
-
-<!-- Datatables -->
-<script src="${pageContext.request.contextPath}/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="${pageContext.request.contextPath}/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 <!-- Bootstrap Select -->
 <script src="${pageContext.request.contextPath}/vendors/bootstrap-select/js/bootstrap-select.min.js"></script>
