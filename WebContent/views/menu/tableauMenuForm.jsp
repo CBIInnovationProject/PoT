@@ -18,7 +18,7 @@
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
-			<div class="col-md-3 left_col menu_fixed">
+			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 
 					<div class="clearfix"></div>
@@ -169,8 +169,13 @@
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - Menu <strong>"+$("#name").val()+"</strong> was successfully added to record"+
                       "</div>");
-                $("select#parentId").find("option#nullselect").attr("selected", true);
-                document.getElementById("formid").reset();
+                $("select#parentId").find("option#nullselect").attr("selected", true);$(".tambahan").css("display","block");  
+					  $('#parentId').selectpicker('deselectAll');
+					  $('#icontype1').selectpicker('deselectAll');
+					  $('#dashboard').selectpicker('deselectAll');
+					  $('.classfontawesome i').removeAttr( "class" );
+					  $('.classidglyphicon i').removeAttr( "class" );
+					  document.getElementById("formid").reset();
     		});
 		});
 	});

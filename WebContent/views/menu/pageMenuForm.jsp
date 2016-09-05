@@ -17,7 +17,7 @@
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
-			<div class="col-md-3 left_col menu_fixed">
+			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 
 					<div class="clearfix"></div>
@@ -134,7 +134,7 @@
 			event.preventDefault();
 			var $form = $( this ),
 	        url = $form.attr( 'action' );
-			
+			var ne = nicEditors.findEditor("content_text");
 			var posting = $.post(url, 
 					{ 
 						name:$("#menu_name").val(),
@@ -147,10 +147,16 @@
 					} );
 			
     		posting.done(function(data) {
-                $(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+                $(".tambahan").append("<div class=\"alert alert-success alert-dismissible \" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - Menu <strong>"+$("#menu_name").val()+"</strong> was successfully added to record"+
                       "</div>");
+				$(".tambahan").css("display","block");  
+					  $('#parentId').selectpicker('deselectAll');
+					  $('#icontype1').selectpicker('deselectAll');
+					  $('.classfontawesome i').removeAttr( "class" );
+					  $('.classidglyphicon i').removeAttr( "class" );
+						ne.setContent("");					  
                 document.getElementById("formid").reset();
     		});
 		});

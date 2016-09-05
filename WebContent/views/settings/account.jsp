@@ -14,7 +14,7 @@
 <%@ include file="../fragments/styles-collection.jsp"%>
 </head>
 
-<body class="nav-md">
+<body class="nav-md footer_fixed">
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col menu_fixed">

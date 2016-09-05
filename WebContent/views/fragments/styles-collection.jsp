@@ -20,3 +20,10 @@
 
 <!-- bootstrap-select -->
 <link href="${pageContext.request.contextPath}/vendors/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+
+<style>
+#myModal {
+left:5%;
+outline: none;
+}
+</style>
