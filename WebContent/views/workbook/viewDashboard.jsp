@@ -38,7 +38,9 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<h3>&nbsp;</h3>
-							<ul class="nav side-menu">${treeMenu}
+							<ul class="nav side-menu">
+							 <li><a href="${pageContext.request.contextPath}"><i class="fa fa-home"></i> Home</a></li>
+							${treeMenu}
 							</ul>
 						</div>
 						<!-- %@ include file="fragments/admin-menu.jsp" %-->
@@ -67,7 +69,12 @@
 	                          </li>
 	                          <li><a href="#" onclick="exportToImage();"><i class="fa fa-image"></i>&nbsp;&nbsp;Image(.png)</a>
 	                          </li>
+	                          <li><a href="#" onclick="exportToCSV();"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;CSV</a>
+	                          </li>
 	                        </ul>
+	                      </li>
+	                      <li>
+	                      	<a href="comments.cbi" class="dropdown-toggle"><i class="fa fa-comments-o"></i>&nbsp;&nbsp;Comments</a>
 	                      </li>
 	                    </ul>
 	                    <div class="clearfix"></div>
@@ -104,10 +111,11 @@ function exportToPDF() {
     viz.showExportPDFDialog();
 }
 function exportToImage(){
-	viz.showExportImageDialog();
+	viz.showExportImageDialog()
+	
 }
-function exportWorkbook(){
-	viz.showDownloadWorkbookDialog();
+function exportToCSV(){
+	viz.showExportCrossTabDialog();
 }
 </script>
 </body>

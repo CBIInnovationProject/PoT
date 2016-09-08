@@ -41,7 +41,9 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<h3>&nbsp;</h3>
-							<ul class="nav side-menu">${treeMenu}
+							<ul class="nav side-menu">
+							 <li><a href="${pageContext.request.contextPath}"><i class="fa fa-home"></i> Home</a></li>
+							${treeMenu}
 							</ul>
 						</div>
 						<!-- %@ include file="fragments/admin-menu.jsp" %-->
@@ -147,7 +149,7 @@
 					} );
 			
     		posting.done(function(data) {
-                $(".tambahan").append("<div class=\"alert alert-success alert-dismissible \" role=\"alert\">"+
+                $(".tambahan").prepend("<div class=\"alert alert-success alert-dismissible \" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - Menu <strong>"+$("#menu_name").val()+"</strong> was successfully added to record"+
                       "</div>");
