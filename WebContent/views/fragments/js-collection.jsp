@@ -46,11 +46,5 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.3.0.min.js"></script>
 <script type='text/javascript' src='${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js'></script>
 
-<!-- text Area  -->
-<script src="${pageContext.request.contextPath}/js/nicEdit-latest.js"></script>
-<script type="text/javascript">
-        bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-</script>
-
 <!-- Bootstrap Select -->
 <script src="${pageContext.request.contextPath}/vendors/bootstrap-select/js/bootstrap-select.min.js"></script>

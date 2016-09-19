@@ -12,6 +12,7 @@ import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.CronTriggerImpl;
 
+import com.cybertrend.pot.job.JobSendEmail;
 import com.cybertrend.pot.util.DBPropertyLooker;
 
 public class SchedullerService extends HttpServlet {
@@ -26,14 +27,14 @@ public class SchedullerService extends HttpServlet {
 		            // and start it off
 		            scheduler.start();
 		            
-		         // define the com.cbi.vfree.job and tie it to our SendResponseToCatalist class
-		            JobDetail job1 = new JobDetailImpl("job1","group1",null);
+		         // define the com.cybertrend.pot.job and tie it to our SendResponseToCatalist class
+		            JobDetail job1 = new JobDetailImpl("job1","group1",JobSendEmail.class);
 
-		            // Trigger the com.cbi.vfree.job to run now
+		            // Trigger the 
 		            Trigger trigger1 = new CronTriggerImpl("trigger1", "group1");
 		            ((CronTriggerImpl) trigger1).setCronExpression(DBPropertyLooker.get("scheduler.time"));
 
-		            // Tell quartz to schedule the com.cbi.vfree.job using our trigger
+		            // Tell quartz to schedule the com.cybertrend.pot.job using our trigger
 		            scheduler.scheduleJob(job1, trigger1);
 
 		        } catch (SchedulerException se) {

@@ -12,4 +12,14 @@
     <servlet-name>MainServlet</servlet-name>
     <url-pattern>/action/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <display-name>Scheduller Service</display-name>
+    <servlet-name>SchedullerService</servlet-name>
+    <servlet-class>com.cybertrend.pot.service.SchedullerService</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SchedullerService</servlet-name>
+    <url-pattern>/scheduller/*</url-pattern>
+  </servlet-mapping>
 </web-app>

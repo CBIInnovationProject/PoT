@@ -165,5 +165,11 @@
 	});
 	</script>
 	
+	<!-- text Area  -->
+	<script src="${pageContext.request.contextPath}/js/nicEdit-latest.js"></script>
+	<script type="text/javascript">
+	        bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+	</script>
+	
 </body>
 </html>

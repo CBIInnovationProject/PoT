@@ -63,16 +63,10 @@
 	                    <h2>Comments</h2>
 	                    <div class="clearfix"></div>
 	                  </div>
-	                  <div class="x_content">
-						    <div class="col-md-6" style="height: 460px; overflow-y: auto">
-						    <textarea style="width: 100%;height: 150px;"></textarea><br>
-						    <input  class="btn btn-success submit-menu" type="submit" name="submitButton" value="Submit">
-						    <div class="ln_solid"></div>
-						    <!-- div style="width: 100%; overflow-y: auto">
-						    <img src="http://tableau.cybertrend-intra.com/views/Sales/2013SalesGrowth?format=png" width="100%">
-						    </div -->
-						    </div>        
+	                  <div class="x_content">    
 							<div class="col-md-6" style="height: 100%; overflow-y: auto">
+						    <textarea name="textarea" style="width: 100%;height: 50px;"></textarea>
+						    <h3><input onclick="addComment();" class="pull-right btn btn-success submit-menu" type="submit" name="submitButton" value="Submit"></h3>
 						                  <ul class="list-unstyled msg_list">
 						                    <li>
 						                      <a>
@@ -285,5 +279,11 @@
 	</div>
 
 <%@ include file="../fragments/js-collection.jsp" %>
+<script type="text/javascript">
+	function addComment(){
+		$(".list-unstyled").prepend("<li><a><span class='image'><img src='../images/img.jpg' alt='img' /></span><span><span>John Smith</span>"+
+                  "<span class='time'>3 mins ago</span></span><span class='message'>"+$("textarea").val()+"</span></a></li>");
+	}
+</script>
 </body>
 </html>
