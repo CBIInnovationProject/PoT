@@ -14,7 +14,7 @@ public class UserTableauDAO {
 	public static UserTableau getUserTableauById(String userTableauId) throws SQLException {
 		UserTableau output = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from usertableau where id = ?");
+		PreparedStatement prep = conn.prepareStatement("select * from t_usertableau where id = ?");
 		prep.setString(1, userTableauId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -37,7 +37,7 @@ public class UserTableauDAO {
 	public static List<UserTableau> getList(String contentUrl) throws SQLException {
 		List<UserTableau> userTableaus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from usertableau WHERE contentUrl=?");
+		PreparedStatement prep = conn.prepareStatement("select id from t_usertableau WHERE contentUrl=?");
 		prep.setString(1, contentUrl);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {

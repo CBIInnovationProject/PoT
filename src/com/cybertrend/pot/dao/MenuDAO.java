@@ -17,7 +17,7 @@ public class MenuDAO {
 	public static List<Menu> getMenusByParentId(String parentId) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from menu where parentId = ? ORDER BY menuOrder");
+		PreparedStatement prep = conn.prepareStatement("select id from t_menu where parentId = ? ORDER BY menuOrder");
 		prep.setString(1, parentId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -30,7 +30,7 @@ public class MenuDAO {
 	public static Menu getMenuById(String id) throws SQLException {
 		Menu menu = null ;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from menu where id = ?");
+		PreparedStatement prep = conn.prepareStatement("select * from t_menu where id = ?");
 		prep.setString(1, id);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -58,7 +58,7 @@ public class MenuDAO {
 	public static List<Menu> getMenusByContentType(String contentType) throws SQLException{
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from menu where contentType=? ORDER BY menuOrder");
+		PreparedStatement prep = conn.prepareStatement("select id from t_menu where contentType=? ORDER BY menuOrder");
 		prep.setString(1, contentType);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -71,7 +71,7 @@ public class MenuDAO {
 	public static Menu getMenuByAction(String action) throws SQLException {
 		Menu menu = null ;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from menu where action = ?");
+		PreparedStatement prep = conn.prepareStatement("select id from t_menu where action = ?");
 		prep.setString(1, action);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -83,7 +83,7 @@ public class MenuDAO {
 	public static List<Menu> getListParentMenu() throws SQLException{
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE contentType IS null");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_menu WHERE contentType IS null");
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			Menu menu = getMenuById(result.getString("id"));
@@ -94,7 +94,7 @@ public class MenuDAO {
 	
 	public static void save(Menu menu) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("INSERT INTO menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		PreparedStatement prep = conn.prepareStatement("INSERT INTO t_menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextLong());
 		prep.setString(2, menu.getCreateBy());
 		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
@@ -117,7 +117,7 @@ public class MenuDAO {
 	
 	public static void update(Menu menu) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("UPDATE menu SET updateBy=?, updateDate=?, name=?, parentId=?, action=?, content=?, contentType=?, menuOrder=?, icon=?, workbookId=?, viewId=?, siteId=? WHERE id=?");
+		PreparedStatement prep = conn.prepareStatement("UPDATE t_menu SET updateBy=?, updateDate=?, name=?, parentId=?, action=?, content=?, contentType=?, menuOrder=?, icon=?, workbookId=?, viewId=?, siteId=? WHERE id=?");
 		prep.setString(1, menu.getUpdateBy());
 		prep.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 		
@@ -138,7 +138,7 @@ public class MenuDAO {
 	
 	public static void delete(Menu menu) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("DELETE FROM menu WHERE id=?");
+		PreparedStatement prep = conn.prepareStatement("DELETE FROM t_menu WHERE id=?");
 		prep.setString(1, menu.getId());
 		prep.executeUpdate();
 	}
@@ -146,7 +146,7 @@ public class MenuDAO {
 	public static List<Menu> getList(String siteId) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE siteId=? AND (contentType <> 'admin' OR contentType IS NULL)");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_menu WHERE siteId=? AND (contentType <> 'admin' OR contentType IS NULL)");
 		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -159,7 +159,7 @@ public class MenuDAO {
 	public static List<Menu> getMenuParents(String siteId) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM menu WHERE siteId=? AND parentId IS NULL AND (contentType <> 'admin' OR contentType IS NULL)");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_menu WHERE siteId=? AND parentId IS NULL AND (contentType <> 'admin' OR contentType IS NULL)");
 		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {

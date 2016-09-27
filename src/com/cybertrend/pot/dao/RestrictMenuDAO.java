@@ -12,7 +12,7 @@ import com.cybertrend.pot.service.DatabaseService;
 public class RestrictMenuDAO {
 	public static boolean isExist(Menu menu, User user) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from resctrictMenu where menuId = ? AND userId = ?");
+		PreparedStatement prep = conn.prepareStatement("select id from t_resctrict_menu where menuId = ? AND userId = ?");
 		prep.setString(1, menu.getId());
 		prep.setString(2, user.getId());
 		ResultSet result = prep.executeQuery();

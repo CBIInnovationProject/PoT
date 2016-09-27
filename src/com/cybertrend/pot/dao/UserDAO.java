@@ -16,7 +16,7 @@ public class UserDAO {
 	public static User getUserByUsernameAndSite(String username, String siteId) throws SQLException {
 		User output = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from user where username = ? AND siteId=?");
+		PreparedStatement prep = conn.prepareStatement("select id from t_user where username = ? AND siteId=?");
 		prep.setString(1, username);
 		List<User> users = new ArrayList<User>();
 		ResultSet result = prep.executeQuery();
@@ -29,7 +29,7 @@ public class UserDAO {
 	public static User getUserById(String userId) throws SQLException {
 		User output = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from user where id = ?");
+		PreparedStatement prep = conn.prepareStatement("select * from t_user where id = ?");
 		prep.setString(1, userId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -60,7 +60,7 @@ public class UserDAO {
 		boolean output = false;
 		User user = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from user where id = ?");
+		PreparedStatement prep = conn.prepareStatement("select id from t_user where id = ?");
 		prep.setString(1, userId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -99,7 +99,7 @@ public class UserDAO {
 	public static List<User> getList(String siteId) throws SQLException{
 		List<User> users = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from user WHERE siteId=?");
+		PreparedStatement prep = conn.prepareStatement("select id from t_user WHERE siteId=?");
 		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -112,7 +112,7 @@ public class UserDAO {
 	public static List<User> getUserByUsernameAndPassword(String username, String password) throws SQLException {
 		List<User> users = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from user WHERE username=? AND password=?");
+		PreparedStatement prep = conn.prepareStatement("select id from t_user WHERE username=? AND password=?");
 		prep.setString(1, username);
 		prep.setString(2, password);
 		ResultSet result = prep.executeQuery();

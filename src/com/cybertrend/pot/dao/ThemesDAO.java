@@ -12,7 +12,7 @@ public class ThemesDAO {
 	public static Themes getThemesById(String id)  throws SQLException {
 		Themes output = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from themes WHERE id = ?");
+		PreparedStatement prep = conn.prepareStatement("select * from t_themes WHERE id = ?");
 		prep.setString(1, id);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {

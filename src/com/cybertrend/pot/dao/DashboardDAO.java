@@ -13,7 +13,7 @@ import com.cybertrend.pot.service.DatabaseService;
 public class DashboardDAO {
 	public static void add(Dashboard dashboard) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("INSERT INTO dashboard(id, createDate, createBy, url, workbookId, siteId) VALUES (?,?,?,?,?,?)");
+		PreparedStatement prep = conn.prepareStatement("INSERT INTO t_dashboard(id, createDate, createBy, url, workbookId, siteId) VALUES (?,?,?,?,?,?)");
 		prep.setString(1, dashboard.getId());
 		prep.setTimestamp(2, dashboard.getCreateDate());
 		prep.setString(3, dashboard.getCreateBy());
@@ -25,7 +25,7 @@ public class DashboardDAO {
 	
 	public static void delete(String id) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("DELETE FROM dashboard WHERE id = ?");
+		PreparedStatement prep = conn.prepareStatement("DELETE FROM t_dashboard WHERE id = ?");
 		prep.setString(1, id);
 		prep.executeUpdate();
 	}
@@ -41,7 +41,7 @@ public class DashboardDAO {
 	public static List<Dashboard> getListDashboards() throws SQLException {
 		List<Dashboard> dashboards = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM dashboard");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_dashboard");
 		ResultSet result = prep.executeQuery();
 		while(result.next()){
 			Dashboard dashboard = getDashboardById(result.getString("id"));
@@ -53,7 +53,7 @@ public class DashboardDAO {
 	public static Dashboard getDashboardById(String id) throws SQLException {
 		Dashboard dash = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT * FROM dashboard WHERE id=?");
+		PreparedStatement prep = conn.prepareStatement("SELECT * FROM t_dashboard WHERE id=?");
 		prep.setString(1, id);
 		ResultSet result = prep.executeQuery();
 		while(result.next()){

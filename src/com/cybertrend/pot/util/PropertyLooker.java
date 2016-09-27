@@ -12,7 +12,7 @@ public class PropertyLooker {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep;
 		try {
-			prep = conn.prepareStatement("select * from properties where name = ?");
+			prep = conn.prepareStatement("select * from t_properties where name = ?");
 			prep.setString(1, propertyName);
 			ResultSet result = prep.executeQuery();
 			while (result.next()) {

@@ -17,7 +17,7 @@ public class RoleDAO {
 	public static Role getRoleById(String id) throws SQLException {
 		Role output = null;
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select * from role WHERE id = ?");
+		PreparedStatement prep = conn.prepareStatement("select * from t_role WHERE id = ?");
 		prep.setString(1, id);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
@@ -36,7 +36,7 @@ public class RoleDAO {
 	
 	public static void save(Role role) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("INSERT INTO role(id, createBy, createDate, updateBy, updateDate, name, description, siteId ) VALUES (?,?,?,?,?,?,?,?)");
+		PreparedStatement prep = conn.prepareStatement("INSERT INTO t_role(id, createBy, createDate, updateBy, updateDate, name, description, siteId ) VALUES (?,?,?,?,?,?,?,?)");
 		prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextLong());
 		prep.setString(2, role.getCreateBy());
 		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
@@ -53,7 +53,7 @@ public class RoleDAO {
 	public static List<Role> getList(String siteId) throws SQLException {
 		List<Role> roles = new ArrayList<Role>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM role WHERE siteId=?");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_role WHERE siteId=?");
 		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {

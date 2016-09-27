@@ -18,6 +18,11 @@
     <servlet-class>com.cybertrend.pot.service.SchedullerService</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet>
+    <servlet-name>RunOnStartUpServlet</servlet-name>
+    <servlet-class>com.cybertrend.pot.RunOnStartUpServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+</servlet>
   <servlet-mapping>
     <servlet-name>SchedullerService</servlet-name>
     <url-pattern>/scheduller/*</url-pattern>
