@@ -41,7 +41,7 @@ public class DashboardDAO {
 	public static List<Dashboard> getListDashboards() throws SQLException {
 		List<Dashboard> dashboards = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_dashboard");
+		PreparedStatement prep = conn.prepareStatement("SELECT d.* FROM t_dashboard d LEFT JOIN t_menu m ON d.id = m.viewid WHERE m.id is null");
 		ResultSet result = prep.executeQuery();
 		while(result.next()){
 			Dashboard dashboard = getDashboardById(result.getString("id"));

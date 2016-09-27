@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.cybertrend.cpot.dao.MenuDAO"%>
 <%@page import="com.cybertrend.cpot.dao.DashboardDAO"%>
 <%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
@@ -79,8 +80,12 @@
 													<a data-toggle="tooltip" data-placement="top" title="Register" class="btn btn-success btn-xs"
 														onclick="addToMenu('${workbook.workbookType.id}','<%= view.getId()%>','<%= view.getContentUrl().replace("sheets/", "")%>',this)"><i class="fa fa-plus"></i></a> 
 												<% } else { %> 
-													<a data-toggle="tooltip" data-placement="top" title="Unregister" class="btn btn-danger btn-xs"
-														onclick="removeFromMenu('${workbook.workbookType.id}','<%= view.getId()%>','yes',this)"><i class="fa fa-minus"></i></a> 
+													<% if(MenuDAO.isDasboardExistOnMenu(view.getId())) { %>
+														already used in menu
+													<% } else {%>
+														<a data-toggle="tooltip" data-placement="top" title="Unregister" class="btn btn-danger btn-xs"
+															onclick="removeFromMenu('${workbook.workbookType.id}','<%= view.getId()%>','yes',this)"><i class="fa fa-minus"></i></a> 
+													<% } %>
 												<% } %>
 											</td>
 										</tr>

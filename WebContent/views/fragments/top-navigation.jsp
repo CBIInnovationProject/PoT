@@ -7,7 +7,7 @@
 			<div class="nav toggle">
 				<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 			</div>
-			<a href="${pageContext.request.contextPath}"><img alt=""
+			<a href="landingPage.cbi"><img alt=""
 				width="170px" src="${pageContext.request.contextPath}/images/logo.png"></a>
 			<ul class="nav navbar-nav navbar-right">
 				<li class=""><a href="javascript:;"

@@ -509,7 +509,7 @@ $(function() {
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="${pageContext.request.contextPath}">
+			<a class="navbar-brand" href="landingPage.cbi">
 				<img
 				src="${pageContext.request.contextPath}/themes/Bootstrap_Navbar/logo.png"
 				alt="CPoT">

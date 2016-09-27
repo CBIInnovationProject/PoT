@@ -169,4 +169,15 @@ public class MenuDAO {
 		return menus;
 	}
 	
+	public static boolean isDasboardExistOnMenu(String viewId) throws SQLException {
+		Menu menu = null;
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep = conn.prepareStatement("SELECT * FROM t_menu WHERE viewId = ? ");
+		prep.setString(1, viewId);
+		ResultSet result = prep.executeQuery();
+		while (result.next()) {
+			menu = getMenuById(result.getString("id"));
+		}
+		return menu!=null?true:false;
+	}
 }
