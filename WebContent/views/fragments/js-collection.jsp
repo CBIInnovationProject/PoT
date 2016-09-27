@@ -48,3 +48,5 @@
 
 <!-- Bootstrap Select -->
 <script src="${pageContext.request.contextPath}/vendors/bootstrap-select/js/bootstrap-select.min.js"></script>
+<!-- Clockpicker -->
+<script src="${pageContext.request.contextPath}/vendors/Clockpicker/js/bootstrap-clockpicker.min.js"></script>

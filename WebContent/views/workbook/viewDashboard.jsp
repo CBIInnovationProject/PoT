@@ -62,6 +62,7 @@
 	                  <div class="x_title">
 	                    <h2>${menuName}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
+						<li><a href="#" class="form_data_alert" onclick="popup_alert_data();"><i class="fa fa-bell-slash"></i></a></li>
 	                      <li class="dropdown">
 	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-download"></i>&nbsp;&nbsp;Download</a>
 	                        <ul class="dropdown-menu" role="menu">
@@ -72,9 +73,6 @@
 	                          <li><a href="#" onclick="exportToCSV();"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;CSV</a>
 	                          </li>
 	                        </ul>
-	                      </li>
-	                      <li>
-	                      	<a href="comments.cbi" class="dropdown-toggle"><i class="fa fa-comments-o"></i>&nbsp;&nbsp;Comments</a>
 	                      </li>
 	                    </ul>
 	                    <div class="clearfix"></div>
@@ -94,8 +92,88 @@
 		</div>
 	</div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dataallert" aria-hidden="true" id="myModal" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" >
+	<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Data Alert Schedule</h4>
+        </div>
+		<div class="modal-body">
+	<form id="formid" method="post" action="menuSave.cbi" class="form-horizontal form-label-left">
+	<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Description <span class="required">*</span>
+										</label>
+										<div class="col-sm-3">
+											<input type="text" name="name" id="menu_name" value="" class="form-control col-md-7 col-xs-12" required="required">
+										</div>
+									</div>
+									<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Time Alert&nbsp;&nbsp;</label>
+								<div class="col-sm-3">
+								<div class="input-group clockpicker">
+								<input type="text" class="form-control" value="18:00">
+								<span class="input-group-addon">
+								<span class="glyphicon glyphicon-time"></span>
+								</span>
+								</div>
+								</div>
+								</div>
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Worksheet</label>
+										<div class="col-sm-3">
+											<select  id="parentId" name="parentId" class="selectpicker">
+												<option>Worksheet1</option>
+												<option>Worksheet2</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Dimension</label>
+										<div class="col-sm-3">
+											<select  id="parentId" name="parentId" class="selectpicker">
+												<option>Dimension1</option>
+												<option>Dimension2</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Measure</label>
+										<div class="col-sm-3">
+											<select  id="parentId" name="parentId" class="selectpicker">
+												<option>Measure1</option>
+												<option>Measure2</option>
+											</select>
+										</div>
+									</div>
+									
+					
+	</form>
+	</div>
+	<div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+  </div>
+</div>
+
 <%@ include file="../fragments/js-collection.jsp" %>
 <script type="text/javascript">
+$('.clockpicker').clockpicker({
+    placement: 'bottom',
+    align: 'left',
+    autoclose: true,
+	'default': 'now'
+});
+
+function popup_alert_data(){
+		$('#myModal').modal("show");
+}
+
+$("#myModal").on('hidden.bs.modal', function () {
+	$('.dropdown-toggle').dropdown();
+});
+		
 var viz;
     var containerDiv = document.getElementById("vizContainer"),
         url = "${hostName}${siteRoot}/views/${url}?&",
@@ -111,7 +189,7 @@ function exportToPDF() {
     viz.showExportPDFDialog();
 }
 function exportToImage(){
-	viz.showExportImageDialog()
+	viz.showExportImageDialog();
 	
 }
 function exportToCSV(){
