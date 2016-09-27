@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.pot.entity.Role"%>
+<%@page import="com.cybertrend.cpot.entity.Role"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 <head>

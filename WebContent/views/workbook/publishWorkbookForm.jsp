@@ -2,7 +2,7 @@
 <%@page import="tableau.api.rest.bindings.ProjectType"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.cybertrend.pot.entity.Menu"%>
+<%@page import="com.cybertrend.cpot.entity.Menu"%>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

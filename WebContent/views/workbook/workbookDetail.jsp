@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.pot.dao.DashboardDAO"%>
+<%@page import="com.cybertrend.cpot.dao.DashboardDAO"%>
 <%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
 <script src="${pageContext.request.contextPath}/vendors/jquery/dist/jquery.min.js"></script>

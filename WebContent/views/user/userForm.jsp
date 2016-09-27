@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.pot.entity.UserTableau"%>
-<%@page import="com.cybertrend.pot.entity.Role"%>
+<%@page import="com.cybertrend.cpot.entity.UserTableau"%>
+<%@page import="com.cybertrend.cpot.entity.Role"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.cybertrend.pot.entity.Menu"%>
+<%@page import="com.cybertrend.cpot.entity.Menu"%>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

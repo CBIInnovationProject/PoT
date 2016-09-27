@@ -1,4 +1,4 @@
-<%@page import="com.cybertrend.pot.entity.Menu"%>
+<%@page import="com.cybertrend.cpot.entity.Menu"%>
 
 <!-- **************
 Replace ## with < % to show dropdown list icon vendors 

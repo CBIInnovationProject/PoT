@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.pot.entity.Role"%>
-<%@page import="com.cybertrend.pot.dao.RoleMenuDAO"%>
-<%@page import="com.cybertrend.pot.dao.MenuDAO"%>
-<%@page import="com.cybertrend.pot.entity.Menu"%>
-<%@page import="com.cybertrend.pot.dao.DashboardDAO"%>
+<%@page import="com.cybertrend.cpot.entity.Role"%>
+<%@page import="com.cybertrend.cpot.dao.RoleMenuDAO"%>
+<%@page import="com.cybertrend.cpot.dao.MenuDAO"%>
+<%@page import="com.cybertrend.cpot.entity.Menu"%>
+<%@page import="com.cybertrend.cpot.dao.DashboardDAO"%>
 <%@page import="tableau.api.rest.bindings.ViewType"%>
 <%@page import="java.util.List"%>
 
