@@ -43,7 +43,16 @@ public class Login extends DefaultAction{
 		request.setAttribute("password", password);
 		request.setAttribute("username", username);
 		if(users.size()>0) {
-			request.getRequestDispatcher("/views/siteSelector.jsp").forward(request, response);
+			if(users.size()==1) {
+				response.sendRedirect("landingPage.cbi");
+				User user = UserDAO.getUserById(users.get(0).getId());
+				String contentUrl = (user.getSiteUrl()+" ").trim();
+				TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
+				request.getSession().setAttribute(Constants.USER_GA, user);
+				request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
+				request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(PropertyLooker.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
+			}
+			else request.getRequestDispatcher("/views/siteSelector.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}

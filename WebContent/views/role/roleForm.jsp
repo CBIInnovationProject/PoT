@@ -17,42 +17,7 @@
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
-			<div class="col-md-3 left_col">
-				<div class="left_col scroll-view">
-
-					<div class="clearfix"></div>
-					<!-- menu profile quick info -->
-					<div class="profile">
-						<div class="profile_pic">
-							<img src="${pageContext.request.contextPath}/images/user.png"
-								alt="..." class="img-circle profile_img">
-						</div>
-						<div class="profile_info">
-							<span>Welcome,</span>
-							<h2>${user.fullName}&nbsp;&nbsp;</h2>
-						</div>
-					</div>
-					<!-- /menu profile quick info -->
-
-					<br />
-
-					<!-- sidebar menu -->
-					<div id="sidebar-menu"
-						class="main_menu_side hidden-print main_menu">
-						<div class="menu_section">
-							<h3>&nbsp;</h3>
-							<ul class="nav side-menu">
-							 <li><a href="landingPage.cbi"><i class="fa fa-home"></i> Home</a></li>
-							${treeMenu}
-							</ul>
-						</div>
-						<!-- %@ include file="fragments/admin-menu.jsp" %-->
-					</div>
-					<!-- /sidebar menu -->
-					<%@ include file="../fragments/footer-buttons.jsp"%>
-				</div>
-			</div>
-
+			<%@ include file="../fragments/left-menu.jsp"%>
 			<%@ include file="../fragments/top-navigation.jsp"%>
 
 			<!-- page content -->
@@ -64,19 +29,6 @@
 						<div class="x_panel">
 							<div class="x_title">
 								<h2>${menu.name}</h2>
-								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
-								</ul>
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
@@ -135,7 +87,7 @@
 					} );
 			
     		posting.done(function(data) {
-    			$(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+    			$(".tambahan").prepend(data+"<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - Role <strong>"+$("#name").val()+"</strong> was successfully added to record"+
                       "</div>");

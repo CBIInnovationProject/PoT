@@ -1,6 +1,7 @@
 package com.cybertrend.cpot;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,8 @@ import com.cybertrend.cpot.action.DefaultAction;
 import com.cybertrend.cpot.dao.MenuDAO;
 import com.cybertrend.cpot.dao.RoleMenuDAO;
 import com.cybertrend.cpot.entity.Menu;
+
+import tableau.api.rest.bindings.WorkbookType;
 
 public class Interceptor extends DefaultAction {
 	
@@ -22,7 +25,7 @@ public class Interceptor extends DefaultAction {
 			if(getCurrentRole(request).getId().trim().equals("0")){
 				return true;
 			}
-			else if(checkLeafAction(action, menu)){
+			else if(checkLeafAction(action, menu, request)){
 				return true;
 			}
 			else {
@@ -34,15 +37,23 @@ public class Interceptor extends DefaultAction {
 		return false;
 	}
 
-	private static boolean checkLeafAction(String action, Menu parent) throws SQLException {
+	private static boolean checkLeafAction(String action, Menu parent, HttpServletRequest request) throws SQLException {
 		for (Menu menu : MenuDAO.getMenusByParentId(parent.getId())){
 			if(MenuDAO.getMenusByParentId(menu.getId()).size()>0){
-				if(checkLeafAction(action, menu)) {
+				if(checkLeafAction(action, menu, request)) {
 					return true;
 				}
 			} else {
 				if (action.equalsIgnoreCase(menu.getAction())){
-					return true;
+					if(menu.getContentType().equals(Constants.CONTENT_TYPE_TABLEAU)){
+						List<WorkbookType> workbooks = new ArrayList<>();
+						for(WorkbookType workbook:workbooks){
+							if(workbook.getId().equals(menu.getWorkbookId())){
+								return true;
+							}
+						}
+					} else
+						return true;
 				}
 			}
 		}

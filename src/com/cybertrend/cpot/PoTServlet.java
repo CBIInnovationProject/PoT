@@ -15,7 +15,6 @@ import com.cybertrend.cpot.action.LandingPage;
 import com.cybertrend.cpot.action.Login;
 import com.cybertrend.cpot.action.Logout;
 import com.cybertrend.cpot.action.MenuForm;
-import com.cybertrend.cpot.action.ProjectForm;
 import com.cybertrend.cpot.action.RoleForm;
 import com.cybertrend.cpot.action.UserForm;
 import com.cybertrend.cpot.action.ViewDashboard;
@@ -169,10 +168,6 @@ public class PoTServlet extends HttpServlet {
 			
 			else if (action.equals("workbook.cbi")) {
 				WorkbookForm.execute(request, response, action);
-			} 
-			
-			else if (action.equals("project.cbi")) {
-				ProjectForm.execute(request, response, action);
 			} 
 			
 			else if (action.equals("comments.cbi")) {

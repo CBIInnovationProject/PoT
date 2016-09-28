@@ -46,9 +46,12 @@ public class RoleForm extends DefaultAction{
 				role.setName(request.getParameter("name"));
 				role.setDescription(request.getParameter("description"));
 				role.setSiteId(getCurrentCredentials(request).getSite().getId());
-				RoleDAO.save(role);
 				PrintWriter out = response.getWriter();
-			    out.println(Constants.SUCCESS);
+				if (RoleDAO.save(role)){
+				    out.println(Constants.SUCCESS);
+				} else {
+					out.println(Constants.FAILED);
+				}
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
