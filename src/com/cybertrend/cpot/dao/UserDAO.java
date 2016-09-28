@@ -18,7 +18,6 @@ public class UserDAO {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep = conn.prepareStatement("select id from t_user where username = ? AND siteId=?");
 		prep.setString(1, username);
-		List<User> users = new ArrayList<User>();
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			output = getUserById(result.getString("id"));
@@ -41,7 +40,7 @@ public class UserDAO {
 			output.setUpdateDate(result.getTimestamp("updateDate"));
 			
 			output.setUsername(result.getString("username"));
-			output.setPassword(result.getString("password"));
+			output.setSiteUrl(result.getString("siteUrl"));
 			output.setFullName(result.getString("fullName"));
 			output.setAddress1(result.getString("address1"));
 			output.setAddress2(result.getString("address2"));
@@ -50,7 +49,6 @@ public class UserDAO {
 			output.setPhone(result.getString("phone"));
 			output.setEmail(result.getString("email"));
 			output.setRole(RoleDAO.getRoleById(result.getString("roleId")));
-			output.setUserTableau(UserTableauDAO.getUserTableauById(result.getString("userTableauId")));
 			output.setThemes(ThemesDAO.getThemesById(result.getString("themes")));
 		}
 		return output;
@@ -72,7 +70,7 @@ public class UserDAO {
 	
 	public static void save(User user) throws SQLException{
 		Connection conn = DatabaseService.getConnection();
-		String sql = "INSERT INTO user (id, createBy, createDate, updateBy, updateDate, username, password, fullName, address1, address2, address3, zip, phone, email, siteId, roleId, userTableauId, themes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO t_user (id, createBy, createDate, updateBy, updateDate, username, siteUrl, fullName, address1, address2, address3, zip, phone, email, siteId, roleId, themes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement prep = conn.prepareStatement(sql);
 		prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextFloat());
 		prep.setString(2, user.getCreateBy());
@@ -81,7 +79,7 @@ public class UserDAO {
 		prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
 		
 		prep.setString(6, user.getUsername());
-		prep.setString(7, user.getPassword());
+		prep.setString(7, user.getSiteUrl());
 		prep.setString(8, user.getFullName());
 		prep.setString(9, user.getAddress1());
 		prep.setString(10, user.getAddress2());
@@ -91,8 +89,7 @@ public class UserDAO {
 		prep.setString(14, user.getEmail());
 		prep.setString(15, user.getSiteId());
 		prep.setString(16, user.getRole().getId());
-		prep.setString(17, user.getUserTableau().getId());
-		prep.setString(18, user.getThemes().getId());
+		prep.setString(17, user.getThemes().getId());
 		prep.executeUpdate();
 	}
 	
@@ -109,12 +106,11 @@ public class UserDAO {
 		return users;
 	}
 	
-	public static List<User> getUserByUsernameAndPassword(String username, String password) throws SQLException {
+	public static List<User> getUserByUsername(String username) throws SQLException {
 		List<User> users = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("select id from t_user WHERE username=? AND password=?");
+		PreparedStatement prep = conn.prepareStatement("select id from t_user WHERE username=?");
 		prep.setString(1, username);
-		prep.setString(2, password);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			User output =  getUserById(result.getString("id"));

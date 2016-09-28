@@ -37,9 +37,10 @@
 							<select name="userId" id="userId" class="selectpicker" required>
 								<% List<User> users=(List<User>) request.getAttribute("users"); 
 								for (User user: users) { %>
-									<option data-icon="fa fa-bar-chart" value="<%= user.getId() %>"><%=(user.getUserTableau().getSiteContentUrl()==null||"".equalsIgnoreCase(user.getUserTableau().getSiteContentUrl().trim()))?"Default": user.getUserTableau().getSiteContentUrl()%></option>
+									<option data-icon="fa fa-bar-chart" value="<%= user.getId() %>"><%=(user.getSiteUrl()==null||"".equalsIgnoreCase(user.getSiteUrl().trim()))?"Default": user.getSiteUrl()%></option>
 								<%}%>
 							</select>
+							<input type="hidden" name="password" value=${password}>
 						</div>
 						<div class="clearfix"></div>
 						<div class="separator">

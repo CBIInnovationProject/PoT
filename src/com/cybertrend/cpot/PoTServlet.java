@@ -190,7 +190,7 @@ public class PoTServlet extends HttpServlet {
 			}
 			
 			else {
-				servletContext.getRequestDispatcher("/views/fragments/404.jsp").forward(request, response);
+//				servletContext.getRequestDispatcher("/views/fragments/404.jsp").forward(request, response);
 			}
 			
 		} catch (SQLException e) {

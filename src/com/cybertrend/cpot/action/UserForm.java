@@ -12,9 +12,11 @@ import com.cybertrend.cpot.Interceptor;
 import com.cybertrend.cpot.dao.RoleDAO;
 import com.cybertrend.cpot.dao.ThemesDAO;
 import com.cybertrend.cpot.dao.UserDAO;
-import com.cybertrend.cpot.dao.UserTableauDAO;
 import com.cybertrend.cpot.entity.User;
 import com.cybertrend.cpot.service.TableauService;
+import com.cybertrend.cpot.util.PropertyLooker;
+
+import tableau.api.rest.bindings.TableauCredentialsType;
 
 public class UserForm extends DefaultAction{
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
@@ -25,7 +27,7 @@ public class UserForm extends DefaultAction{
 			if (getCurrentRole(request).getId().equals("0")){
 				getMenuAction(action, request);
 				request.setAttribute("roles", RoleDAO.getList(getCurrentCredentials(request).getSite().getId()));
-				request.setAttribute("userTableaus", UserTableauDAO.getList(getCurrentCredentials(request).getSite().getContentUrl()));
+				request.setAttribute("userTableaus", getTableauService().invokeQueryUsersOnSite(getCurrentCredentials(request), Integer.parseInt(PropertyLooker.get("tableau.users.max").trim()), 0).getUsers().getUser());
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
@@ -43,8 +45,6 @@ public class UserForm extends DefaultAction{
 				user.setCreateBy(getCurrentUser(request).getId());
 				user.setUpdateBy(getCurrentUser(request).getId());
 				user.setUsername(request.getParameter("username"));
-				user.setPassword(request.getParameter("password"));
-				user.setUserTableau(UserTableauDAO.getUserTableauById(request.getParameter("userTableau")));
 				user.setRole(RoleDAO.getRoleById(request.getParameter("role")));
 				user.setFullName(request.getParameter("fullName"));
 				user.setAddress1(request.getParameter("address1"));
@@ -55,7 +55,12 @@ public class UserForm extends DefaultAction{
 				user.setPhone(request.getParameter("phone"));
 				user.setSiteId(getCurrentCredentials(request).getSite().getId());
 				user.setThemes(ThemesDAO.getThemesById("1"));
-				UserDAO.save(user);
+				TableauCredentialsType credentials = getTableauService().invokeSignIn(user.getUsername(), request.getParameter("password"), getCurrentCredentials(request).getSite().getContentUrl()).getCredentials();
+				System.out.println(credentials.getName());
+				if(credentials!=null){
+					user.setSiteUrl(getCurrentCredentials(request).getSite().getContentUrl());
+					UserDAO.save(user);
+				}
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);

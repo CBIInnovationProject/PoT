@@ -26,9 +26,9 @@ public class Login extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		} 
 		User user = UserDAO.getUserById(request.getParameter("userId"));
-		String username = user.getUserTableau().getUsername();
-		String password = user.getUserTableau().getPassword();
-		String contentUrl = (user.getUserTableau().getSiteContentUrl()+" ").trim();
+		String username = user.getUsername();
+		String password = request.getParameter("password");
+		String contentUrl = (user.getSiteUrl()+" ").trim();
 		TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
 		request.getSession().setAttribute(Constants.USER_GA, user);
 		request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
@@ -38,8 +38,9 @@ public class Login extends DefaultAction{
 	public static void selectSite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		List<User> users = UserDAO.getUserByUsernameAndPassword(username, password);
+		List<User> users = UserDAO.getUserByUsername(username);
 		request.setAttribute("users", users );
+		request.setAttribute("password", password);
 		request.setAttribute("username", username);
 		if(users.size()>0) {
 			request.getRequestDispatcher("/views/siteSelector.jsp").forward(request, response);

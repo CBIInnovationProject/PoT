@@ -2,7 +2,7 @@ package com.cybertrend.cpot.entity;
 
 public class User extends BaseEntity{
 	private String username;
-	private String password;
+	private String siteUrl;
 	private String fullName;
 	private String address1;
 	private String address2;
@@ -13,7 +13,6 @@ public class User extends BaseEntity{
 	private String siteId;
 	private Role role;
 	private String photo ;
-	private UserTableau userTableau ;
 	private Themes themes; 
 	
 	public String getUsername() {
@@ -22,11 +21,11 @@ public class User extends BaseEntity{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
-		return password;
+	public String getSiteUrl() {
+		return siteUrl;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setSiteUrl(String siteUrl) {
+		this.siteUrl = siteUrl;
 	}
 	public String getFullName() {
 		return fullName;
@@ -87,12 +86,6 @@ public class User extends BaseEntity{
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
-	}
-	public UserTableau getUserTableau(){
-		return userTableau;
-	}
-	public void setUserTableau(UserTableau userTableau) {
-		this.userTableau = userTableau;
 	}
 	public Themes getThemes() {
 		return themes;

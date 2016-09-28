@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="tableau.api.rest.bindings.UserType"%>
 <%@page import="com.cybertrend.cpot.entity.UserTableau"%>
 <%@page import="com.cybertrend.cpot.entity.Role"%>
 <%@page import="java.util.List"%>
@@ -67,17 +68,7 @@
 							<div class="x_title">
 								<h2>${menu.name}</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
+									
 								</ul>
 								<div class="clearfix"></div>
 							</div>
@@ -85,32 +76,16 @@
 								<!-- Fill with Content -->
 								<div class="tambahan"></div>
 								<form id="formid" method="post" action="userSave.cbi" class="form-horizontal form-label-left">
-
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Username <span class="required">*</span>
-										</label>
-										<div class="col-sm-3">
-											<input type="text" id="username" name="username" required class="form-control col-md-7 col-xs-12">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Password <span class="required">*</span>
-										</label>
-										<div class="col-sm-3">
-											<input type="password" id="password" name="password" required class="form-control col-md-7 col-xs-12">
-										</div>
-									</div>
 									
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">User Tableau<span class="required">*</span>
 										</label>
 										<div class="col-sm-3">
-										<select name="userTableau" id="userTableau" required class="selectpicker">
+										<select name="username" id="username" required class="selectpicker">
 											<option></option>
-											<% List<UserTableau> userTableaus=(List<UserTableau>) request.getAttribute("userTableaus"); 
-				                  			for (UserTableau userTableau: userTableaus) { %>
-												<option data-icon="fa fa-user-secret" value="<%= userTableau.getId() %>" ><%=userTableau.getUsername() %></option>
+											<% List<UserType> userTableaus=(List<UserType>) request.getAttribute("userTableaus"); 
+				                  			for (UserType userTableau: userTableaus) { %>
+												<option data-icon="fa fa-user-secret" value="<%= userTableau.getName() %>" ><%=userTableau.getName() %></option>
 											<%}%>
 										</select>	
 										</div>
@@ -178,6 +153,15 @@
 											<input type="phone" id="phone" name="phone" class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
+									
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">
+										</label>
+										<div class="col-sm-3">
+											<input type="password" id="password" name="password" required class="form-control col-md-7 col-xs-12">
+											&nbsp; <i>Enter User Tableau Password</i> <span class="required">*</span>
+										</div>
+									</div>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
@@ -208,10 +192,9 @@
 	          url = $form.attr( 'action' );
 			var posting = $.post(url, 
 					{ 
-						username:$("#username").val(),
+                		username:$('#username :selected').val(),
 						password:$("#password").val(),
 		                role:$('#role :selected').val(),
-		                userTableau:$('#userTableau :selected').val(),
 						fullName:$("#fullName").val(),
 						address1:$("#address1").val(),
 						address2:$("#address2").val(),
