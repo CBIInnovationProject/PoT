@@ -71,9 +71,9 @@
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Full Name</label>
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Full Name<span class="required">*</span></label>
 										<div class="col-sm-6">
-											<input type="text" id="fullName" name="fullName" class="form-control col-md-7 col-xs-12">
+											<input type="text" id="fullName" name="fullName" required class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
 
@@ -170,11 +170,18 @@
 		                actionsave:1
 					} );
 			
-    		posting.done(function(data) {
-    			$(".tambahan").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+    		posting.done(function(message) {
+    			var alert = "success";
+    			if(message.indexOf('ERROR')!==-1){
+    				alert = "danger";
+    			}
+    			$(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible fade in\" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-                        "</button> "+new Date().toUTCString()+" - User <strong>"+$("#username").val()+"</strong> was successfully added to record"+
+                        "</button> "+new Date().toUTCString()+" - "+message+
                       "</div>");
+    			$(".tambahan").css("display","block");  
+				  $('#username').selectpicker('deselectAll');
+				  $('#role').selectpicker('deselectAll');
                 document.getElementById("formid").reset();
     		});
 		});

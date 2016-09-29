@@ -1,6 +1,7 @@
 package com.cybertrend.cpot.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import com.cybertrend.cpot.dao.RoleDAO;
 import com.cybertrend.cpot.dao.ThemesDAO;
 import com.cybertrend.cpot.dao.UserDAO;
 import com.cybertrend.cpot.entity.User;
-import com.cybertrend.cpot.service.TableauService;
 import com.cybertrend.cpot.util.PropertyLooker;
 
 import tableau.api.rest.bindings.TableauCredentialsType;
@@ -56,10 +56,12 @@ public class UserForm extends DefaultAction{
 				user.setSiteId(getCurrentCredentials(request).getSite().getId());
 				user.setThemes(ThemesDAO.getThemesById("1"));
 				TableauCredentialsType credentials = getTableauService().invokeSignIn(user.getUsername(), request.getParameter("password"), getCurrentCredentials(request).getSite().getContentUrl()).getCredentials();
-				System.out.println(credentials.getName());
+				PrintWriter out = response.getWriter();
 				if(credentials!=null){
 					user.setSiteUrl(getCurrentCredentials(request).getSite().getContentUrl());
-					UserDAO.save(user);
+					out.println(UserDAO.save(user));
+				} else {
+					out.print("ERROR : invalid Password!!");
 				}
 			}
 			else {

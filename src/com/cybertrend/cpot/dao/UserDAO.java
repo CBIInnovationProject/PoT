@@ -68,29 +68,36 @@ public class UserDAO {
 		return output;
 	}
 	
-	public static void save(User user) throws SQLException{
+	public static String save(User user){
 		Connection conn = DatabaseService.getConnection();
 		String sql = "INSERT INTO t_user (id, createBy, createDate, updateBy, updateDate, username, siteUrl, fullName, address1, address2, address3, zip, phone, email, siteId, roleId, themes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement prep = conn.prepareStatement(sql);
-		prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextFloat());
-		prep.setString(2, user.getCreateBy());
-		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-		prep.setString(4, user.getUpdateBy());
-		prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-		
-		prep.setString(6, user.getUsername());
-		prep.setString(7, user.getSiteUrl());
-		prep.setString(8, user.getFullName());
-		prep.setString(9, user.getAddress1());
-		prep.setString(10, user.getAddress2());
-		prep.setString(11, user.getAddress3());
-		prep.setString(12, user.getZip());
-		prep.setString(13, user.getPhone());
-		prep.setString(14, user.getEmail());
-		prep.setString(15, user.getSiteId());
-		prep.setString(16, user.getRole().getId());
-		prep.setString(17, user.getThemes().getId());
-		prep.executeUpdate();
+		PreparedStatement prep;
+		try {
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextFloat());
+			prep.setString(2, user.getCreateBy());
+			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			prep.setString(4, user.getUpdateBy());
+			prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+			
+			prep.setString(6, user.getUsername());
+			prep.setString(7, user.getSiteUrl());
+			prep.setString(8, user.getFullName());
+			prep.setString(9, user.getAddress1());
+			prep.setString(10, user.getAddress2());
+			prep.setString(11, user.getAddress3());
+			prep.setString(12, user.getZip());
+			prep.setString(13, user.getPhone());
+			prep.setString(14, user.getEmail());
+			prep.setString(15, user.getSiteId());
+			prep.setString(16, user.getRole().getId());
+			prep.setString(17, user.getThemes().getId());
+			prep.executeUpdate();
+			return "User <strong>"+user.getUsername()+"</strong> successfully added to record";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 	
 	public static List<User> getList(String siteId) throws SQLException{

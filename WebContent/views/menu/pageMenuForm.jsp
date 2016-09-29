@@ -114,17 +114,21 @@
 		                actionsave:1
 					} );
 			
-    		posting.done(function(data) {
-                $(".tambahan").prepend("<div class=\"alert alert-success alert-dismissible \" role=\"alert\">"+
+    		posting.done(function(message) {
+    			var alert = "success";
+    			if(message.indexOf('ERROR')!==-1){
+    				alert = "danger";
+    			}
+                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-                        "</button> "+new Date().toUTCString()+" - Menu <strong>"+$("#menu_name").val()+"</strong> was successfully added to record"+
+                        "</button> "+new Date().toUTCString()+" - "+message+
                       "</div>");
 				$(".tambahan").css("display","block");  
-					  $('#parentId').selectpicker('deselectAll');
-					  $('#icontype1').selectpicker('deselectAll');
-					  $('.classfontawesome i').removeAttr( "class" );
-					  $('.classidglyphicon i').removeAttr( "class" );
-						ne.setContent("");					  
+				  $('#parentId').selectpicker('deselectAll');
+				  $('#icontype1').selectpicker('deselectAll');
+				  $('.classfontawesome i').removeAttr( "class" );
+				  $('.classidglyphicon i').removeAttr( "class" );
+					ne.setContent("");					  
                 document.getElementById("formid").reset();
     		});
 		});

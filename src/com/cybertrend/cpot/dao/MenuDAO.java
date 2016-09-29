@@ -92,27 +92,34 @@ public class MenuDAO {
 		return menus;
 	}
 	
-	public static void save(Menu menu) throws SQLException {
+	public static String save(Menu menu) {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("INSERT INTO t_menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-		prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextLong());
-		prep.setString(2, menu.getCreateBy());
-		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-		prep.setString(4, menu.getUpdateBy());
-		prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-		
-		prep.setString(6, menu.getName());
-		prep.setString(7, menu.getParentId());
-		prep.setString(8, menu.getAction());
-		prep.setString(9, menu.getContent());
-		prep.setString(10, menu.getContentType());
-		prep.setInt(11, menu.getMenuOrder());
-		prep.setString(12, menu.getIcon());
-		prep.setString(13, menu.getWorkbookId());
-		prep.setString(14, menu.getViewId());
-		prep.setString(15, menu.getSiteId());
-		
-		prep.executeUpdate();
+		PreparedStatement prep;
+		try {
+			prep = conn.prepareStatement("INSERT INTO t_menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextLong());
+			prep.setString(2, menu.getCreateBy());
+			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			prep.setString(4, menu.getUpdateBy());
+			prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+			
+			prep.setString(6, menu.getName());
+			prep.setString(7, menu.getParentId());
+			prep.setString(8, menu.getAction());
+			prep.setString(9, menu.getContent());
+			prep.setString(10, menu.getContentType());
+			prep.setInt(11, menu.getMenuOrder());
+			prep.setString(12, menu.getIcon());
+			prep.setString(13, menu.getWorkbookId());
+			prep.setString(14, menu.getViewId());
+			prep.setString(15, menu.getSiteId());
+			
+			prep.executeUpdate();
+			return "Menu <strong>"+menu.getName()+"</strong> successfully added to record";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 	
 	public static void update(Menu menu) throws SQLException {

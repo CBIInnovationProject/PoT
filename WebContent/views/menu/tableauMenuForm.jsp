@@ -130,11 +130,15 @@
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
 		                actionsave:1
 					} );
-			
-    		posting.done(function(data) {
-                $(".tambahan").prepend("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">"+
+
+    		posting.done(function(message) {
+    			var alert = "success";
+    			if(message.indexOf('ERROR')!==-1){
+    				alert = "danger";
+    			}
+                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-                        "</button> "+new Date().toUTCString()+" - Menu <strong>"+$("#name").val()+"</strong> was successfully added to record"+
+                        "</button> "+new Date().toUTCString()+" - "+message+
                       "</div>");
                 $("select#parentId").find("option#nullselect").attr("selected", true);$(".tambahan").css("display","block");  
 					  $('#parentId').selectpicker('deselectAll');

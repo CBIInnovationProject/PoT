@@ -54,13 +54,13 @@ public class MenuForm extends DefaultAction {
 			menu.setWorkbookId(dashboard!=null?dashboard.getWorkbookId():null);
 			menu.setViewId(dashboard!=null?dashboard.getId():null);
 			menu.setSiteId(getCurrentCredentials(request).getSite().getId());
+			PrintWriter out = response.getWriter();
 			if(request.getParameter("menuId")!=null&&!"".equalsIgnoreCase(request.getParameter("menuId").trim())) {
 				menu.setId(request.getParameter("menuId"));
 				MenuDAO.update(menu);
-			}else
-				MenuDAO.save(menu);
-			PrintWriter out = response.getWriter();
-		    out.println(Constants.SUCCESS);
+			}else {
+			    out.println(MenuDAO.save(menu));
+			}
 		}
 		else {
 			request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);

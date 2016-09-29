@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.cybertrend.cpot.Constants;
 import com.cybertrend.cpot.entity.Role;
 import com.cybertrend.cpot.service.DatabaseService;
 
@@ -34,7 +35,7 @@ public class RoleDAO {
 		return output;
 	}
 	
-	public static boolean save(Role role) {
+	public static String save(Role role) {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep;
 		try {
@@ -50,10 +51,10 @@ public class RoleDAO {
 			prep.setString(8, role.getSiteId());
 			
 			prep.executeUpdate();
-			return true;
+			return "Role <strong>"+role.getName()+"</strong> successfully added to record";
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return e.getMessage();
 		}
 	}
 	
