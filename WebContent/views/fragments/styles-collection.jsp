@@ -8,7 +8,7 @@
 	rel="stylesheet">
 
 <!-- Custom styling plus plugins -->
-<link href="${pageContext.request.contextPath}/css/custom.min.css"
+<link href="${pageContext.request.contextPath}/css/custom_idx.css"
 	rel="stylesheet">
 	
 <!-- Iconpicker -->
