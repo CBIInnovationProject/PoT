@@ -24,7 +24,7 @@ public class UserForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 				request.setAttribute("roles", RoleDAO.getList(getCurrentCredentials(request).getSite().getId()));
 				request.setAttribute("userTableaus", getTableauService().invokeQueryUsersOnSite(getCurrentCredentials(request), Integer.parseInt(PropertyLooker.get("tableau.users.max").trim()), 0).getUsers().getUser());
@@ -40,7 +40,7 @@ public class UserForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				User user = new User();
 				user.setCreateBy(getCurrentUser(request).getId());
 				user.setUpdateBy(getCurrentUser(request).getId());
@@ -75,7 +75,7 @@ public class UserForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 				List<User> users = UserDAO.getList(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("users", users);

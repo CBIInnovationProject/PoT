@@ -102,7 +102,7 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if(getCurrentRole(request).getId().equals("0")){
+			if(Interceptor.isAuthorized(action, request)){
 				Dashboard dashboard = new Dashboard();
 				dashboard.setId(request.getParameter("viewId"));
 				dashboard.setCreateBy(getCurrentUser(request).getUsername());
@@ -123,7 +123,7 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if(getCurrentRole(request).getId().equals("0")){
+			if(Interceptor.isAuthorized(action, request)){
 				DashboardDAO.delete(request.getParameter("viewId"));
 			}
 		}
@@ -165,7 +165,7 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if(getCurrentRole(request).getId().equals("0")){
+			if(Interceptor.isAuthorized(action, request)){
 				List<ProjectType> projects = TableauService.invokeQueryProjects(getCurrentCredentials(request), getCurrentCredentials(request).getSite().getId()).getProject();
 				request.setAttribute("projects", projects);
 			}

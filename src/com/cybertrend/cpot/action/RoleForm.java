@@ -24,7 +24,7 @@ public class RoleForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 			}
 			else {
@@ -38,7 +38,7 @@ public class RoleForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 				Role role = new Role();
 				role.setCreateBy(getCurrentUser(request).getId());
@@ -60,7 +60,7 @@ public class RoleForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 				List<Role> roles = RoleDAO.getList(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("roles", roles);
@@ -76,7 +76,7 @@ public class RoleForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				Role role = RoleDAO.getRoleById(request.getParameter("roleId"));
 				List<Menu> menus = MenuDAO.getMenuParents(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("menus", menus);
@@ -102,7 +102,7 @@ public class RoleForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				Role role = RoleDAO.getRoleById(request.getParameter("roleId"));
 				Menu menu = MenuDAO.getMenuById(request.getParameter("menuId"));
 				RoleMenu roleMenu = new RoleMenu();
@@ -119,7 +119,7 @@ public class RoleForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				Role role = RoleDAO.getRoleById(request.getParameter("roleId"));
 				Menu menu = MenuDAO.getMenuById(request.getParameter("menuId"));
 				RoleMenu roleMenu = new RoleMenu();

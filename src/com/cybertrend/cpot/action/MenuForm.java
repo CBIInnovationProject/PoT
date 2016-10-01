@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cybertrend.cpot.Constants;
 import com.cybertrend.cpot.Interceptor;
 import com.cybertrend.cpot.dao.DashboardDAO;
 import com.cybertrend.cpot.dao.MenuDAO;
@@ -22,7 +21,7 @@ public class MenuForm extends DefaultAction {
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 				request.setAttribute("parentMenus", MenuDAO.getListParentMenu());
 				request.setAttribute("dashboards", DashboardDAO.getListDashboards());
@@ -38,14 +37,14 @@ public class MenuForm extends DefaultAction {
 	}
 	
 	public static void save(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
-		if (getCurrentRole(request).getId().equals("0")){
+		if (Interceptor.isAuthorized(action, request)){
 			getMenuAction(action, request);
 			Menu menu = new Menu();
 			Dashboard dashboard = DashboardDAO.getDashboardById(request.getParameter("dashboard"));
 			menu.setCreateBy(getCurrentUser(request).getUsername());
 			menu.setUpdateBy(getCurrentUser(request).getUsername());
 			menu.setName(request.getParameter("name"));
-			menu.setAction(request.getParameter("name").trim().toLowerCase().replace(" ", "_")+".cbi");
+			menu.setAction((request.getParameter("contentType").trim().equals("")||request.getParameter("contentType")==null)?null:request.getParameter("name").trim().toLowerCase().replace(" ", "_")+".cbi");
 			menu.setParentId((request.getParameter("parentId")==null||request.getParameter("parentId").trim().equals(""))?null:request.getParameter("parentId"));
 			menu.setContent(dashboard!=null?dashboard.getUrl():request.getParameter("content"));
 			menu.setContentType(request.getParameter("contentType"));
@@ -72,7 +71,7 @@ public class MenuForm extends DefaultAction {
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (getCurrentRole(request).getId().equals("0")){
+			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 				List<Menu> menus = MenuDAO.getList(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("menus", menus);

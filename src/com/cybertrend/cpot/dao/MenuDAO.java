@@ -97,7 +97,7 @@ public class MenuDAO {
 		PreparedStatement prep;
 		try {
 			prep = conn.prepareStatement("INSERT INTO t_menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextLong());
+			prep.setString(1, System.currentTimeMillis()+""+new Random().nextLong());
 			prep.setString(2, menu.getCreateBy());
 			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			prep.setString(4, menu.getUpdateBy());

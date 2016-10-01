@@ -40,7 +40,7 @@ public class RoleDAO {
 		PreparedStatement prep;
 		try {
 			prep = conn.prepareStatement("INSERT INTO t_role(id, createBy, createDate, updateBy, updateDate, name, description, siteId ) VALUES (?,?,?,?,?,?,?,?)");
-			prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextLong());
+			prep.setString(1, System.currentTimeMillis()+""+new Random().nextLong());
 			prep.setString(2, role.getCreateBy());
 			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			prep.setString(4, role.getUpdateBy());

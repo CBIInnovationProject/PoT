@@ -74,7 +74,7 @@ public class UserDAO {
 		PreparedStatement prep;
 		try {
 			prep = conn.prepareStatement(sql);
-			prep.setString(1, System.currentTimeMillis()+"-"+new Random().nextFloat());
+			prep.setString(1, System.currentTimeMillis()+""+new Random().nextFloat());
 			prep.setString(2, user.getCreateBy());
 			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			prep.setString(4, user.getUpdateBy());
