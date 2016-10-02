@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
-public class DBPropertyLooker {
+public class ReadConfig {
 	private static Properties properties = new Properties();
 	static {
 		try {
@@ -24,7 +24,7 @@ public class DBPropertyLooker {
 		url = Thread.currentThread().getContextClassLoader().getResource(
 				resourceName);
 		if (url == null) {
-			url = DBPropertyLooker.class.getClassLoader().getResource(resourceName);
+			url = ReadConfig.class.getClassLoader().getResource(resourceName);
 		}
 		return url;
 	}

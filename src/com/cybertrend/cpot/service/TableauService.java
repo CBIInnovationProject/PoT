@@ -52,6 +52,7 @@ import tableau.api.rest.bindings.ObjectFactory;
 import tableau.api.rest.bindings.PermissionsType;
 import tableau.api.rest.bindings.ProjectListType;
 import tableau.api.rest.bindings.ProjectType;
+import tableau.api.rest.bindings.SiteListType;
 import tableau.api.rest.bindings.SiteRoleType;
 import tableau.api.rest.bindings.SiteType;
 import tableau.api.rest.bindings.TableauCredentialsType;
@@ -81,6 +82,7 @@ public class TableauService {
         GET_WORKBOOK(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}")),
         GET_SITE(getApiUriBuilder().path("sites/{siteId}")),
         QUERY_PROJECTS(getApiUriBuilder().path("sites/{siteId}/projects")),
+        QUERY_SITES(getApiUriBuilder().path("sites")),
         QUERY_USERS_ON_SITE(getApiUriBuilder().path("sites/{siteId}/users")),
         UPDATE_USER(getApiUriBuilder().path("sites/{siteId}/users/{userId}")),
         ADD_WORKBOOK_PERMISSIONS(getApiUriBuilder().path("sites/{siteId}/workbooks/{workbookId}/permissions")),
@@ -629,6 +631,18 @@ public class TableauService {
         TsResponse response = get(url, credential.getToken());
         if (response.getProjects() != null) {
             return response.getProjects();
+        }
+        return null;
+    }
+    
+    /*
+     * Query Sites
+     */
+    public static SiteListType invokeQuerySites(TableauCredentialsType credential) {
+        String url = Operation.QUERY_SITES.getUrl();
+        TsResponse response = get(url, credential.getToken());
+        if (response.getSites() != null) {
+            return response.getSites();
         }
         return null;
     }

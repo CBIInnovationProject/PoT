@@ -47,10 +47,10 @@
 		                          <td><ul style="list-style-type: none;padding: 0;margin:0">
 		                          	<li class="dropdown"><a href="#<%= role.getName()%>" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a>
 		                          		<ul class="dropdown-menu" role="menu">
-					                          <li role="presentation"><a href="#">Edit</a></li>
-					                          <li role="presentation"><a href="#" onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')">Set Privilege Menu</a></li>
+					                          <li><a href="#">Edit</a></li>
+					                          <li><a href="#" onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')">Set Privilege Menu</a></li>
 					                          <li class="divider"></li>
-					                          <li role="presentation"><a href="#">Remove</a></li>
+					                          <li><a onclick="doDelete();" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
 			                        	</ul>
 			                        </li>
 			                        </ul>
@@ -127,6 +127,24 @@
 		$("#myModal").on('hidden.bs.modal', function () {
 			$('.dropdown-toggle').dropdown();
     	});
+		
+		function doDelete(){ 
+    	  	swal({   
+	    	  	title: "Are you sure?",   
+	    		text: "You will not be able to recover this imaginary file!",   
+	    		type: "warning",   
+	    		showCancelButton: true,   
+	    		confirmButtonColor: "#DD6B55",   
+	    		confirmButtonText: "Yes, delete it!",   
+	    		cancelButtonText: "No, cancel plx!",   
+	    		closeOnConfirm: false,   
+	    		closeOnCancel: true }, 
+	      	function(isConfirm){   
+	    		if (isConfirm) {     
+	    			swal("Deleted!", "Your imaginary file has been deleted.", "success");   
+	    		}
+	     	});
+     	}
     </script>
 </body>
 </html>

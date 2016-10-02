@@ -25,10 +25,10 @@ import com.cybertrend.cpot.entity.Menu;
 import com.cybertrend.cpot.util.PoTUtil;
 import com.cybertrend.cpot.util.PropertyLooker;
 
-public class PoTServlet extends HttpServlet {
+public class CPoTServlet extends HttpServlet {
 	private ServletContext servletContext;
 
-	public PoTServlet() {
+	public CPoTServlet() {
 		super();
 	}
 

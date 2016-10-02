@@ -13,7 +13,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.CronTriggerImpl;
 
 import com.cybertrend.cpot.job.JobSendEmail;
-import com.cybertrend.cpot.util.DBPropertyLooker;
+import com.cybertrend.cpot.util.ReadConfig;
 
 public class SchedullerService extends HttpServlet {
 	public SchedullerService() {
@@ -32,7 +32,7 @@ public class SchedullerService extends HttpServlet {
 
 		            // Trigger the 
 		            Trigger trigger1 = new CronTriggerImpl("trigger1", "group1");
-		            ((CronTriggerImpl) trigger1).setCronExpression(DBPropertyLooker.get("scheduler.time"));
+		            ((CronTriggerImpl) trigger1).setCronExpression(ReadConfig.get("scheduler.time"));
 
 		            // Tell quartz to schedule the com.cybertrend.cpot.job using our trigger
 		            scheduler.scheduleJob(job1, trigger1);

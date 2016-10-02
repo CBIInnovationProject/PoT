@@ -50,9 +50,19 @@
 							 	<% List<User> users=(List<User>) request.getAttribute("users"); 
 	                  			for (User user: users) { %>
 		                        <tr>
-		                          <td><i class="fa fa-user"></i>&nbsp;&nbsp;<%= user.getUsername()%></td>
-		                          <td><%= user.getCreateDate()!=null?user.getCreateDate():""%></td>
-		                          <td><%= user.getUpdateDate()!=null?user.getUpdateDate():""%></td>
+		                        	<td>
+		                        	<ul style="list-style-type: none;padding: 0;margin:0">
+		                          	<li class="dropdown"><a href="#<%= user.getUsername()%>" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-user"></i>&nbsp;&nbsp;<%= user.getUsername()%></a>
+		                          		<ul class="dropdown-menu" role="menu">
+					                          <li><a href="#">Edit</a></li>
+					                          <li class="divider"></li>
+					                          <li><a onclick="doDelete();" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
+			                        	</ul>
+			                        </li>
+			                        </ul>
+		                        	</td>
+			                        <td><%= user.getCreateDate()!=null?user.getCreateDate():""%></td>
+			                        <td><%= user.getUpdateDate()!=null?user.getUpdateDate():""%></td>
 		                        </tr>
 		                    	<%} %>
 		                      </tbody>
@@ -65,10 +75,16 @@
 			
 			</div>
 			<!-- /page content -->
+		
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true" id="myModal" >
+			  <div class="modal-dialog modal-lg">
+			    <div id="modal-content" ></div>
+			  </div>
+			</div>
 
 		<%@ include file="../fragments/footer.jsp" %>
 		</div>
-	</div>
+	
 
 <%@ include file="../fragments/js-collection.jsp" %>
 
@@ -137,6 +153,24 @@
 
         TableManageButtons.init();
       });
+      
+      function doDelete(){ 
+  	  	swal({   
+	    	  	title: "Are you sure?",   
+	    		text: "You will not be able to recover this imaginary file!",   
+	    		type: "warning",   
+	    		showCancelButton: true,   
+	    		confirmButtonColor: "#DD6B55",   
+	    		confirmButtonText: "Yes, delete it!",   
+	    		cancelButtonText: "No, cancel plx!",   
+	    		closeOnConfirm: false,   
+	    		closeOnCancel: true }, 
+	      	function(isConfirm){   
+	    		if (isConfirm) {     
+	    			swal("Deleted!", "Your imaginary file has been deleted.", "success");   
+	    		}
+	     	});
+   	}
     </script>
 </body>
 </html>

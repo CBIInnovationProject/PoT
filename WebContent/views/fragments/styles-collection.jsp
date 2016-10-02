@@ -8,7 +8,7 @@
 	rel="stylesheet">
 
 <!-- Custom styling plus plugins -->
-<link href="${pageContext.request.contextPath}/css/custom_idx.css"
+<link href="${pageContext.request.contextPath}/css/custom.min.css"
 	rel="stylesheet">
 	
 <!-- Iconpicker -->
@@ -31,3 +31,6 @@ outline: none;
 
 <!-- Clockpicker -->
 <link href="${pageContext.request.contextPath}/vendors/Clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+
+<!-- Sweet ALert -->
+<link href="${pageContext.request.contextPath}/vendors/sweet-alert/sweetalert.css" rel="stylesheet">

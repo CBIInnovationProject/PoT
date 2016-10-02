@@ -44,7 +44,7 @@ public class MenuForm extends DefaultAction {
 			menu.setCreateBy(getCurrentUser(request).getUsername());
 			menu.setUpdateBy(getCurrentUser(request).getUsername());
 			menu.setName(request.getParameter("name"));
-			menu.setAction((request.getParameter("contentType").trim().equals("")||request.getParameter("contentType")==null)?null:request.getParameter("name").trim().toLowerCase().replace(" ", "_")+".cbi");
+			menu.setAction((request.getParameter("contentType")==null||request.getParameter("contentType").trim().equals(""))?null:request.getParameter("name").trim().toLowerCase().replace(" ", "_")+".cbi");
 			menu.setParentId((request.getParameter("parentId")==null||request.getParameter("parentId").trim().equals(""))?null:request.getParameter("parentId"));
 			menu.setContent(dashboard!=null?dashboard.getUrl():request.getParameter("content"));
 			menu.setContentType(request.getParameter("contentType"));

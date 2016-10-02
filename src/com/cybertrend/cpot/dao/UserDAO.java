@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.cybertrend.cpot.Constants;
 import com.cybertrend.cpot.entity.User;
 import com.cybertrend.cpot.service.DatabaseService;
 
@@ -124,5 +125,21 @@ public class UserDAO {
 			users.add(output);
 		}
 		return users;
+	}
+	
+	public static String delete(String param, String value) {
+		Connection conn = DatabaseService.getConnection();
+		String sql = "DELETE FROM t_user WHERE "+param+" = ? ";
+		PreparedStatement prep;
+		try {
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, value);
+			prep.executeUpdate();
+			return Constants.SUCCESS;
+		} 
+		catch(SQLException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 }

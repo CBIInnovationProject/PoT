@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.cybertrend.cpot.util.DBPropertyLooker;
+import com.cybertrend.cpot.util.ReadConfig;
 
 public class DatabaseService {
 	private static Connection connection;
@@ -25,10 +25,10 @@ public class DatabaseService {
 		Connection output = null;
 
 		try {
-			String user = DBPropertyLooker.get("db.username");
-			String pass = DBPropertyLooker.get("db.password");
-			Class.forName(DBPropertyLooker.get("db.driver"));
-			output = DriverManager.getConnection(DBPropertyLooker.get("db.url"), user, pass);
+			String user = ReadConfig.get("db.username");
+			String pass = ReadConfig.get("db.password");
+			Class.forName(ReadConfig.get("db.driver"));
+			output = DriverManager.getConnection(ReadConfig.get("db.url"), user, pass);
 			if (output == null) {
 				System.out.println("connection null!");
 			}

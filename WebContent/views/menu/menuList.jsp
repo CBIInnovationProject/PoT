@@ -51,7 +51,7 @@
 			                          <li><a href="#">Edit</a>
 			                          </li>
 			                          <li class="divider"></li>
-			                          <li><a href="#">Remove</a>
+			                          <li><a onclick="doDelete();" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a>
 			                          </li>
 			                        </ul></li></ul>
 		                          </td>
@@ -75,7 +75,6 @@
 
 		<%@ include file="../fragments/footer.jsp" %>
 		</div>
-	</div>
 
 <%@ include file="../fragments/js-collection.jsp" %>
 
@@ -144,6 +143,24 @@
 
         TableManageButtons.init();
       });
+      
+      function doDelete(){ 
+    	  	swal({   
+	    	  	title: "Are you sure?",   
+	    		text: "You will not be able to recover this imaginary file!",   
+	    		type: "warning",   
+	    		showCancelButton: true,   
+	    		confirmButtonColor: "#DD6B55",   
+	    		confirmButtonText: "Yes, delete it!",   
+	    		cancelButtonText: "No, cancel plx!",   
+	    		closeOnConfirm: false,   
+	    		closeOnCancel: true }, 
+	      	function(isConfirm){   
+	    		if (isConfirm) {     
+	    			swal("Deleted!", "Your imaginary file has been deleted.", "success");   
+	    		}
+	     	});
+     	}
     </script>
 </body>
 </html>

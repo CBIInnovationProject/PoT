@@ -50,3 +50,6 @@
 <script src="${pageContext.request.contextPath}/vendors/bootstrap-select/js/bootstrap-select.min.js"></script>
 <!-- Clockpicker -->
 <script src="${pageContext.request.contextPath}/vendors/Clockpicker/js/bootstrap-clockpicker.min.js"></script>
+
+<!-- Sweet Alert -->
+<script src="${pageContext.request.contextPath}/vendors/sweet-alert/sweetalert.min.js"></script>
