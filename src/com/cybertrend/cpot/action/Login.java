@@ -2,7 +2,6 @@ package com.cybertrend.cpot.action;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ import com.cybertrend.cpot.dao.ThemesDAO;
 import com.cybertrend.cpot.dao.UserDAO;
 import com.cybertrend.cpot.entity.User;
 import com.cybertrend.cpot.util.PropertyLooker;
-import com.cybertrend.cpot.util.ReadConfig;
+import com.cybertrend.cpot.util.StringUtil;
 
 import tableau.api.rest.bindings.SiteType;
 import tableau.api.rest.bindings.TableauCredentialsType;
@@ -32,7 +31,7 @@ public class Login extends DefaultAction{
 		} 
 		User user = UserDAO.getUserById(request.getParameter("userId"));
 		String username = user.getUsername();
-		String password = request.getParameter("password");
+		String password = StringUtil.decodeBase64(request.getParameter("password"));
 		String contentUrl = (user.getSiteUrl()+" ").trim();
 		TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
 		request.getSession().setAttribute(Constants.USER_GA, user);
@@ -44,8 +43,8 @@ public class Login extends DefaultAction{
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
-		if(username.trim().equals(ReadConfig.get("tableau.admin.default"))){
-			System.out.println(UserDAO.delete("username", username.trim()));
+		if(username.trim().equals(PropertyLooker.get("tableau.admin.default"))){
+			UserDAO.delete("username", username.trim());
 			TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, "").getCredentials();
 			List<SiteType> sites = getTableauService().invokeQuerySites(credentials).getSite();
 			User [] userList = new User[sites.size()];
@@ -63,7 +62,7 @@ public class Login extends DefaultAction{
 		List<User> users = UserDAO.getUserByUsername(username);
 		
 		request.setAttribute("users", users );
-		request.setAttribute("password", password);
+		request.setAttribute("password", StringUtil.encodeBase64(password));
 		request.setAttribute("username", username);
 		if(users.size()>0) {
 			if(users.size()==1) {

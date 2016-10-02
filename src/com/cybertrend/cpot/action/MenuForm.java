@@ -23,7 +23,7 @@ public class MenuForm extends DefaultAction {
 		else {
 			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
-				request.setAttribute("parentMenus", MenuDAO.getListParentMenu());
+				request.setAttribute("parentMenus", MenuDAO.getListParentMenu(getCurrentCredentials(request).getSite().getId()));
 				request.setAttribute("dashboards", DashboardDAO.getListDashboards());
 				if(request.getParameter("menuId")!=null) {
 					Menu menu = MenuDAO.getMenuById(request.getParameter("menuId"));

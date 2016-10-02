@@ -22,7 +22,7 @@ import com.cybertrend.cpot.action.ViewStaticPage;
 import com.cybertrend.cpot.action.WorkbookForm;
 import com.cybertrend.cpot.dao.MenuDAO;
 import com.cybertrend.cpot.entity.Menu;
-import com.cybertrend.cpot.util.PoTUtil;
+import com.cybertrend.cpot.util.CPoTUtil;
 import com.cybertrend.cpot.util.PropertyLooker;
 
 public class CPoTServlet extends HttpServlet {
@@ -55,7 +55,7 @@ public class CPoTServlet extends HttpServlet {
 
 		StringBuffer url = request.getRequestURL();
 
-		String action = PoTUtil.convertUrlIntoAction(url.toString());
+		String action = CPoTUtil.convertUrlIntoAction(url.toString());
 
 		if (action != null) {
 			if (!action.equals("")) {

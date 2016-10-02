@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="com.cybertrend.cpot.util.PropertyLooker"%>
+<%@page import="com.cybertrend.cpot.Constants"%>
 <%@page import="com.cybertrend.cpot.dao.RoleDAO"%>
 <%@page import="com.cybertrend.cpot.entity.User"%>
 <%@page import="java.util.List"%>
@@ -48,7 +50,9 @@
 		
 		                      <tbody>
 							 	<% List<User> users=(List<User>) request.getAttribute("users"); 
-	                  			for (User user: users) { %>
+	                  			for (User user: users) { 
+	                  			if(!user.getUsername().trim().equals(((User)session.getAttribute(Constants.USER_GA)).getUsername())||
+	                  					!user.getUsername().trim().equals(PropertyLooker.get("tableau.admin.default"))) {%>
 		                        <tr>
 		                        	<td>
 		                        	<ul style="list-style-type: none;padding: 0;margin:0">
@@ -64,7 +68,7 @@
 			                        <td><%= user.getCreateDate()!=null?user.getCreateDate():""%></td>
 			                        <td><%= user.getUpdateDate()!=null?user.getUpdateDate():""%></td>
 		                        </tr>
-		                    	<%} %>
+		                    	<%} }%>
 		                      </tbody>
 		                    </table>
 	                  </div>

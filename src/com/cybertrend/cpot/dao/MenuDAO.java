@@ -80,10 +80,11 @@ public class MenuDAO {
 		return menu;
 	}
 	
-	public static List<Menu> getListParentMenu() throws SQLException{
+	public static List<Menu> getListParentMenu(String siteId) throws SQLException{
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_menu WHERE contentType IS null");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_menu WHERE contentType IS null AND siteId = ?");
+		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {
 			Menu menu = getMenuById(result.getString("id"));

@@ -1,6 +1,6 @@
 package com.cybertrend.cpot.util;
 
-public class PoTUtil {
+public class CPoTUtil {
 
 	public static String convertUrlIntoAction(String input) {
 		String output = null;

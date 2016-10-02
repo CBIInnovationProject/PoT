@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.cybertrend.cpot.Constants;
 import com.cybertrend.cpot.entity.Role;
 import com.cybertrend.cpot.service.DatabaseService;
 
@@ -61,7 +60,7 @@ public class RoleDAO {
 	public static List<Role> getList(String siteId) throws SQLException {
 		List<Role> roles = new ArrayList<Role>();
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_role WHERE siteId=?");
+		PreparedStatement prep = conn.prepareStatement("SELECT id FROM t_role WHERE siteId=? OR id='0'");
 		prep.setString(1, siteId);
 		ResultSet result = prep.executeQuery();
 		while (result.next()) {

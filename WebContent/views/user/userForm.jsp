@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <%@page import="tableau.api.rest.bindings.UserType"%>
-<%@page import="com.cybertrend.cpot.entity.UserTableau"%>
 <%@page import="com.cybertrend.cpot.entity.Role"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
