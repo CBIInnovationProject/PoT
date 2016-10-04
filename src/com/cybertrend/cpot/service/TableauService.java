@@ -18,7 +18,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-import com.cybertrend.cpot.util.PropertyLooker;
+import com.cybertrend.cpot.util.ReadConfig;
 import com.google.common.io.Files;
 
 import javax.imageio.ImageIO;
@@ -122,7 +122,7 @@ public class TableauService {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(TsRequest.class, TsResponse.class);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(new URL(PropertyLooker.get("tableau.server.schema.url")));
+            Schema schema = schemaFactory.newSchema(new URL(ReadConfig.get("tableau.server.schema.url")));
             s_jaxbMarshaller = jaxbContext.createMarshaller();
             s_jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             s_jaxbUnmarshaller.setSchema(schema);
@@ -133,7 +133,7 @@ public class TableauService {
     }
     
     private static UriBuilder getApiUriBuilder() {
-        return UriBuilder.fromPath(PropertyLooker.get("tableau.server.host") + "/api/"+PropertyLooker.get("tableau.api.version"));
+        return UriBuilder.fromPath(ReadConfig.get("tableau.server.host") + "/api/"+ReadConfig.get("tableau.api.version"));
     }
     
     public static UriBuilder getApiUriBuilder(String path){

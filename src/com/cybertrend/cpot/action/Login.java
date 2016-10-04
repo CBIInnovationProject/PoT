@@ -14,7 +14,7 @@ import com.cybertrend.cpot.dao.RoleDAO;
 import com.cybertrend.cpot.dao.ThemesDAO;
 import com.cybertrend.cpot.dao.UserDAO;
 import com.cybertrend.cpot.entity.User;
-import com.cybertrend.cpot.util.PropertyLooker;
+import com.cybertrend.cpot.util.ReadConfig;
 import com.cybertrend.cpot.util.StringUtil;
 
 import tableau.api.rest.bindings.SiteType;
@@ -36,14 +36,14 @@ public class Login extends DefaultAction{
 		TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
 		request.getSession().setAttribute(Constants.USER_GA, user);
 		request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
-		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(PropertyLooker.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
+		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 	}
 	
 	public static void selectSite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
-		if(username.trim().equals(PropertyLooker.get("tableau.admin.default"))){
+		if(username.trim().equals(ReadConfig.get("tableau.admin.default"))){
 			UserDAO.delete("username", username.trim());
 			TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, "").getCredentials();
 			List<SiteType> sites = getTableauService().invokeQuerySites(credentials).getSite();
@@ -72,7 +72,7 @@ public class Login extends DefaultAction{
 				TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
 				request.getSession().setAttribute(Constants.USER_GA, user);
 				request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
-				request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(PropertyLooker.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
+				request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 			}
 			else request.getRequestDispatcher("/views/siteSelector.jsp").forward(request, response);
 		} else {

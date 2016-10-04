@@ -15,7 +15,7 @@ import com.cybertrend.cpot.entity.Menu;
 import com.cybertrend.cpot.entity.Role;
 import com.cybertrend.cpot.entity.User;
 import com.cybertrend.cpot.service.TableauService;
-import com.cybertrend.cpot.util.PropertyLooker;
+import com.cybertrend.cpot.util.ReadConfig;
 
 import tableau.api.rest.bindings.TableauCredentialsType;
 import tableau.api.rest.bindings.WorkbookType;
@@ -39,7 +39,7 @@ public class DefaultAction{
 	}
 	
 	public static String getHostName(){
-		return PropertyLooker.get("tableau.server.host");
+		return ReadConfig.get("tableau.server.host");
 	}
 	
 	public static String treeMenu(HttpServletRequest request) throws ServletException, IOException, SQLException {

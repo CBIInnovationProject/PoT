@@ -32,6 +32,7 @@
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
+							<div class="tambahan"></div>
 		                    <table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
@@ -45,13 +46,14 @@
 		
 		                      <tbody>
 							 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
-	                  			for (Menu menu: menus) { %>
+	                  			int i = 0;
+							 	for (Menu menu: menus) { %>
 		                        <tr>
 		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-sitemap"></i>&nbsp;&nbsp;<%= menu.getName()%></a><ul class="dropdown-menu" role="menu">
 			                          <li><a href="#">Edit</a>
 			                          </li>
 			                          <li class="divider"></li>
-			                          <li><a onclick="doDelete();" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a>
+			                          <li><a onclick="doDelete('<%=menu.getId()%>','<%= menu.getName()%>','<%=i%>')" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a>
 			                          </li>
 			                        </ul></li></ul>
 		                          </td>
@@ -61,7 +63,7 @@
 		                          <td><%= menu.getUpdateDate()!=null?menu.getUpdateDate():""%></td>
 		                          
 		                        </tr>
-		                    	<%} %>
+		                    	<%i++; } %>
 		                      </tbody>
 		                    </table>
 	                  </div>
@@ -77,6 +79,7 @@
 		</div>
 
 <%@ include file="../fragments/js-collection.jsp" %>
+<script src="${pageContext.request.contextPath}/js/fnReloadAjax.js}"></script>
 
     <!-- Datatables -->
     <script>
@@ -144,22 +147,39 @@
         TableManageButtons.init();
       });
       
-      function doDelete(){ 
+      
+      function doDelete(menuId, menuName, idRow){ 
     	  	swal({   
-	    	  	title: "Are you sure?",   
-	    		text: "You will not be able to recover this imaginary file!",   
-	    		type: "warning",   
-	    		showCancelButton: true,   
-	    		confirmButtonColor: "#DD6B55",   
-	    		confirmButtonText: "Yes, delete it!",   
-	    		cancelButtonText: "No, cancel plx!",   
-	    		closeOnConfirm: false,   
-	    		closeOnCancel: true }, 
-	      	function(isConfirm){   
-	    		if (isConfirm) {     
-	    			swal("Deleted!", "Your imaginary file has been deleted.", "success");   
-	    		}
-	     	});
+  	    	  	title: "Are you sure to delete menu '"+menuName+"'?",   
+  	    		text: "You will not be able to recover this data!",   
+  	    		type: "warning",   
+  	    		showCancelButton: true,   
+  	    		confirmButtonColor: "#DD6B55",   
+  	    		confirmButtonText: "Yes, delete it!",   
+  	    		cancelButtonText: "No, cancel plx!",   
+  	    		closeOnConfirm: true,   
+  	    		closeOnCancel: true }, 
+  	      	function(isConfirm){   
+  	    		if (isConfirm) {     
+  	    			var posting = $.post("menuDelete.cbi", 
+  	  					{ 
+  	  						menuId:menuId
+  	  					} );
+  	  			
+  	      		posting.done(function(message) {
+  	      			var alert = "success";
+  	      			if(message.indexOf('ERROR')!==-1){
+  	      				alert = "danger";
+  	      			}
+  	                else{ 
+	  	  	      		 $('#datatable').dataTable().fnDeleteRow(idRow);
+  	    			}
+  	                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
+   	                       "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
+   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>");
+  	      		});
+  	    		}
+  	     	});
      	}
     </script>
 </body>

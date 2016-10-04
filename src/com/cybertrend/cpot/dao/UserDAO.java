@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 import com.cybertrend.cpot.Constants;
 import com.cybertrend.cpot.entity.User;
@@ -75,7 +75,7 @@ public class UserDAO {
 		PreparedStatement prep;
 		try {
 			prep = conn.prepareStatement(sql);
-			prep.setString(1, System.currentTimeMillis()+""+new Random().nextFloat());
+			prep.setString(1, UUID.randomUUID().toString());
 			prep.setString(2, user.getCreateBy());
 			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			prep.setString(4, user.getUpdateBy());

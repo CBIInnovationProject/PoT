@@ -14,7 +14,7 @@ import com.cybertrend.cpot.dao.RoleDAO;
 import com.cybertrend.cpot.dao.ThemesDAO;
 import com.cybertrend.cpot.dao.UserDAO;
 import com.cybertrend.cpot.entity.User;
-import com.cybertrend.cpot.util.PropertyLooker;
+import com.cybertrend.cpot.util.ReadConfig;
 
 import tableau.api.rest.bindings.TableauCredentialsType;
 
@@ -27,7 +27,7 @@ public class UserForm extends DefaultAction{
 			if (Interceptor.isAuthorized(action, request)){
 				getMenuAction(action, request);
 				request.setAttribute("roles", RoleDAO.getList(getCurrentCredentials(request).getSite().getId()));
-				request.setAttribute("userTableaus", getTableauService().invokeQueryUsersOnSite(getCurrentCredentials(request), Integer.parseInt(PropertyLooker.get("tableau.users.max").trim()), 0).getUsers().getUser());
+				request.setAttribute("userTableaus", getTableauService().invokeQueryUsersOnSite(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.users.max").trim()), 0).getUsers().getUser());
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
@@ -79,6 +79,23 @@ public class UserForm extends DefaultAction{
 				getMenuAction(action, request);
 				List<User> users = UserDAO.getList(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("users", users);
+			}
+			else {
+				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
+			}
+		}
+	}
+	
+	public static void delete(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+		if(Interceptor.isLogin(request)==false){
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
+		else {
+			if (Interceptor.isAuthorized(action, request)){
+				getMenuAction(action, request);
+				String userId = request.getParameter("userId");
+				PrintWriter out = response.getWriter();
+				out.write(UserDAO.delete("id",userId));
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);

@@ -31,6 +31,7 @@
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
+							<div class="tambahan"></div>
 		                    <table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
@@ -42,7 +43,9 @@
 		
 		                      <tbody>
 							 	<% List<Role> roles=(List<Role>) request.getAttribute("roles"); 
-	                  			for (Role role: roles) { %>
+							 	int i = 0;
+	                  			for (Role role: roles) { 
+	                  			if(!role.getId().trim().equals("0")) {%>
 		                        <tr>
 		                          <td><ul style="list-style-type: none;padding: 0;margin:0">
 		                          	<li class="dropdown"><a href="#<%= role.getName()%>" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a>
@@ -50,7 +53,7 @@
 					                          <li><a href="#">Edit</a></li>
 					                          <li><a href="#" onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')">Set Privilege Menu</a></li>
 					                          <li class="divider"></li>
-					                          <li><a onclick="doDelete();" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
+					                          <li><a onclick="doDelete('<%=role.getId()%>','<%=role.getName()%>','<%=i %>');" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
 			                        	</ul>
 			                        </li>
 			                        </ul>
@@ -58,7 +61,7 @@
 		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
 		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
 		                        </tr>
-		                    	<%} %>
+		                    	<%i++; } } %>
 		                      </tbody>
 		                    </table>
 	                  </div>
@@ -128,20 +131,36 @@
 			$('.dropdown-toggle').dropdown();
     	});
 		
-		function doDelete(){ 
+		function doDelete(roleId, roleName, idRow){ 
     	  	swal({   
-	    	  	title: "Are you sure?",   
-	    		text: "You will not be able to recover this imaginary file!",   
+	    	  	title: "Are you sure to delete role '"+roleName+"'?",
+	    		text: "You will not be able to recover this data!",   
 	    		type: "warning",   
 	    		showCancelButton: true,   
 	    		confirmButtonColor: "#DD6B55",   
 	    		confirmButtonText: "Yes, delete it!",   
 	    		cancelButtonText: "No, cancel plx!",   
-	    		closeOnConfirm: false,   
+	    		closeOnConfirm: true,   
 	    		closeOnCancel: true }, 
 	      	function(isConfirm){   
-	    		if (isConfirm) {     
-	    			swal("Deleted!", "Your imaginary file has been deleted.", "success");   
+	    			if (isConfirm) {     
+	  	    			var posting = $.post("roleDelete.cbi", 
+	  	  					{ 
+	  	  						roleId:roleId
+	  	  					} );
+	  	  			
+	  	      		posting.done(function(message) {
+	  	      			var alert = "success";
+	  	      			if(message.indexOf('ERROR')!==-1){
+	  	      				alert = "danger";
+	  	      			}
+	  	                else{ 
+		  	  	      		 $('#datatable').dataTable().fnDeleteRow(idRow, null, true);
+	  	    			}
+	  	                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
+	   	                       "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
+	   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>");
+	  	      		});
 	    		}
 	     	});
      	}

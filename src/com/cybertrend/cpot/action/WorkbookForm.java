@@ -18,7 +18,7 @@ import com.cybertrend.cpot.dao.DashboardDAO;
 import com.cybertrend.cpot.entity.Dashboard;
 import com.cybertrend.cpot.entity.WorkbookTableau;
 import com.cybertrend.cpot.service.TableauService;
-import com.cybertrend.cpot.util.PropertyLooker;
+import com.cybertrend.cpot.util.ReadConfig;
 
 import tableau.api.rest.bindings.ProjectType;
 import tableau.api.rest.bindings.UserType;
@@ -30,7 +30,7 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
-			request.setAttribute("workbooks", getTableauService().invokeQueryWorkbooks(getCurrentCredentials(request), Integer.parseInt(PropertyLooker.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
+			request.setAttribute("workbooks", getTableauService().invokeQueryWorkbooks(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 			request.setAttribute("credential", getCurrentCredentials(request));
 			if(request.getParameter("workbookId")!=null){
 				if(request.getParameter("url")!=null){
@@ -73,7 +73,7 @@ public class WorkbookForm extends DefaultAction{
 			UserType user = getTableauService().invokeGetUser(getCurrentCredentials(request), workbookType.getOwner().getId());
 			request.setAttribute("workbook", workbook);
 			request.setAttribute("owner", user);
-			request.setAttribute("views", getTableauService().invokeQueryViews(getCurrentCredentials(request), workbookType.getId(), Integer.parseInt(PropertyLooker.get("tableau.views.max").trim()), 0).getView());
+			request.setAttribute("views", getTableauService().invokeQueryViews(getCurrentCredentials(request), workbookType.getId(), Integer.parseInt(ReadConfig.get("tableau.views.max").trim()), 0).getView());
 			request.setAttribute("createDate", workbookType.getCreatedAt().toString().replace("T", " ").replace("Z", " "));
 			request.setAttribute("updateDate", workbookType.getUpdatedAt().toString().replace("T", " ").replace("Z", " "));
 			

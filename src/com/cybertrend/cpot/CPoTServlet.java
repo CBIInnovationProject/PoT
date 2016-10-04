@@ -23,7 +23,7 @@ import com.cybertrend.cpot.action.WorkbookForm;
 import com.cybertrend.cpot.dao.MenuDAO;
 import com.cybertrend.cpot.entity.Menu;
 import com.cybertrend.cpot.util.CPoTUtil;
-import com.cybertrend.cpot.util.PropertyLooker;
+import com.cybertrend.cpot.util.ReadConfig;
 
 public class CPoTServlet extends HttpServlet {
 	private ServletContext servletContext;
@@ -44,9 +44,9 @@ public class CPoTServlet extends HttpServlet {
 
 	protected void service(String method, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(PropertyLooker.get("proxy.host")!=null&&PropertyLooker.get("proxy.host").trim().length()>0) {
-			System.setProperty("http.proxyHost", PropertyLooker.get("proxy.host"));
-	        System.setProperty("http.proxyPort", PropertyLooker.get("proxy.port"));
+		if(ReadConfig.get("proxy.host")!=null&&ReadConfig.get("proxy.host").trim().length()>0) {
+			System.setProperty("http.proxyHost", ReadConfig.get("proxy.host"));
+	        System.setProperty("http.proxyPort", ReadConfig.get("proxy.port"));
 		}
 		
 		if (servletContext == null) {
@@ -128,6 +128,10 @@ public class CPoTServlet extends HttpServlet {
 				MenuForm.save(request, response, action);
 			}
 			
+			else if (action.equals("menuDelete.cbi")){
+				MenuForm.delete(request, response, action);
+			}
+			
 			else if(action.equals("roleForm.cbi")) {
 				RoleForm.execute(request, response, action);
 				request.getRequestDispatcher("/views/role/roleForm.jsp").forward(request, response);
@@ -147,6 +151,10 @@ public class CPoTServlet extends HttpServlet {
 				RoleForm.save(request, response, action);
 			}
 			
+			else if(action.equals("roleDelete.cbi")) {
+				RoleForm.delete(request, response, action);
+			}
+			
 			else if(action.equals("userForm.cbi")) {
 				UserForm.execute(request, response, action);
 				request.getRequestDispatcher("/views/user/userForm.jsp").forward(request, response);
@@ -159,6 +167,10 @@ public class CPoTServlet extends HttpServlet {
 			else if(action.equals("userList.cbi")) {
 				UserForm.list(request, response, action);
 				request.getRequestDispatcher("/views/user/userList.jsp").forward(request, response);
+			}
+			
+			else if(action.equals("userDelete.cbi")) {
+				UserForm.delete(request, response, action);
 			}
 			
 			else if (action.equals("tableauMenuForm.cbi")){

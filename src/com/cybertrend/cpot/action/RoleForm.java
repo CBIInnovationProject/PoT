@@ -129,4 +129,22 @@ public class RoleForm extends DefaultAction{
 			}
 		}
 	}
+	
+
+	public static void delete(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+		if(Interceptor.isLogin(request)==false){
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
+		else {
+			if (Interceptor.isAuthorized(action, request)){
+				getMenuAction(action, request);
+				String menuId = request.getParameter("roleId");
+				PrintWriter out = response.getWriter();
+				out.write(RoleDAO.delete(RoleDAO.getRoleById(menuId)));
+			}
+			else {
+				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
+			}
+		}
+	}
 }

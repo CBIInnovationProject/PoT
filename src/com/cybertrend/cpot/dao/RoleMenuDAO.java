@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 import com.cybertrend.cpot.entity.Menu;
 import com.cybertrend.cpot.entity.Role;
@@ -45,7 +45,7 @@ public class RoleMenuDAO {
 	public static void save(RoleMenu roleMenu) throws SQLException {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep = conn.prepareStatement("INSERT INTO t_rolemenu(id, createBy, createDate, updateBy, updateDate, role, menu, menuOrder) VALUES (?,?,?,?,?,?,?,?)");
-		prep.setString(1, System.currentTimeMillis()+""+new Random().nextLong());
+		prep.setString(1, UUID.randomUUID().toString());
 		prep.setString(2, roleMenu.getCreateBy());
 		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 		prep.setString(4, roleMenu.getUpdateBy());

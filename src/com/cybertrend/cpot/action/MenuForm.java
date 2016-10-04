@@ -81,4 +81,21 @@ public class MenuForm extends DefaultAction {
 			}
 		}
 	}
+	
+	public static void delete(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
+		if(Interceptor.isLogin(request)==false){
+			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		}
+		else {
+			if (Interceptor.isAuthorized(action, request)){
+				getMenuAction(action, request);
+				String menuId = request.getParameter("menuId");
+				PrintWriter out = response.getWriter();
+				out.write(MenuDAO.delete(MenuDAO.getMenuById(menuId)));
+			}
+			else {
+				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
+			}
+		}
+	}
 }

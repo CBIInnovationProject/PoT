@@ -45,14 +45,14 @@ public class Interceptor extends DefaultAction {
 				}
 			} else {
 				if (action.equalsIgnoreCase(menu.getAction())){
-					if(menu.getContentType().equals(Constants.CONTENT_TYPE_TABLEAU)){
-						List<WorkbookType> workbooks = new ArrayList<>();
-						for(WorkbookType workbook:workbooks){
-							if(workbook.getId().equals(menu.getWorkbookId())){
-								return true;
-							}
-						}
-					} else
+//					if(menu.getContentType().equals(Constants.CONTENT_TYPE_TABLEAU)){
+//						List<WorkbookType> workbooks = new ArrayList<>();
+//						for(WorkbookType workbook:workbooks){
+//							if(workbook.getId().equals(menu.getWorkbookId())){
+//								return true;
+//							}
+//						}
+//					} else
 						return true;
 				}
 			}

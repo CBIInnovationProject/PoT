@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@page import="com.cybertrend.cpot.util.PropertyLooker"%>
+<%@page import="com.cybertrend.cpot.util.ReadConfig"%>
 <%@page import="com.cybertrend.cpot.Constants"%>
 <%@page import="com.cybertrend.cpot.dao.RoleDAO"%>
 <%@page import="com.cybertrend.cpot.entity.User"%>
@@ -39,6 +39,7 @@
 	                  </div>
 	                  <div class="x_content">
 							<!-- X-Content -->
+							<div class="tambahan"></div>
 		                    <table id="datatable" class="table table-striped table-bordered">
 		                      <thead>
 		                        <tr>
@@ -50,9 +51,10 @@
 		
 		                      <tbody>
 							 	<% List<User> users=(List<User>) request.getAttribute("users"); 
+							 	int i = 0;
 	                  			for (User user: users) { 
-	                  			if(!user.getUsername().trim().equals(((User)session.getAttribute(Constants.USER_GA)).getUsername())||
-	                  					!user.getUsername().trim().equals(PropertyLooker.get("tableau.admin.default"))) {%>
+	                  			if(!user.getUsername().trim().equals(((User)session.getAttribute(Constants.USER_GA)).getUsername())&&
+	                  					!user.getUsername().trim().equals(ReadConfig.get("tableau.admin.default"))) {%>
 		                        <tr>
 		                        	<td>
 		                        	<ul style="list-style-type: none;padding: 0;margin:0">
@@ -60,7 +62,7 @@
 		                          		<ul class="dropdown-menu" role="menu">
 					                          <li><a href="#">Edit</a></li>
 					                          <li class="divider"></li>
-					                          <li><a onclick="doDelete();" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
+					                          <li><a onclick="doDelete('<%=user.getId() %>','<%=user.getUsername() %>','<%=i %>');" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
 			                        	</ul>
 			                        </li>
 			                        </ul>
@@ -68,7 +70,7 @@
 			                        <td><%= user.getCreateDate()!=null?user.getCreateDate():""%></td>
 			                        <td><%= user.getUpdateDate()!=null?user.getUpdateDate():""%></td>
 		                        </tr>
-		                    	<%} }%>
+		                    	<%i++; } }%>
 		                      </tbody>
 		                    </table>
 	                  </div>
@@ -158,20 +160,36 @@
         TableManageButtons.init();
       });
       
-      function doDelete(){ 
+      function doDelete(userId, userName, idRow){ 
   	  	swal({   
-	    	  	title: "Are you sure?",   
-	    		text: "You will not be able to recover this imaginary file!",   
+	    	  	title: "Are you sure to delete user '"+userName+"'?",   
+	    		text: "You will not be able to recover this data!",   
 	    		type: "warning",   
 	    		showCancelButton: true,   
 	    		confirmButtonColor: "#DD6B55",   
 	    		confirmButtonText: "Yes, delete it!",   
 	    		cancelButtonText: "No, cancel plx!",   
-	    		closeOnConfirm: false,   
+	    		closeOnConfirm: true,   
 	    		closeOnCancel: true }, 
 	      	function(isConfirm){   
-	    		if (isConfirm) {     
-	    			swal("Deleted!", "Your imaginary file has been deleted.", "success");   
+	    			if (isConfirm) {     
+	  	    			var posting = $.post("userDelete.cbi", 
+	  	  					{ 
+	  	  						userId:userId
+	  	  					} );
+	  	  			
+	  	      		posting.done(function(message) {
+	  	      			var alert = "success";
+	  	      			if(message.indexOf('ERROR')!==-1){
+	  	      				alert = "danger";
+	  	      			}
+	  	                else{ 
+		  	  	      		 $('#datatable').dataTable().fnDeleteRow(idRow);
+	  	    			}
+	  	                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
+	   	                       "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
+	   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>");
+	  	      		});
 	    		}
 	     	});
    	}

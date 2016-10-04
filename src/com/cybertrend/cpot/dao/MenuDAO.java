@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 import com.cybertrend.cpot.entity.Menu;
 import com.cybertrend.cpot.service.DatabaseService;
@@ -98,7 +98,7 @@ public class MenuDAO {
 		PreparedStatement prep;
 		try {
 			prep = conn.prepareStatement("INSERT INTO t_menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			prep.setString(1, System.currentTimeMillis()+""+new Random().nextLong());
+			prep.setString(1, UUID.randomUUID().toString());
 			prep.setString(2, menu.getCreateBy());
 			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			prep.setString(4, menu.getUpdateBy());
@@ -144,11 +144,18 @@ public class MenuDAO {
 		prep.executeUpdate();
 	}
 	
-	public static void delete(Menu menu) throws SQLException {
+	public static String delete(Menu menu){
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("DELETE FROM t_menu WHERE id=?");
-		prep.setString(1, menu.getId());
-		prep.executeUpdate();
+		PreparedStatement prep;
+		try {
+			prep = conn.prepareStatement("DELETE FROM t_menu WHERE id=?");
+			prep.setString(1, menu.getId());
+			prep.executeUpdate();
+			return "Menu <strong>"+menu.getName()+"</strong> has been deleted";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 	
 	public static List<Menu> getList(String siteId) throws SQLException {
