@@ -8,11 +8,12 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+import org.apache.log4j.Logger;
 import com.cybertrend.cpot.entity.Menu;
 import com.cybertrend.cpot.service.DatabaseService;
 
 public class MenuDAO {
+	static Logger logger = Logger.getLogger(MenuDAO.class);
 	
 	public static List<Menu> getMenusByParentId(String parentId) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
@@ -96,8 +97,10 @@ public class MenuDAO {
 	public static String save(Menu menu) {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep;
+		String sql = "INSERT INTO t_menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
-			prep = conn.prepareStatement("INSERT INTO t_menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
 			prep.setString(1, UUID.randomUUID().toString());
 			prep.setString(2, menu.getCreateBy());
 			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
@@ -116,9 +119,11 @@ public class MenuDAO {
 			prep.setString(15, menu.getSiteId());
 			
 			prep.executeUpdate();
+			logger.info("Insert Menu Success!!!");
 			return "Menu <strong>"+menu.getName()+"</strong> successfully added to record";
 		} catch (SQLException e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 	}

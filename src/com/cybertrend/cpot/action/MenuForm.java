@@ -3,11 +3,13 @@ package com.cybertrend.cpot.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 import com.cybertrend.cpot.Interceptor;
 import com.cybertrend.cpot.dao.DashboardDAO;
@@ -16,12 +18,16 @@ import com.cybertrend.cpot.entity.Dashboard;
 import com.cybertrend.cpot.entity.Menu;
 
 public class MenuForm extends DefaultAction {
+	static Logger logger = Logger.getLogger(MenuForm.class);
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
 				request.setAttribute("parentMenus", MenuDAO.getListParentMenu(getCurrentCredentials(request).getSite().getId()));
 				request.setAttribute("dashboards", DashboardDAO.getListDashboards());
@@ -38,6 +44,9 @@ public class MenuForm extends DefaultAction {
 	
 	public static void save(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if (Interceptor.isAuthorized(action, request)){
+			logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+			logger.info("Activity : "+action);
+			logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 			getMenuAction(action, request);
 			Menu menu = new Menu();
 			Dashboard dashboard = DashboardDAO.getDashboardById(request.getParameter("dashboard"));
@@ -72,6 +81,9 @@ public class MenuForm extends DefaultAction {
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
 				List<Menu> menus = MenuDAO.getList(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("menus", menus);
@@ -88,6 +100,9 @@ public class MenuForm extends DefaultAction {
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
 				String menuId = request.getParameter("menuId");
 				PrintWriter out = response.getWriter();

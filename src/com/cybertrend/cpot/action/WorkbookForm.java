@@ -1,30 +1,27 @@
 package com.cybertrend.cpot.action;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import org.apache.log4j.Logger;
 
 import com.cybertrend.cpot.Constants;
 import com.cybertrend.cpot.Interceptor;
 import com.cybertrend.cpot.dao.DashboardDAO;
 import com.cybertrend.cpot.entity.Dashboard;
 import com.cybertrend.cpot.entity.WorkbookTableau;
-import com.cybertrend.cpot.service.TableauService;
 import com.cybertrend.cpot.util.ReadConfig;
 
-import tableau.api.rest.bindings.ProjectType;
 import tableau.api.rest.bindings.UserType;
 import tableau.api.rest.bindings.WorkbookType;
 
 public class WorkbookForm extends DefaultAction{
+	static Logger logger = Logger.getLogger(WorkbookForm.class);
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
@@ -53,6 +50,9 @@ public class WorkbookForm extends DefaultAction{
 					}
 				}
 			} else{ 
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				request.getRequestDispatcher("/views/workbook/workbookList.jsp").forward(request, response);
 			}
 		}
@@ -66,6 +66,9 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
+			logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+			logger.info("Activity : "+action);
+			logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 			WorkbookType workbookType = getTableauService().invokeGetWorkbook(getCurrentCredentials(request), request.getParameter("workbookId").toString()) ;
 			WorkbookTableau workbook = new WorkbookTableau();
 			workbook.setWorkbookType(workbookType);
@@ -88,6 +91,9 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
+			logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+			logger.info("Activity : "+action);
+			logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 			request.setAttribute("menuName", "<a href=\"workbook.cbi\">Workbook</a> <i class=\"fa fa-angle-double-right\"></i> "+request.getParameter("url").split("/")[1]+"");
 			request.setAttribute("url", request.getParameter("url"));
 			request.getRequestDispatcher("/views/workbook/viewDashboard.jsp").forward(request, response);
@@ -103,6 +109,9 @@ public class WorkbookForm extends DefaultAction{
 		}
 		else {
 			if(Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				Dashboard dashboard = new Dashboard();
 				dashboard.setId(request.getParameter("viewId"));
 				dashboard.setCreateBy(getCurrentUser(request).getUsername());
@@ -124,50 +133,10 @@ public class WorkbookForm extends DefaultAction{
 		}
 		else {
 			if(Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				DashboardDAO.delete(request.getParameter("viewId"));
-			}
-		}
-	}
-	
-	/*
-	 * publish Workbook
-	 */
-	public static void publishWorkbook(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
-		String SAVE_DIR = "uploadWorkbook";
-		String appPath = request.getServletContext().getRealPath("");
-		String savePath = appPath + File.separator + SAVE_DIR;
-		String project = request.getParameter("project");
-		String workbookName = request.getParameter("workbookName");
-		
-		// creates the save directory if it does not exists
-		File workbookFile = new File(savePath);
-		if (!workbookFile.exists()) {
-			workbookFile.mkdir();
-		}
-	
-		for (Part part : request.getParts()) {
-			String fileName = "tableauwb"+System.currentTimeMillis()+ ".twbx";
-			part.write(savePath + File.separator + fileName);
-		}
-		
-		boolean chunkedPublish = true;
-
-        // Publishes the workbook as a multipart request
-        WorkbookType publishedWorkbook = TableauService.invokePublishWorkbook(getCurrentCredentials(request), getCurrentCredentials(request).getSite().getId(),
-                project, workbookName, workbookFile, chunkedPublish);
-	}
-	
-	/*
-	 * publish Workbook Form
-	 */
-	public static void publishWorkbookForm(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
-		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
-		}
-		else {
-			if(Interceptor.isAuthorized(action, request)){
-				List<ProjectType> projects = TableauService.invokeQueryProjects(getCurrentCredentials(request), getCurrentCredentials(request).getSite().getId()).getProject();
-				request.setAttribute("projects", projects);
 			}
 		}
 	}

@@ -184,11 +184,12 @@
 	  	      				alert = "danger";
 	  	      			}
 	  	                else{ 
-		  	  	      		 $('#datatable').dataTable().fnDeleteRow(idRow);
+	  	                	table = $('#datatable').dataTable();
+	  	                	table.fnDeleteRow(idRow);
 	  	    			}
-	  	                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
+	  	                $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
 	   	                       "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-	   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>");
+	   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>").fadeIn('slow');
 	  	      		});
 	    		}
 	     	});

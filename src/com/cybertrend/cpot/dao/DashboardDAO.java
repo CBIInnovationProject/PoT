@@ -6,28 +6,48 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 import com.cybertrend.cpot.entity.Dashboard;
 import com.cybertrend.cpot.service.DatabaseService;
 
 public class DashboardDAO {
-	public static void add(Dashboard dashboard) throws SQLException {
+	static Logger logger = Logger.getLogger(DashboardDAO.class);
+	public static void add(Dashboard dashboard) {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("INSERT INTO t_dashboard(id, createDate, createBy, url, workbookId, siteId) VALUES (?,?,?,?,?,?)");
-		prep.setString(1, dashboard.getId());
-		prep.setTimestamp(2, dashboard.getCreateDate());
-		prep.setString(3, dashboard.getCreateBy());
-		prep.setString(4, dashboard.getUrl());
-		prep.setString(5, dashboard.getWorkbookId());
-		prep.setString(6, dashboard.getSiteId());
-		prep.executeUpdate();
+		PreparedStatement prep;
+		String sql = "INSERT INTO t_dashboard(id, createDate, createBy, url, workbookId, siteId) VALUES (?,?,?,?,?,?)";
+		try {
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, dashboard.getId());
+			prep.setTimestamp(2, dashboard.getCreateDate());
+			prep.setString(3, dashboard.getCreateBy());
+			prep.setString(4, dashboard.getUrl());
+			prep.setString(5, dashboard.getWorkbookId());
+			prep.setString(6, dashboard.getSiteId());
+			prep.executeUpdate();
+			logger.info("Insert dashboard Success !!!");
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
-	public static void delete(String id) throws SQLException {
+	public static void delete(String id) {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("DELETE FROM t_dashboard WHERE id = ?");
-		prep.setString(1, id);
-		prep.executeUpdate();
+		PreparedStatement prep;
+		String sql = "DELETE FROM t_dashboard WHERE id = ?";
+		try {
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, id);
+			prep.executeUpdate();
+			logger.info("Delete dashboard Success !!!");
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	public static boolean isDasboardExist(String id) throws SQLException {

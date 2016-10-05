@@ -136,10 +136,10 @@
     			if(message.indexOf('ERROR')!==-1){
     				alert = "danger";
     			}
-                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
+                $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - "+message+
-                      "</div>");
+                      "</div>").fadeIn('slow');
                 $("select#parentId").find("option#nullselect").attr("selected", true);$(".tambahan").css("display","block");  
 					  $('#parentId').selectpicker('deselectAll');
 					  $('#icontype1').selectpicker('deselectAll');

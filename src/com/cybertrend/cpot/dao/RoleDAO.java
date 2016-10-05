@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import com.cybertrend.cpot.entity.Role;
 import com.cybertrend.cpot.service.DatabaseService;
 
 public class RoleDAO {
+	static Logger logger = Logger.getLogger(RoleDAO.class);
 	
 	public static Role getRoleById(String id) throws SQLException {
 		Role output = null;
@@ -37,8 +39,10 @@ public class RoleDAO {
 	public static String save(Role role) {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep;
+		String sql = "INSERT INTO t_role(id, createBy, createDate, updateBy, updateDate, name, description, siteId ) VALUES (?,?,?,?,?,?,?,?)";
 		try {
-			prep = conn.prepareStatement("INSERT INTO t_role(id, createBy, createDate, updateBy, updateDate, name, description, siteId ) VALUES (?,?,?,?,?,?,?,?)");
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
 			prep.setString(1, UUID.randomUUID().toString());
 			prep.setString(2, role.getCreateBy());
 			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
@@ -48,11 +52,12 @@ public class RoleDAO {
 			prep.setString(6, role.getName());
 			prep.setString(7, role.getDescription());
 			prep.setString(8, role.getSiteId());
-			
 			prep.executeUpdate();
+			logger.info("Insert Role Success!!!");
 			return "Role <strong>"+role.getName()+"</strong> successfully added to record";
 		} catch (SQLException e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 	}
@@ -73,13 +78,17 @@ public class RoleDAO {
 	public static String delete(Role role) {
 		Connection conn = DatabaseService.getConnection();
 		PreparedStatement prep;
+		String sql = "DELETE FROM t_role WHERE id=?";
 		try {
-			prep = conn.prepareStatement("DELETE FROM t_role WHERE id=?");
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
 			prep.setString(1, role.getId());
 			prep.executeUpdate();
+			logger.info("Delete Role Success!!!");
 			return "Role <strong>"+role.getName()+"</strong> has been deleted";
 		} catch (SQLException e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 	}

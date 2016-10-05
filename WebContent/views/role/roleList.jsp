@@ -53,7 +53,7 @@
 					                          <li><a href="#">Edit</a></li>
 					                          <li><a href="#" onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')">Set Privilege Menu</a></li>
 					                          <li class="divider"></li>
-					                          <li><a onclick="doDelete('<%=role.getId()%>','<%=role.getName()%>','<%=i %>');" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
+					                          <li><a onclick="doDelete('<%=role.getId()%>','<%=role.getName()%>',<%=i%>);" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
 			                        	</ul>
 			                        </li>
 			                        </ul>
@@ -61,7 +61,7 @@
 		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
 		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
 		                        </tr>
-		                    	<%i++; } } %>
+		                    	<%i++;  }  } %>
 		                      </tbody>
 		                    </table>
 	                  </div>
@@ -155,11 +155,12 @@
 	  	      				alert = "danger";
 	  	      			}
 	  	                else{ 
-		  	  	      		 $('#datatable').dataTable().fnDeleteRow(idRow, null, true);
+	  	                	table = $('#datatable').dataTable();
+	  	                	table.fnDeleteRow(idRow);
 	  	    			}
-	  	                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
+	  	                $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
 	   	                       "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-	   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>");
+	   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>").fadeIn('slow');
 	  	      		});
 	    		}
 	     	});

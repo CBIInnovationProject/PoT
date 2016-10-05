@@ -79,42 +79,10 @@
 		</div>
 
 <%@ include file="../fragments/js-collection.jsp" %>
-<script src="${pageContext.request.contextPath}/js/fnReloadAjax.js}"></script>
 
     <!-- Datatables -->
     <script>
       $(document).ready(function() {
-
-          var handleDataTableButtons = function() {
-            if ($("#datatable-buttons").length) {
-              $("#datatable-buttons").DataTable({
-                dom: "Bfrtip",
-                buttons: [
-                  {
-                    extend: "copy",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "csv",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "excel",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "pdfHtml5",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "print",
-                    className: "btn-sm"
-                  },
-                ],
-                responsive: true
-              });
-            }
-          };
           
         TableManageButtons = function() {
           "use strict";
@@ -172,11 +140,12 @@
   	      				alert = "danger";
   	      			}
   	                else{ 
-	  	  	      		 $('#datatable').dataTable().fnDeleteRow(idRow);
+  	                	table = $('#datatable').dataTable();
+  	                	table.fnDeleteRow(idRow);
   	    			}
-  	                $(".tambahan").prepend("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
+  	                $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
    	                       "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
-   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>");
+   	                       "</button> "+new Date().toUTCString()+" - "+message+"</div>").fadeIn('slow');
   	      		});
   	    		}
   	     	});

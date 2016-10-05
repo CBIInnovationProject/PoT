@@ -9,12 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.cybertrend.cpot.entity.Menu;
 import com.cybertrend.cpot.entity.Role;
 import com.cybertrend.cpot.entity.RoleMenu;
 import com.cybertrend.cpot.service.DatabaseService;
 
 public class RoleMenuDAO {
+	static Logger logger = Logger.getLogger(RoleMenuDAO.class);
+	
 	public static List<Menu> getMenuByRole(Role role) throws SQLException {
 		List<Menu> menus = new ArrayList<>();
 		Connection conn = DatabaseService.getConnection();
@@ -42,27 +46,45 @@ public class RoleMenuDAO {
 		return exist;
 	}
 	
-	public static void save(RoleMenu roleMenu) throws SQLException {
+	public static void save(RoleMenu roleMenu) {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("INSERT INTO t_rolemenu(id, createBy, createDate, updateBy, updateDate, role, menu, menuOrder) VALUES (?,?,?,?,?,?,?,?)");
-		prep.setString(1, UUID.randomUUID().toString());
-		prep.setString(2, roleMenu.getCreateBy());
-		prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-		prep.setString(4, roleMenu.getUpdateBy());
-		prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-		
-		prep.setString(6, roleMenu.getRole().getId());
-		prep.setString(7, roleMenu.getMenu().getId());
-		prep.setInt(8, roleMenu.getMenu().getMenuOrder());
-		prep.executeUpdate();
+		PreparedStatement prep;
+		String sql = "INSERT INTO t_rolemenu(id, createBy, createDate, updateBy, updateDate, role, menu, menuOrder) VALUES (?,?,?,?,?,?,?,?)";
+		try {
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, UUID.randomUUID().toString());
+			prep.setString(2, roleMenu.getCreateBy());
+			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			prep.setString(4, roleMenu.getUpdateBy());
+			prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+			
+			prep.setString(6, roleMenu.getRole().getId());
+			prep.setString(7, roleMenu.getMenu().getId());
+			prep.setInt(8, roleMenu.getMenu().getMenuOrder());
+			prep.executeUpdate();
+			logger.info("Insert RoleMenu Success!!!");
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
-	public static void delete(Role role, Menu menu) throws SQLException {
+	public static void delete(Role role, Menu menu) {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("DELETE FROM t_rolemenu WHERE menu=? AND role=?");
-		prep.setString(1, menu.getId());
-		prep.setString(2, role.getId());
-		prep.executeUpdate();
+		PreparedStatement prep;
+		String sql = "DELETE FROM t_rolemenu WHERE menu=? AND role=?";
+		try {
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, menu.getId());
+			prep.setString(2, role.getId());
+			prep.executeUpdate();
+			logger.info("Delete RoleMenu Success!!!!");
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 }

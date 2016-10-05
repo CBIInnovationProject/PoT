@@ -1,7 +1,6 @@
 package com.cybertrend.cpot;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +9,6 @@ import com.cybertrend.cpot.action.DefaultAction;
 import com.cybertrend.cpot.dao.MenuDAO;
 import com.cybertrend.cpot.dao.RoleMenuDAO;
 import com.cybertrend.cpot.entity.Menu;
-
-import tableau.api.rest.bindings.WorkbookType;
 
 public class Interceptor extends DefaultAction {
 	
@@ -45,15 +42,7 @@ public class Interceptor extends DefaultAction {
 				}
 			} else {
 				if (action.equalsIgnoreCase(menu.getAction())){
-//					if(menu.getContentType().equals(Constants.CONTENT_TYPE_TABLEAU)){
-//						List<WorkbookType> workbooks = new ArrayList<>();
-//						for(WorkbookType workbook:workbooks){
-//							if(workbook.getId().equals(menu.getWorkbookId())){
-//								return true;
-//							}
-//						}
-//					} else
-						return true;
+					return true;
 				}
 			}
 		}

@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.cybertrend.cpot.Constants;
 import com.cybertrend.cpot.entity.User;
 import com.cybertrend.cpot.service.DatabaseService;
 
 public class UserDAO {
+	static Logger logger = Logger.getLogger(UserDAO.class);
 	public static User getUserByUsernameAndSite(String username, String siteId) throws SQLException {
 		User output = null;
 		Connection conn = DatabaseService.getConnection();
@@ -74,6 +77,7 @@ public class UserDAO {
 		String sql = "INSERT INTO t_user (id, createBy, createDate, updateBy, updateDate, username, siteUrl, fullName, address1, address2, address3, zip, phone, email, siteId, roleId, themes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement prep;
 		try {
+			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, UUID.randomUUID().toString());
 			prep.setString(2, user.getCreateBy());
@@ -94,9 +98,11 @@ public class UserDAO {
 			prep.setString(16, user.getRole().getId());
 			prep.setString(17, user.getThemes().getId());
 			prep.executeUpdate();
+			logger.info("Insert User Success!!!");
 			return "User <strong>"+user.getUsername()+"</strong> successfully added to record";
 		} catch (SQLException e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 	}
@@ -132,12 +138,15 @@ public class UserDAO {
 		String sql = "DELETE FROM t_user WHERE "+param+" = ? ";
 		PreparedStatement prep;
 		try {
+			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, value);
 			prep.executeUpdate();
+			logger.info("Insert User Success!!");
 			return Constants.SUCCESS;
 		} 
 		catch(SQLException e) {
+			logger.error(e.getMessage());
 			e.printStackTrace();
 			return e.getMessage();
 		}

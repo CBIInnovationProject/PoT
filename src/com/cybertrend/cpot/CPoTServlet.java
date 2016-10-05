@@ -27,7 +27,7 @@ import com.cybertrend.cpot.util.ReadConfig;
 
 public class CPoTServlet extends HttpServlet {
 	private ServletContext servletContext;
-
+	
 	public CPoTServlet() {
 		super();
 	}

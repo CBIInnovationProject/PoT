@@ -3,11 +3,13 @@ package com.cybertrend.cpot.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 import com.cybertrend.cpot.Interceptor;
 import com.cybertrend.cpot.dao.RoleDAO;
@@ -19,12 +21,16 @@ import com.cybertrend.cpot.util.ReadConfig;
 import tableau.api.rest.bindings.TableauCredentialsType;
 
 public class UserForm extends DefaultAction{
+	static Logger logger = Logger.getLogger(UserForm.class);
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
 			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
 				request.setAttribute("roles", RoleDAO.getList(getCurrentCredentials(request).getSite().getId()));
 				request.setAttribute("userTableaus", getTableauService().invokeQueryUsersOnSite(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.users.max").trim()), 0).getUsers().getUser());
@@ -41,6 +47,9 @@ public class UserForm extends DefaultAction{
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				User user = new User();
 				user.setCreateBy(getCurrentUser(request).getId());
 				user.setUpdateBy(getCurrentUser(request).getId());
@@ -62,6 +71,7 @@ public class UserForm extends DefaultAction{
 					out.println(UserDAO.save(user));
 				} else {
 					out.print("ERROR : invalid Password!!");
+					logger.info("Invalid Password!!!");
 				}
 			}
 			else {
@@ -76,6 +86,9 @@ public class UserForm extends DefaultAction{
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
 				List<User> users = UserDAO.getList(getCurrentCredentials(request).getSite().getId());
 				request.setAttribute("users", users);
@@ -92,6 +105,9 @@ public class UserForm extends DefaultAction{
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
+				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
+				logger.info("Activity : "+action);
+				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
 				String userId = request.getParameter("userId");
 				PrintWriter out = response.getWriter();
