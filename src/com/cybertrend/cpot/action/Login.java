@@ -59,6 +59,7 @@ public class Login extends DefaultAction{
 				UserDAO.save(userList[i]);
 			}
 		}
+		
 		List<User> users = UserDAO.getUserByUsername(username);
 		
 		request.setAttribute("users", users );
