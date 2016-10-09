@@ -51,18 +51,17 @@
 		
 		                      <tbody>
 							 	<% List<User> users=(List<User>) request.getAttribute("users"); 
-							 	int i = 0;
 	                  			for (User user: users) { 
 	                  			if(!user.getUsername().trim().equals(((User)session.getAttribute(Constants.USER_GA)).getUsername())&&
 	                  					!user.getUsername().trim().equals(ReadConfig.get("tableau.admin.default"))) {%>
-		                        <tr>
+		                        <tr id="<%=user.getId()%>">
 		                        	<td>
 		                        	<ul style="list-style-type: none;padding: 0;margin:0">
 		                          	<li class="dropdown"><a href="#<%= user.getUsername()%>" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-user"></i>&nbsp;&nbsp;<%= user.getUsername()%></a>
 		                          		<ul class="dropdown-menu" role="menu">
 					                          <li><a href="#">Edit</a></li>
 					                          <li class="divider"></li>
-					                          <li><a onclick="doDelete('<%=user.getId() %>','<%=user.getUsername() %>','<%=i %>');" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
+					                          <li><a onclick="doDelete('<%=user.getId() %>','<%=user.getUsername() %>');" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
 			                        	</ul>
 			                        </li>
 			                        </ul>
@@ -70,7 +69,7 @@
 			                        <td><%= user.getCreateDate()!=null?user.getCreateDate():""%></td>
 			                        <td><%= user.getUpdateDate()!=null?user.getUpdateDate():""%></td>
 		                        </tr>
-		                    	<%i++; } }%>
+		                    	<% } }%>
 		                      </tbody>
 		                    </table>
 	                  </div>
@@ -97,37 +96,6 @@
     <!-- Datatables -->
     <script>
       $(document).ready(function() {
-
-          var handleDataTableButtons = function() {
-            if ($("#datatable-buttons").length) {
-              $("#datatable-buttons").DataTable({
-                dom: "Bfrtip",
-                buttons: [
-                  {
-                    extend: "copy",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "csv",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "excel",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "pdfHtml5",
-                    className: "btn-sm"
-                  },
-                  {
-                    extend: "print",
-                    className: "btn-sm"
-                  },
-                ],
-                responsive: true
-              });
-            }
-          };
           
         TableManageButtons = function() {
           "use strict";
@@ -160,7 +128,7 @@
         TableManageButtons.init();
       });
       
-      function doDelete(userId, userName, idRow){ 
+      function doDelete(userId, userName){ 
   	  	swal({   
 	    	  	title: "Are you sure to delete user '"+userName+"'?",   
 	    		text: "You will not be able to recover this data!",   
@@ -184,8 +152,8 @@
 	  	      				alert = "danger";
 	  	      			}
 	  	                else{ 
-	  	                	table = $('#datatable').dataTable();
-	  	                	table.fnDeleteRow(idRow);
+	  	                	table = $('#datatable').DataTable();
+	  	                	table.row("#"+userId).remove().draw();
 	  	    			}
 	  	                $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
 	   	                       "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+

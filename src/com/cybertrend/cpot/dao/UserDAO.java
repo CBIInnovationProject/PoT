@@ -142,8 +142,8 @@ public class UserDAO {
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, value);
 			prep.executeUpdate();
-			logger.info("Insert User Success!!");
-			return Constants.SUCCESS;
+			logger.info("Delete User Success!!");
+			return "User <strong> "+value+"</strong> has been deleted";
 		} 
 		catch(SQLException e) {
 			logger.error(e.getMessage());

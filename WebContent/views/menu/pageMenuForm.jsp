@@ -53,7 +53,7 @@
 												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
 												Menu menuView = (Menu) request.getAttribute("menuView");
 												for(Menu parent:parents){%>
-													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>" <%if(menuView!=null) { if(menuView.getId().equals(parent.getId())) {%>selected<% } }%>><%=parent.getName() %></option>
+													<option data-icon="<%=parent.getIcon()%>" value="<%= parent.getId() %>"><%=parent.getName() %></option>
 												<% }%>
 											</select>
 										</div>

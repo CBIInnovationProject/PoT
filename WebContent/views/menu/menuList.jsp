@@ -46,14 +46,13 @@
 		
 		                      <tbody>
 							 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
-	                  			int i = 0;
 							 	for (Menu menu: menus) { %>
-		                        <tr>
+		                        <tr id="<%=menu.getId()%>">
 		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-sitemap"></i>&nbsp;&nbsp;<%= menu.getName()%></a><ul class="dropdown-menu" role="menu">
-			                          <li><a href="#">Edit</a>
+			                          <li><a onclick="popup_detail('pageMenuEdit.cbi?menuId=<%=menu.getId()%>')" href="#">Edit</a>
 			                          </li>
 			                          <li class="divider"></li>
-			                          <li><a onclick="doDelete('<%=menu.getId()%>','<%= menu.getName()%>','<%=i%>')" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a>
+			                          <li><a onclick="doDelete('<%=menu.getId()%>','<%= menu.getName()%>')" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a>
 			                          </li>
 			                        </ul></li></ul>
 		                          </td>
@@ -63,7 +62,7 @@
 		                          <td><%= menu.getUpdateDate()!=null?menu.getUpdateDate():""%></td>
 		                          
 		                        </tr>
-		                    	<%i++; } %>
+		                    	<%} %>
 		                      </tbody>
 		                    </table>
 	                  </div>
@@ -74,6 +73,12 @@
 			
 			</div>
 			<!-- /page content -->
+		
+			<div class="modal fade" role="dialog" aria-labelledby="myModal" aria-hidden="true" id="myModal" >
+			  <div class="modal-dialog modal-lg">
+			    <div id="modal-content" ></div>
+			  </div>
+			</div>
 
 		<%@ include file="../fragments/footer.jsp" %>
 		</div>
@@ -116,7 +121,7 @@
       });
       
       
-      function doDelete(menuId, menuName, idRow){ 
+      function doDelete(menuId, menuName){ 
     	  	swal({   
   	    	  	title: "Are you sure to delete menu '"+menuName+"'?",   
   	    		text: "You will not be able to recover this data!",   
@@ -140,8 +145,8 @@
   	      				alert = "danger";
   	      			}
   	                else{ 
-  	                	table = $('#datatable').dataTable();
-  	                	table.fnDeleteRow(idRow);
+  	                	table = $('#datatable').DataTable();
+  	                	table.row("#"+menuId).remove().draw();
   	    			}
   	                $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
    	                       "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
@@ -150,6 +155,18 @@
   	    		}
   	     	});
      	}
+      
+		function popup_detail(url){
+		
+			$('#myModal').on('show.bs.modal', function () {
+				$('#modal-content').html("<div style='text-align: center;background: #ffffff;background-position: center center;background-repeat: no-repeat;background-image: url(../images/loading.gif);'><p>&nbsp;</p><br/><br/><br/><p>&nbsp;&nbsp;Loading ...</p><p>&nbsp;</p></div>");
+		 			$('#modal-content').load(url);
+			})
+			$('#myModal').modal("show");
+		}
+		$("#myModal").on('hidden.bs.modal', function () {
+			$('.dropdown-toggle').dropdown();
+		});
     </script>
 </body>
 </html>

@@ -119,6 +119,10 @@ public class CPoTServlet extends HttpServlet {
 				request.getRequestDispatcher("/views/menu/pageMenuForm.jsp").forward(request, response);
 			}
 			
+			else if (action.equals("pageMenuEdit.cbi")){
+				MenuForm.execute(request, response, action);
+			}
+			
 			else if(action.equals("menuList.cbi")) {
 				MenuForm.list(request, response, action);
 				request.getRequestDispatcher("/views/menu/menuList.jsp").forward(request, response);
