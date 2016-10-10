@@ -44,7 +44,7 @@ $('.select2').select2();
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent
 								Menu</label>
 							<div class="col-sm-3">
-								<select id="parentId" name="parentId" class="select2">
+								<select id="parentId" name="parentId" class="select2" style="width: 200px;">
 									<option data-icon=""></option>
 									<%
 										List<Menu> parents = (List<Menu>) request.getAttribute("parentMenus");
@@ -78,16 +78,16 @@ $('.select2').select2();
 							style="width: 100%; height: 150px;">${menuView.content}</textarea>
 						<% } if (menuView.getContentType()!=null && menuView.getContentType().trim().equals("tableau")) { %>
 							<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">Tableau URL <span class="required">*</span></label>
-										<div class="col-sm-3">
-											<select name="dashboard" id="dashboard" required class="select2">
-													<option data-icon="fa fa-bar-chart" value="<%=menuView.getViewId() %>"><%=menuView.getContent() %></option>
-												<% List<Dashboard> dashboards=DashboardDAO.getListDashboards(); for (Dashboard dashboard: dashboards) { %>
-													<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%=dashboard.getUrl()%></option>
-												<%}%>
-											</select>
-										</div>
-									</div>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tableau URL <span class="required">*</span></label>
+								<div class="col-sm-3">
+									<select name="dashboard" id="dashboard" required class="select2">
+											<option data-icon="fa fa-bar-chart" value="<%=menuView.getViewId() %>"><%=menuView.getContent() %></option>
+										<% List<Dashboard> dashboards=DashboardDAO.getListDashboards(); for (Dashboard dashboard: dashboards) { %>
+											<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%=dashboard.getUrl()%></option>
+										<%}%>
+									</select>
+								</div>
+							</div>
 						<% } %>
 						<div class="ln_solid"></div>
 						<div class="form-group">
