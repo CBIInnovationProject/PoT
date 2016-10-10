@@ -8,7 +8,7 @@
 <link href="${pageContext.request.contextPath}/vendors/select2/css/select2.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/vendors/select2/js/select2.min.js"></script>
 <script type="text/javascript">
-$('.selectpicker').select2();
+$('.select2').select2();
 </script>
 
 <div class="main_container">
@@ -44,8 +44,8 @@ $('.selectpicker').select2();
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent
 								Menu</label>
 							<div class="col-sm-3">
-								<select id="parentId" name="parentId" class="selectpicker">
-									<option data-icon="">-- None --</option>
+								<select id="parentId" name="parentId" class="select2">
+									<option data-icon=""></option>
 									<%
 										List<Menu> parents = (List<Menu>) request.getAttribute("parentMenus");
 										for(Menu parent:parents){ if(!parent.getId().trim().equals(menuView.getId())) {%>
@@ -80,7 +80,7 @@ $('.selectpicker').select2();
 							<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Tableau URL <span class="required">*</span></label>
 										<div class="col-sm-3">
-											<select name="dashboard" id="dashboard" required class="selectpicker">
+											<select name="dashboard" id="dashboard" required class="select2">
 													<option data-icon="fa fa-bar-chart" value="<%=menuView.getViewId() %>"><%=menuView.getContent() %></option>
 												<% List<Dashboard> dashboards=DashboardDAO.getListDashboards(); for (Dashboard dashboard: dashboards) { %>
 													<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%=dashboard.getUrl()%></option>

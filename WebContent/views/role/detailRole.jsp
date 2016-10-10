@@ -62,7 +62,7 @@
 									<thead>
 										<tr>
 											<th>Menu Name</th>
-											<th>Content Type</th>
+											<th>Icon</th>
 											<th>Set Privilege Menu</th>
 										</tr>
 									</thead>
@@ -71,10 +71,12 @@
 										<%
 											List<Menu> menus = (List<Menu>) request.getAttribute("menus");
 											for (Menu menu : menus) {
+											 	String contentType = menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT";
+											 	String icon = contentType.equalsIgnoreCase("PARENT")?"fa fa-folder-o":(contentType.equals("TABLEAU")?"fa fa-line-chart":"fa fa-file-text-o");
 										%>
 										<tr>
-											<td><i class="fa fa-sitemap"></i>&nbsp;&nbsp;<%=menu.getName()%></td>
-											<td><%=menu.getContentType() != null ? menu.getContentType().toUpperCase() : "PARENT"%></td>
+											<td><i class="<%=icon%>"></i>&nbsp;&nbsp;<%=menu.getName()%></td>
+											<td><i class="<%=menu.getIcon()%>"></i></td>
 											<td id="dashboardAction">
 												<%
 													if (!RoleMenuDAO.isMenuExist(menu.getId(), ((Role) request.getAttribute("role")).getId())) {

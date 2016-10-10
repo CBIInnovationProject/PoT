@@ -38,7 +38,6 @@
 		                        <tr>
 		                          <th>Name</th>
 		                          <th>Icon</th>
-		                          <th>Content Type</th>
 		                          <th>Create Date</th>
 		                          <th>Last Updated</th>
 		                        </tr>
@@ -46,9 +45,11 @@
 		
 		                      <tbody>
 							 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
-							 	for (Menu menu: menus) { %>
+							 	for (Menu menu: menus) { 
+							 	String contentType = menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT";
+							 	String icon = contentType.equalsIgnoreCase("PARENT")?"fa fa-folder-o":(contentType.equals("TABLEAU")?"fa fa-line-chart":"fa fa-file-text-o");%>
 		                        <tr id="<%=menu.getId()%>">
-		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-sitemap"></i>&nbsp;&nbsp;<%= menu.getName()%></a><ul class="dropdown-menu" role="menu">
+		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="<%=icon%>"></i>&nbsp;&nbsp;<%= menu.getName()%></a><ul class="dropdown-menu" role="menu">
 			                          <li><a onclick="popup_detail('pageMenuEdit.cbi?menuId=<%=menu.getId()%>')" href="#">Edit</a>
 			                          </li>
 			                          <li class="divider"></li>
@@ -57,7 +58,6 @@
 			                        </ul></li></ul>
 		                          </td>
 		                          <td width="5%" align="center"><i class="<%=menu.getIcon()%>"></i></td>
-		                          <td><%= menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT"%></td>
 		                          <td><%= menu.getCreateDate()!=null?menu.getCreateDate():""%></td>
 		                          <td><%= menu.getUpdateDate()!=null?menu.getUpdateDate():""%></td>
 		                          
