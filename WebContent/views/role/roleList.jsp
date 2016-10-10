@@ -85,38 +85,7 @@
 
     <!-- Datatables -->
     <script>
-      $(document).ready(function() {
-          
-        TableManageButtons = function() {
-          "use strict";
-          return {
-            init: function() {
-              handleDataTableButtons();
-            }
-          };
-        }();
-
-        $('#datatable').dataTable();
-        $('#datatable-keytable').DataTable({
-          keys: true
-        });
-
-        $('#datatable-responsive').DataTable();
-
-        $('#datatable-scroller').DataTable({
-          ajax: "js/datatables/json/scroller-demo.json",
-          deferRender: true,
-          scrollY: 380,
-          scrollCollapse: true,
-          scroller: true
-        });
-
-        var table = $('#datatable-fixed-header').DataTable({
-          fixedHeader: true
-        });
-
-        TableManageButtons.init();
-      });
+      var table = $('#datatable').DataTable();
     	
       function popup_detail(url){
     		$('#myModal').on('show.bs.modal', function () {
@@ -126,7 +95,7 @@
 
       		$('#myModal').modal();
     	}
-		$("#myModal").on('hidden.bs.modal', function () {
+		$("#myModal").on('hidden.bs.modal', function (e) {
 			$('.dropdown-toggle').dropdown();
     	});
 		
@@ -154,7 +123,6 @@
 	  	      				alert = "danger";
 	  	      			}
 	  	                else{ 
-	  	                	table = $('#datatable').DataTable();
 	  	                	table.row("#"+roleId).remove().draw();
 	  	    			}
 	  	                $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+

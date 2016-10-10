@@ -10,6 +10,7 @@
 <script src="${pageContext.request.contextPath}/vendors/jquery/dist/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/vendors/fastclick/lib/fastclick.js"></script>
+<script src="${pageContext.request.contextPath}/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <!-- page content -->
 <div class="main_container">
 	<div>
