@@ -47,9 +47,9 @@
 	                  			if(!role.getId().trim().equals("0")) {%>
 		                        <tr id="<%=role.getId()%>">
 		                          <td><ul style="list-style-type: none;padding: 0;margin:0">
-		                          	<li class="dropdown"><a href="#<%= role.getName()%>" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="menu"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<%= role.getName()%></a>
+		                          	<li class="dropdown"><i class="fa fa-user-secret"></i>&nbsp;&nbsp;<a href="#<%= role.getName()%>" class="dropdown-toggle name<%=role.getId()%>" data-toggle="dropdown" aria-expanded="false" role="menu"><%= role.getName()%></a>
 		                          		<ul class="dropdown-menu" role="menu">
-					                          <li><a href="#">Edit</a></li>
+					                          <li><a onclick="popup_detail('roleEdit.cbi?roleId=<%=role.getId()%>')" href="#">Edit</a></li>
 					                          <li><a href="#" onclick="popup_detail('detailRole.cbi?roleId=<%=role.getId()%>')">Set Privilege Menu</a></li>
 					                          <li class="divider"></li>
 					                          <li><a onclick="doDelete('<%=role.getId()%>','<%=role.getName()%>');" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a></li>
@@ -58,7 +58,7 @@
 			                        </ul>
                         			</td>
 		                          <td><%= role.getCreateDate()!=null?role.getCreateDate():""%></td>
-		                          <td><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
+		                          <td class="updateDate<%=role.getId()%>"><%= role.getUpdateDate()!=null?role.getUpdateDate():""%></td>
 		                        </tr>
 		                    	<%}  } %>
 		                      </tbody>

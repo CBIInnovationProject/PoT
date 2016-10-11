@@ -92,5 +92,29 @@ public class RoleDAO {
 			return e.getMessage();
 		}
 	}
+	
+	public static String update(Role role) {
+		Connection conn = DatabaseService.getConnection();
+		PreparedStatement prep;
+		String sql = "UPDATE t_role SET updateBy=?, updateDate=?, name=?, description=?, siteId=? WHERE id=?";
+		try {
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, role.getUpdateBy());
+			prep.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			
+			prep.setString(3, role.getName());
+			prep.setString(4, role.getDescription());
+			prep.setString(5, role.getSiteId());
+			prep.setString(6, role.getId());
+			prep.executeUpdate();
+			logger.info("Update Role Success!!!");
+			return "Role <strong>"+role.getName()+"</strong> successfully updated";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+			return e.getMessage();
+		}
+	}
 
 }

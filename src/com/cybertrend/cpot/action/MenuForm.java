@@ -34,7 +34,7 @@ public class MenuForm extends DefaultAction {
 				if(request.getParameter("menuId")!=null) {
 					Menu menu = MenuDAO.getMenuById(request.getParameter("menuId"));
 					request.setAttribute("menuView", menu);
-					request.getRequestDispatcher("/views/menu/pageMenuEdit.jsp").forward(request, response);
+					request.getRequestDispatcher("/views/menu/menuEdit.jsp").forward(request, response);
 				}
 			}
 			else {

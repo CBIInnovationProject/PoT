@@ -32,6 +32,11 @@ public class RoleForm extends DefaultAction{
 				logger.info("Activity : "+action);
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
+				if(request.getParameter("roleId")!=null) {
+					Role role = RoleDAO.getRoleById(request.getParameter("roleId"));
+					request.setAttribute("role", role);
+					request.getRequestDispatcher("/views/role/roleEdit.jsp").forward(request, response);
+				}
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
@@ -56,7 +61,11 @@ public class RoleForm extends DefaultAction{
 				role.setDescription(request.getParameter("description"));
 				role.setSiteId(getCurrentCredentials(request).getSite().getId());
 				PrintWriter out = response.getWriter();
-				out.println(RoleDAO.save(role));
+				if(request.getParameter("roleId")!=null&&!"".equalsIgnoreCase(request.getParameter("roleId").trim())) {
+					role.setId(request.getParameter("roleId"));
+					out.println(RoleDAO.update(role));
+				}
+				else out.println(RoleDAO.save(role));
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);

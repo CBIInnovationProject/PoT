@@ -1,3 +1,4 @@
+<%@page import="java.sql.Timestamp"%>
 <%@page import="com.cybertrend.cpot.dao.DashboardDAO"%>
 <%@page import="com.cybertrend.cpot.entity.Dashboard"%>
 <%@page import="com.cybertrend.cpot.entity.Menu"%>
@@ -10,6 +11,8 @@
 <link href="${pageContext.request.contextPath}/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="${pageContext.request.contextPath}/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script type='text/javascript' src="${pageContext.request.contextPath}/js/nicEdit-latest.js"></script>
+
 <script type="text/javascript">
 $('.select2').select2();
 </script>
@@ -21,7 +24,7 @@ $('.select2').select2();
 				<div class="x_title">
 					<h2>Edit Menu </h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><button type="button" class="close" data-dismiss="modal"
+						<li><button id="btnClose" type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
 								<span aria-hidden="true">×</span>
 							</button></li>
@@ -78,7 +81,7 @@ $('.select2').select2();
 							<div class="ln_solid"></div>
 							<input type="hidden" name="contentType" id="contentType" value="page" />
 							<textarea name="content" id="content_text"
-							style="width: 100%; height: 150px;">${menuView.content}</textarea>
+							style="width: 800px; height: 150px;">${menuView.content}</textarea>
 						<% } if (menuView.getContentType()!=null && menuView.getContentType().trim().equals("tableau")) { %>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tableau URL <span class="required">*</span></label>
@@ -114,17 +117,21 @@ $('.select2').select2();
 <script type='text/javascript' src='${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js'></script>
 
 <script type="text/javascript">
+	nicEditors.allTextAreas() ;
+
 	$(document).ready(function(){
-		$("#formid").submit(function(event){
+		$("#formid").submit(function(event){	
 			event.preventDefault();
 			var $form = $( this ),
 	        url = $form.attr( 'action' );
+			var ne = nicEditors.findEditor("content_text");
 			var posting = $.post(url, 
 					{ 
 						menuId:$("#menuId").val(),
 						name:$("#menu_name").val(),
 		                parentId:$('#parentId :selected').val(),
 		                content:$(".nicEdit-main").html(),
+		                dashboard:$('#dashboard :selected').val(),
 		                contentType:$("#contentType").val(),
 		                menuOrder:$("#menuOrder").val(),
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
@@ -140,8 +147,11 @@ $('.select2').select2();
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - "+message+
                       "</div>").fadeIn('slow');
-                $('modal').modal("hide");
+                $(".name"+$("#menuId").val()).html($("#menu_name").val());
+                $(".updateDate"+$("#menuId").val()).html('<%=new Timestamp(System.currentTimeMillis())%>');
+                $("#"+$("#menuId").val()).hide().fadeIn('slow');
+                document.getElementById('btnClose').click();
     		});
 		});
 	});
-	</script>
+</script>

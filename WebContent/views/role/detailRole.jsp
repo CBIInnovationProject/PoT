@@ -63,7 +63,6 @@
 									<thead>
 										<tr>
 											<th>Menu Name</th>
-											<th>Icon</th>
 											<th>Set Privilege Menu</th>
 										</tr>
 									</thead>
@@ -77,7 +76,6 @@
 										%>
 										<tr>
 											<td><i class="<%=icon%>"></i>&nbsp;&nbsp;<%=menu.getName()%></td>
-											<td><i class="<%=menu.getIcon()%>"></i></td>
 											<td id="dashboardAction">
 												<%
 													if (!RoleMenuDAO.isMenuExist(menu.getId(), ((Role) request.getAttribute("role")).getId())) {

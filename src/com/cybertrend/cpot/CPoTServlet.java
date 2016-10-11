@@ -119,7 +119,7 @@ public class CPoTServlet extends HttpServlet {
 				request.getRequestDispatcher("/views/menu/pageMenuForm.jsp").forward(request, response);
 			}
 			
-			else if (action.equals("pageMenuEdit.cbi")){
+			else if (action.equals("menuEdit.cbi")){
 				MenuForm.execute(request, response, action);
 			}
 			
@@ -153,6 +153,10 @@ public class CPoTServlet extends HttpServlet {
 			
 			else if(action.equals("roleSave.cbi")) {
 				RoleForm.save(request, response, action);
+			}
+			
+			else if(action.equals("roleEdit.cbi")) {
+				RoleForm.execute(request, response, action);
 			}
 			
 			else if(action.equals("roleDelete.cbi")) {
