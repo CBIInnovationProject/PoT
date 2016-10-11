@@ -66,7 +66,7 @@ public class MenuForm extends DefaultAction {
 			PrintWriter out = response.getWriter();
 			if(request.getParameter("menuId")!=null&&!"".equalsIgnoreCase(request.getParameter("menuId").trim())) {
 				menu.setId(request.getParameter("menuId"));
-				MenuDAO.update(menu);
+				out.println(MenuDAO.update(menu));
 			}else {
 			    out.println(MenuDAO.save(menu));
 			}

@@ -128,25 +128,36 @@ public class MenuDAO {
 		}
 	}
 	
-	public static void update(Menu menu) throws SQLException {
+	public static String update(Menu menu) {
 		Connection conn = DatabaseService.getConnection();
-		PreparedStatement prep = conn.prepareStatement("UPDATE t_menu SET updateBy=?, updateDate=?, name=?, parentId=?, action=?, content=?, contentType=?, menuOrder=?, icon=?, workbookId=?, viewId=?, siteId=? WHERE id=?");
-		prep.setString(1, menu.getUpdateBy());
-		prep.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-		
-		prep.setString(3, menu.getName());
-		prep.setString(4, menu.getParentId());
-		prep.setString(5, menu.getAction());
-		prep.setString(6, menu.getContent());
-		prep.setString(7, menu.getContentType());
-		prep.setInt(8, menu.getMenuOrder());
-		prep.setString(9, menu.getIcon());
-		prep.setString(10, menu.getWorkbookId());
-		prep.setString(11, menu.getViewId());
-		prep.setString(12, menu.getSiteId());
-		prep.setString(13, menu.getId());
-		
-		prep.executeUpdate();
+		PreparedStatement prep;
+		String sql = "UPDATE t_menu SET updateBy=?, updateDate=?, name=?, parentId=?, action=?, content=?, contentType=?, menuOrder=?, icon=?, workbookId=?, viewId=?, siteId=? WHERE id=?";
+		try {
+			logger.info("Query "+sql);
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, menu.getUpdateBy());
+			prep.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			
+			prep.setString(3, menu.getName());
+			prep.setString(4, menu.getParentId());
+			prep.setString(5, menu.getAction());
+			prep.setString(6, menu.getContent());
+			prep.setString(7, menu.getContentType());
+			prep.setInt(8, menu.getMenuOrder());
+			prep.setString(9, menu.getIcon());
+			prep.setString(10, menu.getWorkbookId());
+			prep.setString(11, menu.getViewId());
+			prep.setString(12, menu.getSiteId());
+			prep.setString(13, menu.getId());
+			
+			prep.executeUpdate();
+			logger.info("Update Menu Success!!!");
+			return "Menu <strong>"+menu.getName()+"</strong> successfully updated";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+			return e.getMessage();
+		}
 	}
 	
 	public static String delete(Menu menu){

@@ -91,11 +91,12 @@ $('.select2').select2();
 									</select>
 								</div>
 							</div>
+							<input type="hidden" name="contentType" id="contentType" value="tableau" />
 						<% } %>
 						<div class="ln_solid"></div>
 						<div class="form-group">
-							<div class="col-md-6">
-								<input type="hidden" name="menuId" value="${menuView.id}"></input>
+							<div class="col-md-6" >
+								<input type="hidden" id="menuId" name="menuId" value="${menuView.id}"></input>
 								<input class="btn btn-success submit-menu" type="submit"
 									name="submitButton" value="Submit">
 							</div>
@@ -111,3 +112,36 @@ $('.select2').select2();
 <script type="text/javascript" src="${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/iconset/iconset-glyphicon.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.3.0.min.js"></script>
 <script type='text/javascript' src='${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js'></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#formid").submit(function(event){
+			event.preventDefault();
+			var $form = $( this ),
+	        url = $form.attr( 'action' );
+			var posting = $.post(url, 
+					{ 
+						menuId:$("#menuId").val(),
+						name:$("#menu_name").val(),
+		                parentId:$('#parentId :selected').val(),
+		                content:$(".nicEdit-main").html(),
+		                contentType:$("#contentType").val(),
+		                menuOrder:$("#menuOrder").val(),
+		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
+		                actionsave:1
+					} );
+			
+    		posting.done(function(message) {
+    			var alert = "success";
+    			if(message.indexOf('ERROR')!==-1){
+    				alert = "danger";
+    			}
+                $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
+                        "</button> "+new Date().toUTCString()+" - "+message+
+                      "</div>").fadeIn('slow');
+                $('modal').modal("hide");
+    		});
+		});
+	});
+	</script>
