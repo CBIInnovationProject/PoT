@@ -49,7 +49,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
-											<select  id="parentId" name="parentId" class="selectpicker">
+											<select id="parentId" name="parentId" class="selectpicker">
 												<option></option>
 												<% List<Menu> parents = (List<Menu>)request.getAttribute("parentMenus"); 
 												Menu menuView = (Menu) request.getAttribute("menuView");
@@ -123,6 +123,7 @@
 					  $('.classfontawesome i').removeAttr( "class" );
 					  $('.classidglyphicon i').removeAttr( "class" );
                 document.getElementById("formid").reset();
+                $("#parentId").append('<option value="<%=request.getAttribute("menuId")%>">$("#name").val()</option>');
     		});
 		});
 	});

@@ -124,10 +124,10 @@
                         "</button> "+new Date().toUTCString()+" - "+message+
                       "</div>").fadeIn('slow');
 				$(".tambahan").css("display","block");  
-				  $('#parentId').selectpicker('deselectAll');
-				  $('#icontype1').selectpicker('deselectAll');
-				  $('.classfontawesome i').removeAttr( "class" );
-				  $('.classidglyphicon i').removeAttr( "class" );
+				$('#parentId').selectpicker('deselectAll');
+				$('#icontype1').selectpicker('deselectAll');
+				$('.classfontawesome i').removeAttr( "class" );
+				$('.classidglyphicon i').removeAttr( "class" );
 					ne.setContent("");					  
                 document.getElementById("formid").reset();
     		});

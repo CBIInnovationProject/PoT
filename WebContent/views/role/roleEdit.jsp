@@ -89,14 +89,15 @@ $('.select2').select2();
     			var alert = "success";
     			if(message.indexOf('ERROR')!==-1){
     				alert = "danger";
+    			} else {
+                    $(".name"+$("#roleId").val()).html($("#role_name").val());
+                    $(".updateDate"+$("#roleId").val()).html('<%=new Timestamp(System.currentTimeMillis())%>');
+                    $("#"+$("#roleId").val()).hide().fadeIn('slow');
     			}
                 $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - "+message+
                       "</div>").fadeIn('slow');
-                $(".name"+$("#roleId").val()).html($("#role_name").val());
-                $(".updateDate"+$("#roleId").val()).html('<%=new Timestamp(System.currentTimeMillis())%>');
-                $("#"+$("#roleId").val()).hide().fadeIn('slow');
                 document.getElementById('btnClose').click();
     		});
 		});

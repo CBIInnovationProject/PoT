@@ -142,14 +142,15 @@ $('.select2').select2();
     			var alert = "success";
     			if(message.indexOf('ERROR')!==-1){
     				alert = "danger";
+    			} else {
+                    $(".name"+$("#menuId").val()).html($("#menu_name").val());
+                    $(".updateDate"+$("#menuId").val()).html('<%=new Timestamp(System.currentTimeMillis())%>');
+                    $("#"+$("#menuId").val()).hide().fadeIn('slow');
     			}
                 $(".tambahan").hide().html("<div class=\"alert alert-"+alert+" alert-dismissible \" role=\"alert\">"+
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span>"+
                         "</button> "+new Date().toUTCString()+" - "+message+
                       "</div>").fadeIn('slow');
-                $(".name"+$("#menuId").val()).html($("#menu_name").val());
-                $(".updateDate"+$("#menuId").val()).html('<%=new Timestamp(System.currentTimeMillis())%>');
-                $("#"+$("#menuId").val()).hide().fadeIn('slow');
                 document.getElementById('btnClose').click();
     		});
 		});

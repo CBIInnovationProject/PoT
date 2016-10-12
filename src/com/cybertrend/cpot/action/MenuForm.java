@@ -69,6 +69,7 @@ public class MenuForm extends DefaultAction {
 				out.println(MenuDAO.update(menu));
 			}else {
 			    out.println(MenuDAO.save(menu));
+				request.setAttribute("menuId", menu.getId());
 			}
 		}
 		else {
