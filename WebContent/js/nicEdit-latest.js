@@ -69,7 +69,7 @@ var nicLinkOptions = {
 	}
 };
 
-var nicLinkButton=nicEditorAdvancedButton.extend({addPane:function(){this.ln=this.ne.selectedInstance.selElm().parentTag("A");this.addForm({"":{type:"title",txt:"Add/Edit Link"},href:{type:"text",txt:"URL",value:"http://",style:{width:"150px"}},title:{type:"text",txt:"Title"},target:{type:"select",txt:"Open In",options:{"":"Current Window",_blank:"New Window"},style:{width:"100px"}}},this.ln)},submit:function(C){var A=this.inputs.href.value;if(A=="http://"||A==""){alert("You must enter a URL to Create a Link");return false}this.removePane();if(!this.ln){var B="javascript:nicTemp();";this.ne.nicCommand("createlink",B);this.ln=this.findElm("A","href",B)}if(this.ln){this.ln.setAttributes({href:this.inputs.href.value,title:this.inputs.title.value,target:this.inputs.target.options[this.inputs.target.selectedIndex].value})}}});nicEditors.registerPlugin(nicPlugin,nicLinkOptions);
+var nicLinkButton=nicEditorAdvancedButton.extend({addPane:function(){this.ln=this.ne.selectedInstance.selElm().parentTag("A");this.addForm({"":{type:"title",txt:"Add/Edit Link"},href:{type:"text",txt:"URL",value:"/images/",style:{width:"150px"}},title:{type:"text",txt:"Title"},target:{type:"select",txt:"Open In",options:{"":"Current Window",_blank:"New Window"},style:{width:"100px"}}},this.ln)},submit:function(C){var A=this.inputs.href.value;if(A=="/images/"||A==""){alert("You must enter a URL to Create a Link");return false}this.removePane();if(!this.ln){var B="javascript:nicTemp();";this.ne.nicCommand("createlink",B);this.ln=this.findElm("A","href",B)}if(this.ln){this.ln.setAttributes({href:this.inputs.href.value,title:this.inputs.title.value,target:this.inputs.target.options[this.inputs.target.selectedIndex].value})}}});nicEditors.registerPlugin(nicPlugin,nicLinkOptions);
 
 
 var nicColorOptions = {
@@ -89,7 +89,71 @@ var nicImageOptions = {
 	
 };
 
-var nicImageButton=nicEditorAdvancedButton.extend({addPane:function(){this.im=this.ne.selectedInstance.selElm().parentTag("IMG");this.addForm({"":{type:"title",txt:"Add/Edit Image"},src:{type:"text",txt:"URL",value:"http://",style:{width:"150px"}},alt:{type:"text",txt:"Alt Text",style:{width:"100px"}},align:{type:"select",txt:"Align",options:{none:"Default",left:"Left",right:"Right"}}},this.im)},submit:function(B){var C=this.inputs.src.value;if(C==""||C=="http://"){alert("You must enter a Image URL to insert");return false}this.removePane();if(!this.im){var A="javascript:nicImTemp();";this.ne.nicCommand("insertImage",A);this.im=this.findElm("IMG","src",A)}if(this.im){this.im.setAttributes({src:this.inputs.src.value,alt:this.inputs.alt.value,align:this.inputs.align.value})}}});nicEditors.registerPlugin(nicPlugin,nicImageOptions);
+var nicImageButton = nicEditorAdvancedButton.extend({
+	addPane : function() {
+		this.im = this.ne.selectedInstance.selElm().parentTag("IMG");
+		this.addForm({
+			"" : {
+				type : "title",
+				txt : "Add/Edit Image"
+			},
+			src : {
+				type : "text",
+				txt : "URL",
+				value : "/images/",
+				style : {
+					width : "150px"
+				}
+			},
+			alt : {
+				type : "text",
+				txt : "Alt Text",
+				style : {
+					width : "100px"
+				}
+			},
+			align : {
+				type : "select",
+				txt : "Align",
+				options : {
+					none : "Default",
+					left : "Left",
+					right : "Right"
+				}
+			},
+			width : {
+				type : "text",
+				txt : "Width",
+				style : {
+					width : "60px"
+				}
+			}
+		}, this.im)
+	},
+	submit : function(B) {
+		var C = this.inputs.src.value;
+		if (C == "" || C == "/images/") {
+			alert("You must enter a Image URL to insert");
+			return false
+		}
+		this.removePane();
+		if (!this.im) {
+			var A = "javascript:nicImTemp();";
+			this.ne.nicCommand("insertImage", A);
+			this.im = this.findElm("IMG", "src", A)
+		}
+		if (this.im) {
+			this.im.setAttributes({
+				src : this.inputs.src.value,
+				alt : this.inputs.alt.value,
+				align : this.inputs.align.value,
+				width : this.inputs.width.value
+			})
+		}
+	}
+});
+nicEditors.registerPlugin(nicPlugin, nicImageOptions);
+
 
 
 var nicSaveOptions = {
@@ -115,12 +179,12 @@ var nicCodeButton=nicEditorAdvancedButton.extend({width:"350px",addPane:function
 var nicBBCode=bkClass.extend({construct:function(A){this.ne=A;if(this.ne.options.bbCode){A.addEvent("get",this.bbGet.closure(this));A.addEvent("set",this.bbSet.closure(this));var B=this.ne.loadedPlugins;for(itm in B){if(B[itm].toXHTML){this.xhtml=B[itm]}}}},bbGet:function(A){var B=this.xhtml.toXHTML(A.getElm());A.content=this.toBBCode(B)},bbSet:function(A){A.content=this.fromBBCode(A.content)},toBBCode:function(B){function A(D,C){B=B.replace(D,C)}A(/\n/gi,"");A(/<strong>(.*?)<\/strong>/gi,"[b]$1[/b]");A(/<em>(.*?)<\/em>/gi,"[i]$1[/i]");A(/<span.*?style="text-decoration:underline;">(.*?)<\/span>/gi,"[u]$1[/u]");A(/<ul>(.*?)<\/ul>/gi,"[list]$1[/list]");A(/<li>(.*?)<\/li>/gi,"[*]$1[]");A(/<ol>(.*?)<\/ol>/gi,"[list=1]$1[/list]");A(/<img.*?src="(.*?)".*?>/gi,"[img]$1[/img]");A(/<a.*?href="(.*?)".*?>(.*?)<\/a>/gi,"[url=$1]$2[/url]");A(/<br.*?>/gi,"\n");A(/<.*?>.*?<\/.*?>/gi,"");return B},fromBBCode:function(A){function B(D,C){A=A.replace(D,C)}B(/\[b\](.*?)\[\/b\]/gi,"<strong>$1</strong>");B(/\[i\](.*?)\[\/i\]/gi,"<em>$1</em>");B(/\[u\](.*?)\[\/u\]/gi,'<span style="text-decoration:underline;">$1</span>');B(/\[list\](.*?)\[\/list\]/gi,"<ul>$1</ul>");B(/\[list=1\](.*?)\[\/list\]/gi,"<ol>$1</ol>");B(/\[\*\](.*?)\[\/\*\]/gi,"<li>$1</li>");B(/\[img\](.*?)\[\/img\]/gi,'<img src="$1" />');B(/\[url=(.*?)\](.*?)\[\/url\]/gi,'<a href="$1">$2</a>');B(/\n/gi,"<br />");return A}});nicEditors.registerPlugin(nicBBCode);
 
 
-var nicUploadOptions = {
-	buttons : {
-		'upload' : {name : 'Upload Image', type : 'nicUploadButton'}
-	}
-	
-};
+//var nicUploadOptions = {
+//	buttons : {
+//		'upload' : {name : 'Upload Image', type : 'nicUploadButton'}
+//	}
+//	
+//};
 
-var nicUploadButton=nicEditorAdvancedButton.extend({nicURI:"https://api.imgur.com/3/image",errorText:"Failed to upload image",addPane:function(){if(typeof window.FormData==="undefined"){return this.onError("Image uploads are not supported in this browser, use Chrome, Firefox, or Safari instead.")}this.im=this.ne.selectedInstance.selElm().parentTag("IMG");var A=new bkElement("div").setStyle({padding:"10px"}).appendTo(this.pane.pane);new bkElement("div").setStyle({fontSize:"14px",fontWeight:"bold",paddingBottom:"5px"}).setContent("Insert an Image").appendTo(A);this.fileInput=new bkElement("input").setAttributes({type:"file"}).appendTo(A);this.progress=new bkElement("progress").setStyle({width:"100%",display:"none"}).setAttributes("max",100).appendTo(A);this.fileInput.onchange=this.uploadFile.closure(this)},onError:function(A){this.removePane();alert(A||"Failed to upload image")},uploadFile:function(){var B=this.fileInput.files[0];if(!B||!B.type.match(/image.*/)){this.onError("Only image files can be uploaded");return }this.fileInput.setStyle({display:"none"});this.setProgress(0);var A=new FormData();A.append("image",B);var C=new XMLHttpRequest();C.open("POST",this.ne.options.uploadURI||this.nicURI);C.onload=function(){try{var D=JSON.parse(C.responseText).data}catch(E){return this.onError()}if(D.error){return this.onError(D.error)}this.onUploaded(D)}.closure(this);C.onerror=this.onError.closure(this);C.upload.onprogress=function(D){this.setProgress(D.loaded/D.total)}.closure(this);C.setRequestHeader("Authorization","Client-ID c37fc05199a05b7");C.send(A)},setProgress:function(A){this.progress.setStyle({display:"block"});if(A<0.98){this.progress.value=A}else{this.progress.removeAttribute("value")}},onUploaded:function(B){this.removePane();var D=B.link;if(!this.im){this.ne.selectedInstance.restoreRng();var C="javascript:nicImTemp();";this.ne.nicCommand("insertImage",D);this.im=this.findElm("IMG","src",D)}var A=parseInt(this.ne.selectedInstance.elm.getStyle("width"));if(this.im){this.im.setAttributes({src:D,width:(A&&B.width)?Math.min(A,B.width):""})}}});nicEditors.registerPlugin(nicPlugin,nicUploadOptions);
+//var nicUploadButton=nicEditorAdvancedButton.extend({nicURI:"https://api.imgur.com/3/image",errorText:"Failed to upload image",addPane:function(){if(typeof window.FormData==="undefined"){return this.onError("Image uploads are not supported in this browser, use Chrome, Firefox, or Safari instead.")}this.im=this.ne.selectedInstance.selElm().parentTag("IMG");var A=new bkElement("div").setStyle({padding:"10px"}).appendTo(this.pane.pane);new bkElement("div").setStyle({fontSize:"14px",fontWeight:"bold",paddingBottom:"5px"}).setContent("Insert an Image").appendTo(A);this.fileInput=new bkElement("input").setAttributes({type:"file"}).appendTo(A);this.progress=new bkElement("progress").setStyle({width:"100%",display:"none"}).setAttributes("max",100).appendTo(A);this.fileInput.onchange=this.uploadFile.closure(this)},onError:function(A){this.removePane();alert(A||"Failed to upload image")},uploadFile:function(){var B=this.fileInput.files[0];if(!B||!B.type.match(/image.*/)){this.onError("Only image files can be uploaded");return }this.fileInput.setStyle({display:"none"});this.setProgress(0);var A=new FormData();A.append("image",B);var C=new XMLHttpRequest();C.open("POST",this.ne.options.uploadURI||this.nicURI);C.onload=function(){try{var D=JSON.parse(C.responseText).data}catch(E){return this.onError()}if(D.error){return this.onError(D.error)}this.onUploaded(D)}.closure(this);C.onerror=this.onError.closure(this);C.upload.onprogress=function(D){this.setProgress(D.loaded/D.total)}.closure(this);C.setRequestHeader("Authorization","Client-ID c37fc05199a05b7");C.send(A)},setProgress:function(A){this.progress.setStyle({display:"block"});if(A<0.98){this.progress.value=A}else{this.progress.removeAttribute("value")}},onUploaded:function(B){this.removePane();var D=B.link;if(!this.im){this.ne.selectedInstance.restoreRng();var C="javascript:nicImTemp();";this.ne.nicCommand("insertImage",D);this.im=this.findElm("IMG","src",D)}var A=parseInt(this.ne.selectedInstance.elm.getStyle("width"));if(this.im){this.im.setAttributes({src:D,width:(A&&B.width)?Math.min(A,B.width):""})}}});nicEditors.registerPlugin(nicPlugin,nicUploadOptions);
 

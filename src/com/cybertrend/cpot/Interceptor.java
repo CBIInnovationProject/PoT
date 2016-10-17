@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.cybertrend.cpot.action.DefaultAction;
 import com.cybertrend.cpot.dao.MenuDAO;
+import com.cybertrend.cpot.dao.RoleDAO;
 import com.cybertrend.cpot.dao.RoleMenuDAO;
 import com.cybertrend.cpot.entity.Menu;
 

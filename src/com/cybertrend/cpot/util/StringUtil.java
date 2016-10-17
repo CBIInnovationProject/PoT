@@ -94,4 +94,17 @@ public class StringUtil {
 		}
 		return ret.toString();
 	}
+	
+	public static int textToInt(String text) {
+		String huruf = "abcdefghijklmnopqrstuvwx ";
+		int result = 0;
+		for(int i=1 ; i < text.length()+1; i++) {
+			int intHuruf = huruf.indexOf(text.toLowerCase().charAt(i-1))+1;
+			if(intHuruf==0)intHuruf = 99;
+			System.out.println(i+" - "+text.toLowerCase().charAt(i-1)+"  "+intHuruf);
+			result = result + (i*intHuruf);
+		}
+		System.out.println(result);
+		return result;
+	}
 }

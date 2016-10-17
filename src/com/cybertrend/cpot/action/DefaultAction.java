@@ -18,7 +18,6 @@ import com.cybertrend.cpot.service.TableauService;
 import com.cybertrend.cpot.util.ReadConfig;
 
 import tableau.api.rest.bindings.TableauCredentialsType;
-import tableau.api.rest.bindings.WorkbookType;
 
 public class DefaultAction{
 
@@ -30,9 +29,9 @@ public class DefaultAction{
 		return (TableauCredentialsType) request.getSession().getAttribute(Constants.TABLEAU_CREDENTIALS);
 	}
 	
-	public static List<WorkbookType> getCurrentWorkbookList(HttpServletRequest request){
-		return (List<WorkbookType>)request.getSession().getAttribute(Constants.TABLEAU_WORKBOOKS);
-	}
+//	public static List<WorkbookType> getCurrentWorkbookList(HttpServletRequest request){
+//		return (List<WorkbookType>)request.getSession().getAttribute(Constants.TABLEAU_WORKBOOKS);
+//	}
 	
 	public static User getCurrentUser(HttpServletRequest request){
 		return (User) request.getSession().getAttribute(Constants.USER_GA);
@@ -54,11 +53,11 @@ public class DefaultAction{
 	private static boolean authMenu(Menu menu, HttpServletRequest request) {
 		boolean authorized = false ;
 		if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("tableau")){
-			for (WorkbookType wb : getCurrentWorkbookList(request)) {
-				if(wb.getId().equalsIgnoreCase(menu.getWorkbookId())){
+//			for (WorkbookType wb : getCurrentWorkbookList(request)) {
+//				if(wb.getId().equalsIgnoreCase(menu.getWorkbookId())){
 					authorized = true;
-				}
-			}
+//				}
+//			}
 		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("page")){
 			authorized = true;
 		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("admin")){

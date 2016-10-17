@@ -36,7 +36,7 @@ public class Login extends DefaultAction{
 		TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
 		request.getSession().setAttribute(Constants.USER_GA, user);
 		request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
-		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
+//		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 	}
 	
 	public static void selectSite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -73,7 +73,6 @@ public class Login extends DefaultAction{
 				TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
 				request.getSession().setAttribute(Constants.USER_GA, user);
 				request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
-				request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 			}
 			else request.getRequestDispatcher("/views/siteSelector.jsp").forward(request, response);
 		} else {
