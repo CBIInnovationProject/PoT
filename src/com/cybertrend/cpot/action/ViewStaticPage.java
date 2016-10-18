@@ -18,7 +18,7 @@ public class ViewStaticPage extends DefaultAction {
 	
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		} else { 
 			if (Interceptor.isAuthorized(action, request)){
 				logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );

@@ -27,7 +27,7 @@ public class Login extends DefaultAction{
 		if (AUTH || Interceptor.isLogin(request)==true) {
 			response.sendRedirect("landingPage.cbi");
 		} else {
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		} 
 		User user = UserDAO.getUserById(request.getParameter("userId"));
 		String username = user.getUsername();
@@ -76,7 +76,7 @@ public class Login extends DefaultAction{
 			}
 			else request.getRequestDispatcher("/views/siteSelector.jsp").forward(request, response);
 		} else {
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 	}
 }

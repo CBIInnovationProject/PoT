@@ -16,7 +16,7 @@ public class AccountForm extends DefaultAction {
 	static Logger logger = Logger.getLogger(AccountForm.class);
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		} else {
 			logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
 			logger.info("Activity : "+action);

@@ -21,7 +21,7 @@ public class MenuForm extends DefaultAction {
 	static Logger logger = Logger.getLogger(MenuForm.class);
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
@@ -79,7 +79,7 @@ public class MenuForm extends DefaultAction {
 	
 	public static void list(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
@@ -98,7 +98,7 @@ public class MenuForm extends DefaultAction {
 	
 	public static void delete(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){

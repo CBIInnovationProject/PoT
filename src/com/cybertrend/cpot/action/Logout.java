@@ -18,6 +18,6 @@ public class Logout extends DefaultAction{
 		request.getSession().removeAttribute(Constants.TABLEAU_WORKBOOKS);
 		logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
 		logger.info("Activity : Logout");
-		request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+		request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 	}
 }

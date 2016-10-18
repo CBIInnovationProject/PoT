@@ -93,7 +93,7 @@ public class CPoTServlet extends HttpServlet {
 				if(Interceptor.isLogin(request)!=false){
 					response.sendRedirect("landingPage.cbi");
 				} else
-					servletContext.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+					servletContext.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 			} 
 			else if (action.equals("login.cbi")) {
 				Login.execute(request, response);
@@ -106,7 +106,7 @@ public class CPoTServlet extends HttpServlet {
 			}
 			
 			else if (action.equals("landingPage.cbi")){
-				LandingPage.execute(request, response, servletContext);
+				LandingPage.execute(request, response, servletContext, action);
 			}
 			
 			else if (action.equals("parentMenuForm.cbi")){
@@ -202,10 +202,6 @@ public class CPoTServlet extends HttpServlet {
 			else if (action.equals("settings_password.cbi")) {
 				AccountForm.execute(request, response, action);
 				request.getRequestDispatcher("/views/settings/password.jsp").forward(request, response);
-			}
-			
-			else {
-				servletContext.getRequestDispatcher("/views/fragments/404.jsp").forward(request, response);
 			}
 			
 		} catch (SQLException e) {

@@ -24,7 +24,7 @@ public class WorkbookForm extends DefaultAction{
 	static Logger logger = Logger.getLogger(WorkbookForm.class);
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			request.setAttribute("workbooks", getTableauService().invokeQueryWorkbooks(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
@@ -63,7 +63,7 @@ public class WorkbookForm extends DefaultAction{
 	 */
 	private static void detail(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
@@ -88,7 +88,7 @@ public class WorkbookForm extends DefaultAction{
 	 */
 	private static void viewDashboard(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
@@ -105,7 +105,7 @@ public class WorkbookForm extends DefaultAction{
 	 */
 	private static void addToPortal(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if(Interceptor.isAuthorized(action, request)){
@@ -129,7 +129,7 @@ public class WorkbookForm extends DefaultAction{
 	 */
 	private static void removeFromPortal(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if(Interceptor.isAuthorized(action, request)){

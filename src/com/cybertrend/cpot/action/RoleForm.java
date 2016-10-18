@@ -24,7 +24,7 @@ public class RoleForm extends DefaultAction{
 	static Logger logger = Logger.getLogger(RoleForm.class);
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
@@ -46,7 +46,7 @@ public class RoleForm extends DefaultAction{
 	
 	public static void save(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
@@ -75,7 +75,7 @@ public class RoleForm extends DefaultAction{
 	
 	public static void list(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
@@ -94,7 +94,7 @@ public class RoleForm extends DefaultAction{
 	
 	public static void detailRole(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
@@ -123,7 +123,7 @@ public class RoleForm extends DefaultAction{
 
 	private static void addMenuToRole(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
@@ -143,7 +143,7 @@ public class RoleForm extends DefaultAction{
 	
 	private static void removeMenuFromRole(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
@@ -163,7 +163,7 @@ public class RoleForm extends DefaultAction{
 
 	public static void delete(HttpServletRequest request, HttpServletResponse response, String action)throws ServletException, IOException, SQLException {
 		if(Interceptor.isLogin(request)==false){
-			request.getRequestDispatcher("/views/loginForm.jsp").forward(request, response);
+			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
 			if (Interceptor.isAuthorized(action, request)){
