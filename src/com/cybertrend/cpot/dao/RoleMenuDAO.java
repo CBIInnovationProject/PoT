@@ -51,17 +51,27 @@ public class RoleMenuDAO {
 		PreparedStatement prep;
 		String sql = "INSERT INTO t_rolemenu(id, createBy, createDate, updateBy, updateDate, role, menu, menuOrder) VALUES (?,?,?,?,?,?,?,?)";
 		try {
+			String roleMenuId = UUID.randomUUID().toString();
+			Timestamp currDate = new Timestamp(System.currentTimeMillis());
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
-			prep.setString(1, UUID.randomUUID().toString());
+			prep.setString(1, roleMenuId);
+			logger.info("RoleMenu Id : "+roleMenuId);
 			prep.setString(2, roleMenu.getCreateBy());
-			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			logger.info("RoleMenu Create By : "+roleMenu.getCreateBy());
+			prep.setTimestamp(3, currDate);
+			logger.info("RoleMenu Create Date : "+currDate);
 			prep.setString(4, roleMenu.getUpdateBy());
-			prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+			logger.info("RoleMenu Update By : "+roleMenu.getUpdateBy());
+			prep.setTimestamp(5, currDate);
+			logger.info("RoleMenu Update Date : "+currDate);
 			
 			prep.setString(6, roleMenu.getRole().getId());
+			logger.info("RoleMenu Role Id : "+roleMenu.getRole().getId());
 			prep.setString(7, roleMenu.getMenu().getId());
+			logger.info("RoleMenu Menu Id : "+roleMenu.getMenu().getId());
 			prep.setInt(8, roleMenu.getMenu().getMenuOrder());
+			logger.info("RoleMenu Menu Order : "+roleMenu.getMenu().getMenuOrder());
 			prep.executeUpdate();
 			logger.info("Insert RoleMenu Success!!!");
 		} catch (SQLException e) {
@@ -78,7 +88,9 @@ public class RoleMenuDAO {
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, menu.getId());
+			logger.info("RoleMenu Menu Id : "+menu.getId());
 			prep.setString(2, role.getId());
+			logger.info("RoleMenu Role Id : "+role.getId());
 			prep.executeUpdate();
 			logger.info("Delete RoleMenu Success!!!!");
 		} catch (SQLException e) {

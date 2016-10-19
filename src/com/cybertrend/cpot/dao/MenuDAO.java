@@ -99,24 +99,41 @@ public class MenuDAO {
 		PreparedStatement prep;
 		String sql = "INSERT INTO t_menu(id, createBy, createDate, updateBy, updateDate, name, parentId, action, content, contentType, menuOrder, icon, workbookId, viewId, siteId ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
+			String id = UUID.randomUUID().toString();
+			Timestamp currDate = new Timestamp(System.currentTimeMillis());
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
-			prep.setString(1, UUID.randomUUID().toString());
+			prep.setString(1, id);
+			logger.info("Menu id : "+id);
 			prep.setString(2, menu.getCreateBy());
-			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			logger.info("Menu Created By : "+menu.getCreateBy());
+			prep.setTimestamp(3, currDate);
+			logger.info("Menu Create Date : "+currDate);
 			prep.setString(4, menu.getUpdateBy());
+			logger.info("Menu Update By : "+menu.getUpdateBy());
 			prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+			logger.info("Menu Update Date : "+currDate);
 			
 			prep.setString(6, menu.getName());
+			logger.info("Menu Name : "+menu.getName());
 			prep.setString(7, menu.getParentId());
+			logger.info("Menu Parent Id : "+menu.getParentId());
 			prep.setString(8, menu.getAction());
+			logger.info("Menu Action : "+menu.getAction());
 			prep.setString(9, menu.getContent());
+			logger.info("Menu Content : "+menu.getContent());
 			prep.setString(10, menu.getContentType());
+			logger.info("Menu Content Type : "+menu.getContentType());
 			prep.setInt(11, menu.getMenuOrder());
+			logger.info("Menu Order : "+menu.getMenuOrder());
 			prep.setString(12, menu.getIcon());
+			logger.info("Menu Icon : "+menu.getIcon());
 			prep.setString(13, menu.getWorkbookId());
+			logger.info("Workbook Id : "+menu.getWorkbookId());
 			prep.setString(14, menu.getViewId());
+			logger.info("View Id : "+menu.getViewId());
 			prep.setString(15, menu.getSiteId());
+			logger.info("Site Id : "+menu.getSiteId());
 			
 			prep.executeUpdate();
 			logger.info("Insert Menu Success!!!");
@@ -133,22 +150,36 @@ public class MenuDAO {
 		PreparedStatement prep;
 		String sql = "UPDATE t_menu SET updateBy=?, updateDate=?, name=?, parentId=?, action=?, content=?, contentType=?, menuOrder=?, icon=?, workbookId=?, viewId=?, siteId=? WHERE id=?";
 		try {
+			Timestamp currDate = new Timestamp(System.currentTimeMillis());
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, menu.getUpdateBy());
-			prep.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			logger.info("Menu Update By : "+menu.getUpdateBy());
+			prep.setTimestamp(2, currDate);
+			logger.info("Menu Update Date : "+currDate);
 			
 			prep.setString(3, menu.getName());
+			logger.info("Menu Name : "+menu.getName());
 			prep.setString(4, menu.getParentId());
+			logger.info("Menu Parent Id : "+menu.getParentId());
 			prep.setString(5, menu.getAction());
+			logger.info("Menu Action : "+menu.getAction());
 			prep.setString(6, menu.getContent());
+			logger.info("Menu Content : "+menu.getContent());
 			prep.setString(7, menu.getContentType());
+			logger.info("Menu Content Type : "+menu.getContentType());
 			prep.setInt(8, menu.getMenuOrder());
+			logger.info("Menu Order : "+menu.getMenuOrder());
 			prep.setString(9, menu.getIcon());
+			logger.info("Menu Icon : "+menu.getIcon());
 			prep.setString(10, menu.getWorkbookId());
+			logger.info("Workbook Id : "+menu.getWorkbookId());
 			prep.setString(11, menu.getViewId());
+			logger.info("View Id : "+menu.getViewId());
 			prep.setString(12, menu.getSiteId());
+			logger.info("Site Id : "+menu.getSiteId());
 			prep.setString(13, menu.getId());
+			logger.info("Menu Id : "+menu.getId());
 			
 			prep.executeUpdate();
 			logger.info("Update Menu Success!!!");

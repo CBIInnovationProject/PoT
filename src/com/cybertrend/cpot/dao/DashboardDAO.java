@@ -21,11 +21,17 @@ public class DashboardDAO {
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, dashboard.getId());
+			logger.info("Dashboard Id : "+dashboard.getId());
 			prep.setTimestamp(2, dashboard.getCreateDate());
+			logger.info("Dashboard Create Date : "+dashboard.getCreateDate());
 			prep.setString(3, dashboard.getCreateBy());
+			logger.info("Dashboard Create By : "+dashboard.getCreateBy());
 			prep.setString(4, dashboard.getUrl());
+			logger.info("Dashboard Url : "+dashboard.getUrl());
 			prep.setString(5, dashboard.getWorkbookId());
+			logger.info("Dashboard Workbook Id : "+dashboard.getWorkbookId());
 			prep.setString(6, dashboard.getSiteId());
+			logger.info("Dashboard Site Id : "+dashboard.getSiteId());
 			prep.executeUpdate();
 			logger.info("Insert dashboard Success !!!");
 		} catch (SQLException e) {
@@ -42,6 +48,7 @@ public class DashboardDAO {
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, id);
+			logger.info("Dashboard Id : "+id);
 			prep.executeUpdate();
 			logger.info("Delete dashboard Success !!!");
 		} catch (SQLException e) {

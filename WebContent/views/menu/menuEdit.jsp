@@ -95,6 +95,13 @@ $('.select2').select2();
 								</div>
 							</div>
 							<input type="hidden" name="contentType" id="contentType" value="tableau" />
+						<% } if (menuView.getContentType()!=null && menuView.getContentType().trim().equals("module")) {%>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Url</label>
+								<div class="col-sm-3">
+									${menuView.action}
+								</div>
+							</div>
 						<% } else { %>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Leaf Menu</label>

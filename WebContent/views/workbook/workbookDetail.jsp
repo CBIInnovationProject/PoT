@@ -74,7 +74,7 @@
 											for (ViewType view : views) {
 										%>
 										<tr>
-											<td><a href="workbook.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "")%>"><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%=view.getName()%></a></td>
+											<td><a target="_blank" href="workbook.cbi?workbookId=${workbook.workbookType.id}&&url=<%=view.getContentUrl().replace("sheets/", "")%>"><i class='fa fa-bar-chart'></i>&nbsp;&nbsp;<%=view.getName()%></a></td>
 											<td id="dashboardAction">
 												<% if (DashboardDAO.isDasboardExist(view.getId()) == false) { %> 
 													<a data-toggle="tooltip" data-placement="top" title="Register" class="btn btn-success btn-xs"

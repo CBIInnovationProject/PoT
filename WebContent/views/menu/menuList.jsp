@@ -46,7 +46,7 @@
 							 	<% List<Menu> menus=(List<Menu>) request.getAttribute("menus"); 
 							 	for (Menu menu: menus) { 
 							 	String contentType = menu.getContentType()!=null?menu.getContentType().toUpperCase():"PARENT";
-							 	String icon = contentType.equalsIgnoreCase("PARENT")?"fa fa-folder-o":(contentType.equals("TABLEAU")?"fa fa-line-chart":"fa fa-file-text-o");%>
+							 	String icon = contentType.equalsIgnoreCase("PARENT")?"fa fa-folder-o":(contentType.equals("TABLEAU")?"fa fa-line-chart":(contentType.equals("MODULE")?"fa fa-code":"fa fa-file-text-o"));%>
 		                        <tr id="<%=menu.getId()%>">
 		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><i class="<%=icon%>"></i>&nbsp;&nbsp;<a href="#" class="dropdown-toggle name<%=menu.getId()%>" data-toggle="dropdown" aria-expanded="false" role="menu"><%= menu.getName()%></a><ul class="dropdown-menu" role="menu">
 			                          <li><a onclick="popup_detail('menuEdit.cbi?menuId=<%=menu.getId()%>')" href="#">Edit</a>

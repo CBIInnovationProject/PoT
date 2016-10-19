@@ -41,17 +41,27 @@ public class RoleDAO {
 		PreparedStatement prep;
 		String sql = "INSERT INTO t_role(id, createBy, createDate, updateBy, updateDate, name, description, siteId ) VALUES (?,?,?,?,?,?,?,?)";
 		try {
+			String roleId = UUID.randomUUID().toString();
+			Timestamp currDate = new Timestamp(System.currentTimeMillis());
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
-			prep.setString(1, UUID.randomUUID().toString());
+			prep.setString(1, roleId );
+			logger.info("Role Id : "+roleId);
 			prep.setString(2, role.getCreateBy());
-			prep.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			logger.info("Role Create By : "+role.getCreateBy());
+			prep.setTimestamp(3, currDate );
+			logger.info("Role Create Date : "+currDate);
 			prep.setString(4, role.getUpdateBy());
-			prep.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+			logger.info("Role Update By : "+role.getUpdateBy());
+			prep.setTimestamp(5, currDate);
+			logger.info("Role Update Date : "+currDate);
 			
 			prep.setString(6, role.getName());
+			logger.info("Role Name : "+role.getName());
 			prep.setString(7, role.getDescription());
+			logger.info("Role Description : "+role.getDescription());
 			prep.setString(8, role.getSiteId());
+			logger.info("Site Id : "+role.getSiteId());
 			prep.executeUpdate();
 			logger.info("Insert Role Success!!!");
 			return "Role <strong>"+role.getName()+"</strong> successfully added to record";
@@ -83,6 +93,7 @@ public class RoleDAO {
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, role.getId());
+			logger.info("Role id : "+role.getId());
 			prep.executeUpdate();
 			logger.info("Delete Role Success!!!");
 			return "Role <strong>"+role.getName()+"</strong> has been deleted";
@@ -98,15 +109,21 @@ public class RoleDAO {
 		PreparedStatement prep;
 		String sql = "UPDATE t_role SET updateBy=?, updateDate=?, name=?, description=?, siteId=? WHERE id=?";
 		try {
+			Timestamp currDate = new Timestamp(System.currentTimeMillis());
 			logger.info("Query "+sql);
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, role.getUpdateBy());
-			prep.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-			
+			logger.info("Role Update By : "+role.getUpdateBy());
+			prep.setTimestamp(2, currDate);
+			logger.info("Role Update Date : "+currDate);
 			prep.setString(3, role.getName());
+			logger.info("Role Name : "+role.getName());
 			prep.setString(4, role.getDescription());
+			logger.info("Role Description : "+role.getDescription());
 			prep.setString(5, role.getSiteId());
+			logger.info("Site Id : "+role.getSiteId());
 			prep.setString(6, role.getId());
+			logger.info("Role Id : "+role.getId());
 			prep.executeUpdate();
 			logger.info("Update Role Success!!!");
 			return "Role <strong>"+role.getName()+"</strong> successfully updated";
