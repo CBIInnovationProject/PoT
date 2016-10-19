@@ -50,7 +50,7 @@ public class DefaultAction{
 		return treeMenu;
 	}
 	
-	private static boolean authMenu(Menu menu, HttpServletRequest request) {
+	public static boolean authMenu(Menu menu, HttpServletRequest request) {
 		boolean authorized = false ;
 		if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("tableau")){
 //			for (WorkbookType wb : getCurrentWorkbookList(request)) {
@@ -61,6 +61,8 @@ public class DefaultAction{
 		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("page")){
 			authorized = true;
 		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("admin")){
+			authorized = true;
+		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("module")){
 			authorized = true;
 		}
 		return authorized;

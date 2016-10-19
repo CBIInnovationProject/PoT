@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 import com.cybertrend.cpot.Interceptor;
@@ -34,6 +35,7 @@ public class MenuForm extends DefaultAction {
 				if(request.getParameter("menuId")!=null) {
 					Menu menu = MenuDAO.getMenuById(request.getParameter("menuId"));
 					request.setAttribute("menuView", menu);
+					request.setAttribute("previewMenu", leafMenu(menu, request));
 					request.getRequestDispatcher("/views/menu/menuEdit.jsp").forward(request, response);
 				}
 			}
@@ -114,5 +116,19 @@ public class MenuForm extends DefaultAction {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
 			}
 		}
+	}
+	
+	private static String leafMenu(Menu menu, HttpServletRequest request) throws SQLException{
+		String treeMenu = "";
+		List<Menu> menus = MenuDAO.getMenusByParentId(menu.getId());
+		if(menus.size()>0){
+			treeMenu = treeMenu+"<li class='list-unstyled'><ul>";
+			for(Menu menu2: menus){
+				treeMenu = treeMenu + leafMenu(menu2, request);
+			} treeMenu = treeMenu + "</ul></li>";
+		} else if (menu.getContentType()!=null){
+			treeMenu = treeMenu+"<li><i class='"+menu.getIcon()+"'></i>&nbsp;&nbsp;<a target='_blank'>"+menu.getName()+"</a></li>";
+		} 		
+		return treeMenu;
 	}
 }

@@ -17,15 +17,14 @@ public class LandingPage extends DefaultAction{
 			servletContext.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
-			if (Interceptor.isAuthorized(action, request)){
-				servletContext.setAttribute("treeMenu", treeMenu(request));
-				servletContext.setAttribute("user", getCurrentUser(request));
-				servletContext.setAttribute("hostName", getHostName());
+			servletContext.setAttribute("treeMenu", treeMenu(request));
+			servletContext.setAttribute("user", getCurrentUser(request));
+			servletContext.setAttribute("hostName", getHostName());
+			if(getCurrentCredentials(request)!=null) { 
 				servletContext.setAttribute("siteRoot", getCurrentCredentials(request).getSite().getContentUrl().trim().equals("")?"":("/t/"+getCurrentCredentials(request).getSite().getContentUrl().trim()));
 				servletContext.getRequestDispatcher(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getPath()+"/landingPage.jsp").forward(request, response);
-			}
-			else {
-				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 			}
 		}
 	}

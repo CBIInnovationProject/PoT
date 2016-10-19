@@ -82,7 +82,7 @@ $('.select2').select2();
 							<input type="hidden" name="contentType" id="contentType" value="page" />
 							<textarea name="content" id="content_text"
 							style="width: 800px; height: 150px;">${menuView.content}</textarea>
-						<% } if (menuView.getContentType()!=null && menuView.getContentType().trim().equals("tableau")) { %>
+						<% } else if (menuView.getContentType()!=null && menuView.getContentType().trim().equals("tableau")) { %>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tableau URL <span class="required">*</span></label>
 								<div class="col-sm-3">
@@ -95,6 +95,13 @@ $('.select2').select2();
 								</div>
 							</div>
 							<input type="hidden" name="contentType" id="contentType" value="tableau" />
+						<% } else { %>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Leaf Menu</label>
+								<div class="col-sm-9">
+									<ul class="list-unstyled">${previewMenu}</ul>
+								</div>
+							</div>
 						<% } %>
 						<div class="ln_solid"></div>
 						<div class="form-group">
