@@ -1,0 +1,490 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.4
+-- Dumped by pg_dump version 9.2.4
+-- Started on 2016-10-19 12:57:24
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 176 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2053 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 168 (class 1259 OID 165445)
+-- Name: t_dashboard; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE t_dashboard (
+    id character varying(255) DEFAULT ''::character varying NOT NULL,
+    createby character varying(255) DEFAULT NULL::character varying,
+    createdate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    url character varying(255) DEFAULT NULL::character varying,
+    workbookid character varying(255) DEFAULT NULL::character varying,
+    siteid character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.t_dashboard OWNER TO postgres;
+
+--
+-- TOC entry 169 (class 1259 OID 165459)
+-- Name: t_menu; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE t_menu (
+    id character varying(50) DEFAULT '0'::character varying NOT NULL,
+    action character varying(255) DEFAULT NULL::character varying,
+    createby character varying(255) DEFAULT NULL::character varying,
+    createdate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    icon character varying(255) DEFAULT NULL::character varying,
+    menuorder integer NOT NULL,
+    name character varying(255) DEFAULT NULL::character varying,
+    updateby character varying(255) DEFAULT NULL::character varying,
+    updatedate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    content text,
+    workbookid character varying(255) DEFAULT NULL::character varying,
+    parentid character varying(50) DEFAULT NULL::character varying,
+    viewid character varying(255) DEFAULT NULL::character varying,
+    siteid character varying(255) DEFAULT NULL::character varying,
+    contenttype character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.t_menu OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 165491)
+-- Name: t_restrict_menu_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE t_restrict_menu_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.t_restrict_menu_seq OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 165505)
+-- Name: t_role; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE t_role (
+    id character varying(50) DEFAULT ''::character varying NOT NULL,
+    name character varying(255) DEFAULT NULL::character varying,
+    description character varying(255) DEFAULT NULL::character varying,
+    createby character varying(255) DEFAULT NULL::character varying,
+    createdate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    updateby character varying(255) DEFAULT NULL::character varying,
+    updatedate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    siteid character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.t_role OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 165521)
+-- Name: t_rolemenu; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE t_rolemenu (
+    id character varying(50) DEFAULT ''::character varying NOT NULL,
+    createby character varying(255) DEFAULT NULL::character varying,
+    createdate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    updateby character varying(255) DEFAULT NULL::character varying,
+    updatedate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    role character varying(255) DEFAULT NULL::character varying,
+    menu character varying(255) DEFAULT NULL::character varying,
+    menuorder integer
+);
+
+
+ALTER TABLE public.t_rolemenu OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 165551)
+-- Name: t_subscription; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE t_subscription (
+    id character varying(11) DEFAULT ''::character varying NOT NULL,
+    subscribeby character varying(255) DEFAULT NULL::character varying,
+    subscribedate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    cronsyntax character varying(255) DEFAULT NULL::character varying,
+    description character varying(255) DEFAULT NULL::character varying,
+    contenturl character varying(255) DEFAULT NULL::character varying,
+    menuid character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.t_subscription OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 165566)
+-- Name: t_themes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE t_themes (
+    id character varying(11) DEFAULT ''::character varying NOT NULL,
+    name character varying(255) DEFAULT NULL::character varying,
+    path character varying(255) DEFAULT NULL::character varying,
+    ul text,
+    li text
+);
+
+
+ALTER TABLE public.t_themes OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 165623)
+-- Name: t_user; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE t_user (
+    id character varying(50) DEFAULT ''::character varying NOT NULL,
+    createby character varying(255) DEFAULT NULL::character varying,
+    createdate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    updateby character varying(255) DEFAULT NULL::character varying,
+    updatedate timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    username character varying(255) DEFAULT NULL::character varying,
+    siteurl character varying(255) DEFAULT NULL::character varying,
+    fullname character varying(255) DEFAULT NULL::character varying,
+    address1 character varying(255) DEFAULT NULL::character varying,
+    address2 character varying(255) DEFAULT NULL::character varying,
+    address3 character varying(255) DEFAULT NULL::character varying,
+    zip character varying(255) DEFAULT NULL::character varying,
+    phone character varying(255) DEFAULT NULL::character varying,
+    photo character varying(255) DEFAULT NULL::character varying,
+    email character varying(255) DEFAULT NULL::character varying,
+    siteid character varying(255) DEFAULT NULL::character varying,
+    roleid character varying(255) DEFAULT NULL::character varying,
+    themes character varying(255) DEFAULT '1'::character varying
+);
+
+
+ALTER TABLE public.t_user OWNER TO postgres;
+
+--
+-- TOC entry 2038 (class 0 OID 165445)
+-- Dependencies: 168
+-- Data for Name: t_dashboard; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY t_dashboard (id, createby, createdate, url, workbookid, siteid) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2039 (class 0 OID 165459)
+-- Dependencies: 169
+-- Data for Name: t_menu; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY t_menu (id, action, createby, createdate, icon, menuorder, name, updateby, updatedate, content, workbookid, parentid, viewid, siteid, contenttype) FROM stdin;
+10	menuList.cbi	\N	\N	fa fa-list	3	Menu List	faris	2016-06-22 10:06:26	\N	\N	1	\N	\N	admin
+11	roleForm.cbi	faris	2016-06-17 13:24:42	fa fa-plus-square-o	0	Create Role	faris	2016-06-17 13:24:42	\N	\N	3	\N	\N	admin
+15	userForm.cbi	faris	2016-06-18 12:34:13	fa fa-user-plus	0	Create User	faris	2016-06-18 12:34:13	\N	\N	14	\N	\N	admin
+2	\N	faris	2016-06-17 23:07:27	fa fa-plus-square-o	0	Create Menu	faris	2016-06-17 23:07:27	\N	\N	1	\N	\N	admin
+4	roleList.cbi	faris	2016-06-18 09:04:32	fa fa-list	2	Role List	faris	2016-06-18 09:04:32	\N	\N	3	\N	\N	admin
+5	userList.cbi	faris	2016-06-18 12:35:23	fa fa-list	1	User List	faris	2016-06-18 12:35:23	\N	\N	14	\N	\N	admin
+7	parentMenuForm.cbi	\N	\N	\N	0	Parent Menu	\N	\N	\N	\N	2	\N	\N	admin
+8	pageMenuForm.cbi	\N	\N	\N	1	Static Page	\N	\N	\N	\N	2	\N	\N	admin
+9	tableauMenuForm.cbi	\N	\N	\N	2	Tableau Dashboard	\N	\N	\N	\N	2	\N	\N	admin
+6	workbook.cbi	\N	\N	fa fa-line-chart	1	Workbook	\N	\N	\N	\N	\N	\N	\N	admin
+14	\N	faris	2016-06-18 12:24:57	fa fa-user	4	User	faris	2016-06-21 16:36:33	\N	\N	\N	\N	\N	admin
+1	\N	faris	2016-06-17 22:55:02	fa fa-sitemap	1	Menu	faris	2016-06-17 22:55:02	\N	\N	\N	\N	\N	admin
+3	\N	faris	2016-06-18 08:59:14	fa fa-circle-o	1	Role	faris	2016-06-18 08:59:14	\N	\N	\N	\N	\N	admin
+12	moduleFunctionForm.cbi	faris	2016-10-19 10:50:10	 	0	Module Function	faris	2016-10-19 10:50:10	\N	\N	2	\N	\N	admin
+\.
+
+
+--
+-- TOC entry 2054 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: t_restrict_menu_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('t_restrict_menu_seq', 1, false);
+
+
+--
+-- TOC entry 2041 (class 0 OID 165505)
+-- Dependencies: 171
+-- Data for Name: t_role; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY t_role (id, name, description, createby, createdate, updateby, updatedate, siteid) FROM stdin;
+0	Administrator	\N	0	\N	0	\N	\N
+\.
+
+
+--
+-- TOC entry 2042 (class 0 OID 165521)
+-- Dependencies: 172
+-- Data for Name: t_rolemenu; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY t_rolemenu (id, createby, createdate, updateby, updatedate, role, menu, menuorder) FROM stdin;
+2	\N	\N	\N	\N	0	1	1
+4	\N	\N	\N	\N	0	3	2
+5	\N	\N	\N	\N	0	14	3
+3	\N	\N	\N	\N	0	6	0
+\.
+
+
+--
+-- TOC entry 2043 (class 0 OID 165551)
+-- Dependencies: 173
+-- Data for Name: t_subscription; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY t_subscription (id, subscribeby, subscribedate, cronsyntax, description, contenturl, menuid) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2044 (class 0 OID 165566)
+-- Dependencies: 174
+-- Data for Name: t_themes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY t_themes (id, name, path, ul, li) FROM stdin;
+1	Default	/views	<li><a><i class="%s"></i>%s<span class="fa fa-chevron-down"></span></a><ul class="nav child_menu">	<li><a href="%s"><i class="%s"></i>&nbsp;%s</a></li>
+2	Bootstrap_Navbar	/themes/Bootstrap_Navbar	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="%s"></i>&nbsp;%s</a><ul class="dropdown-menu">	<li><a href="%s" target="mainframe"><i class="%s"></i>&nbsp;%s</a></li>
+\.
+
+
+--
+-- TOC entry 2045 (class 0 OID 165623)
+-- Dependencies: 175
+-- Data for Name: t_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY t_user (id, createby, createdate, updateby, updatedate, username, siteurl, fullname, address1, address2, address3, zip, phone, photo, email, siteid, roleid, themes) FROM stdin;
+24dfd81c-3f13-47bf-97b9-38d585c7737e	\N	2016-10-17 10:53:24	\N	2016-10-17 10:53:24	Cybertrend		Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	b4126fe9-d7ee-4083-88f9-a5eea1f40416	0	1
+4ed28882-b81c-4532-94e5-1a053cfae003	\N	2016-10-17 10:53:25	\N	2016-10-17 10:53:25	Cybertrend	BOD	Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	13d37425-46c0-4de3-b8b6-a6390174093c	0	1
+985f7dec-dfba-48f6-9001-6a74f30173e8	\N	2016-10-17 10:53:25	\N	2016-10-17 10:53:25	Cybertrend	Demo	Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	a9c6a618-fdd1-40bc-a5a6-f2f18ad89714	0	1
+89d9a146-ce72-44af-8bd1-f65f5e878089	\N	2016-10-17 10:53:25	\N	2016-10-17 10:53:25	Cybertrend	Training	Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	8529fc6a-33ec-4c33-b26c-71a6a2b01a23	0	1
+0ae0a8c3-683d-474a-a53c-031c0cb2e7cc	\N	2016-10-17 10:53:29	\N	2016-10-17 10:53:29	Cybertrend	DWBI	Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	167c0b37-7f1a-47f4-b4e3-06dabd7fbdde	0	1
+d6c7b864-9e48-4daf-a8bf-e167d42e4ebb	\N	2016-10-17 10:53:29	\N	2016-10-17 10:53:29	Cybertrend	PMO	Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	669758c8-6579-4d55-9501-6b6650c3cfd4	0	1
+38331852-9ab8-4c61-9c2d-89da622fa582	\N	2016-10-17 10:53:29	\N	2016-10-17 10:53:29	Cybertrend	RnD	Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	9926b659-8101-4775-be53-781c486238f9	0	1
+6dfdf370-c968-448d-bd85-bc4de690f066	\N	2016-10-17 10:53:30	\N	2016-10-17 10:53:30	Cybertrend	LKPP	Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	6e8a2acd-3fbe-4f07-829b-3bb5687004d9	0	1
+e18ae347-177a-4acf-b901-bd04f29b4f14	\N	2016-10-17 10:53:30	\N	2016-10-17 10:53:30	Cybertrend	Presales	Cybertrend Intrabuana	\N	\N	\N	\N	\N	\N	\N	9d2afe70-1229-4f53-8258-d615af431def	0	1
+1	\N	\N	\N	\N	training	Training	Muhammad Faris Ashim	\N	\N	\N	\N	\N	\N	\N	8529fc6a-33ec-4c33-b26c-71a6a2b01a23	0	1
+\.
+
+
+--
+-- TOC entry 2014 (class 2606 OID 181044)
+-- Name: menu_name_constraint; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_menu
+    ADD CONSTRAINT menu_name_constraint UNIQUE (name, siteid);
+
+
+--
+-- TOC entry 2018 (class 2606 OID 181046)
+-- Name: role_name_constraint; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_role
+    ADD CONSTRAINT role_name_constraint UNIQUE (name, siteid);
+
+
+--
+-- TOC entry 2010 (class 2606 OID 165458)
+-- Name: t_dashboard_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_dashboard
+    ADD CONSTRAINT t_dashboard_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2016 (class 2606 OID 165479)
+-- Name: t_menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_menu
+    ADD CONSTRAINT t_menu_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2020 (class 2606 OID 165520)
+-- Name: t_role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_role
+    ADD CONSTRAINT t_role_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2024 (class 2606 OID 165535)
+-- Name: t_rolemenu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_rolemenu
+    ADD CONSTRAINT t_rolemenu_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2026 (class 2606 OID 165565)
+-- Name: t_subscription_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_subscription
+    ADD CONSTRAINT t_subscription_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2028 (class 2606 OID 165576)
+-- Name: t_themes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_themes
+    ADD CONSTRAINT t_themes_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2031 (class 2606 OID 165648)
+-- Name: t_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_user
+    ADD CONSTRAINT t_user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2033 (class 2606 OID 181048)
+-- Name: username_constraint; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY t_user
+    ADD CONSTRAINT username_constraint UNIQUE (username, siteid);
+
+
+--
+-- TOC entry 2011 (class 1259 OID 165480)
+-- Name: fk33155fe1b69350; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fk33155fe1b69350 ON t_menu USING btree (parentid);
+
+
+--
+-- TOC entry 2021 (class 1259 OID 181060)
+-- Name: fki_menu; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_menu ON t_rolemenu USING btree (menu);
+
+
+--
+-- TOC entry 2012 (class 1259 OID 181054)
+-- Name: fki_parentid; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_parentid ON t_menu USING btree (parentid);
+
+
+--
+-- TOC entry 2022 (class 1259 OID 181066)
+-- Name: fki_role; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_role ON t_rolemenu USING btree (role);
+
+
+--
+-- TOC entry 2029 (class 1259 OID 181077)
+-- Name: fki_roleuser; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_roleuser ON t_user USING btree (roleid);
+
+
+--
+-- TOC entry 2035 (class 2606 OID 181055)
+-- Name: fk_menu; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY t_rolemenu
+    ADD CONSTRAINT fk_menu FOREIGN KEY (menu) REFERENCES t_menu(id);
+
+
+--
+-- TOC entry 2034 (class 2606 OID 181049)
+-- Name: fk_parentid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY t_menu
+    ADD CONSTRAINT fk_parentid FOREIGN KEY (parentid) REFERENCES t_menu(id);
+
+
+--
+-- TOC entry 2036 (class 2606 OID 181061)
+-- Name: fk_role; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY t_rolemenu
+    ADD CONSTRAINT fk_role FOREIGN KEY (role) REFERENCES t_role(id);
+
+
+--
+-- TOC entry 2037 (class 2606 OID 181072)
+-- Name: fk_roleuser; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY t_user
+    ADD CONSTRAINT fk_roleuser FOREIGN KEY (roleid) REFERENCES t_role(id);
+
+
+--
+-- TOC entry 2052 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2016-10-19 12:57:24
+
+--
+-- PostgreSQL database dump complete
+--
+

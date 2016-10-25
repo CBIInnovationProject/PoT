@@ -87,19 +87,29 @@ $('.select2').select2();
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Tableau URL <span class="required">*</span></label>
 								<div class="col-sm-3">
 									<select name="dashboard" id="dashboard" required class="select2">
-											<option data-icon="fa fa-bar-chart" value="<%=menuView.getViewId() %>"><%=menuView.getContent() %></option>
+											<option data-icon="fa fa-bar-chart" value="<%=menuView.getViewId() %>"><%=menuView.getContent().split("\\?&")[0] %></option>
 										<% List<Dashboard> dashboards=DashboardDAO.getListDashboards(); for (Dashboard dashboard: dashboards) { %>
 											<option data-icon="fa fa-bar-chart" value="<%= dashboard.getId() %>"><%=dashboard.getUrl()%></option>
 										<%}%>
 									</select>
 								</div>
 							</div>
-							<input type="hidden" name="contentType" id="contentType" value="tableau" />
-						<% } if (menuView.getContentType()!=null && menuView.getContentType().trim().equals("module")) {%>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Url</label>
-								<div class="col-sm-3">
-									${menuView.action}
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="menu-order">Tableau Parameters
+								</label>
+								<div class="col-sm-4">
+									<input type="text" name="customParams" id="customParams" value="<%=menuView.getContent().split("\\?&")[1] %>" class="form-control col-md-3">
+								</div>
+							</div>
+							<input type="hidden" name="contentType" id="contentType" value="tableau" />
+						<% } else if (menuView.getContentType()!=null && menuView.getContentType().trim().equals("module")) {%>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Name<span class="required">*</span>
+								</label>
+								<div class="col-sm-2">
+									<input type="text" onkeypress="return blockSpecialChar(event)" id="action" name="action" value="<%=menuView.getAction().replace(".cbi", "") %>" required class="form-control col-md-3 col-xs-3">
+									<i>Not to allow special characters and space</i>
 								</div>
 							</div>
 						<% } else { %>
@@ -131,6 +141,11 @@ $('.select2').select2();
 <script type='text/javascript' src='${pageContext.request.contextPath}/vendors/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js'></script>
 
 <script type="text/javascript">
+	function blockSpecialChar(e){
+	    var k;
+	    document.all ? k = e.keyCode : k = e.which;
+	    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+    }
 	nicEditors.allTextAreas() ;
 
 	$(document).ready(function(){
@@ -145,9 +160,11 @@ $('.select2').select2();
 						name:$("#menu_name").val(),
 		                parentId:$('#parentId :selected').val(),
 		                content:$(".nicEdit-main").html(),
+		                action:$("#action").val(),
 		                dashboard:$('#dashboard :selected').val(),
 		                contentType:$("#contentType").val(),
 		                menuOrder:$("#menuOrder").val(),
+		                customParams:$("#customParams").val(),
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
 		                actionsave:1
 					} );

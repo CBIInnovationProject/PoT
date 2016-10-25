@@ -58,11 +58,13 @@ public class DefaultAction{
 					authorized = true;
 //				}
 //			}
-		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("page")){
+		} else if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("page")){
 			authorized = true;
-		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("admin")){
+		} else if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("admin")){
 			authorized = true;
-		} if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("module")){
+		} else if(menu.getContentType()!=null && menu.getContentType().trim().equalsIgnoreCase("module")){
+			authorized = true;
+		} else if(menu.getContentType()==null){
 			authorized = true;
 		}
 		return authorized;
@@ -78,7 +80,7 @@ public class DefaultAction{
 					treeMenu = treeMenu + leafMenu(menu2, request);
 				}
 			} treeMenu = treeMenu + "</ul></li>";
-		} else {
+		} else if (menu.getContentType()!=null) {
 			if(authMenu(menu, request)){
 				treeMenu = treeMenu+String.format(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getLi(), menu.getAction(), menu.getIcon(),menu.getName());
 			}

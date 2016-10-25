@@ -88,7 +88,6 @@
 										</label>
 										<div class="col-sm-4">
 											<input type="text" name="customParams" id="customParams" value="" class="form-control col-md-3">
-											<input type="checkbox" name="usernameParam" id="usernameParam" value="yes">&nbsp;Include Username Parameter
 										</div>
 									</div>
 									<div class="ln_solid"></div>
@@ -127,6 +126,7 @@
 		                dashboard:$('#dashboard :selected').val(),
 		                menuOrder:$("#menuOrder").val(),
 		                contentType:$("#contentType").val(),
+		                customParams:$('#customParams').val(),
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
 		                actionsave:1
 					} );

@@ -118,8 +118,9 @@
 										</div>
 									</div>
 									
+									<div class="ln_solid"></div>
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Password Confirmation
 										</label>
 										<div class="col-sm-3">
 											<input type="password" id="password" name="password" required class="form-control col-md-7 col-xs-12">

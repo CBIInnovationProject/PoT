@@ -45,7 +45,6 @@
 											<input type="text" id="name" name="name" value="${menuView.name}" required class="form-control col-md-7 col-xs-12">
 										</div>
 									</div>
-									
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Menu</label>
 										<div class="col-sm-3">
@@ -70,6 +69,14 @@
 									
 									<%@ include file="../fragments/icon-picker-list.jsp"%>
 									
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Name<span class="required">*</span>
+										</label>
+										<div class="col-sm-2">
+											<input type="text" onkeypress="return blockSpecialChar(event)" id="action" name="action" value="${menuView.action}" required class="form-control col-md-3 col-xs-3">
+											<i>Not to allow special characters and space</i>
+										</div>
+									</div>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div class="col-md-6">
@@ -93,6 +100,11 @@
 
 	<%@ include file="../fragments/js-collection.jsp"%>
 	<script type="text/javascript">
+	function blockSpecialChar(e){
+	    var k;
+	    document.all ? k = e.keyCode : k = e.which;
+	    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+    }
 	$(document).ready(function(){
 		$("#formid").submit(function(event){
 			event.preventDefault();
@@ -103,6 +115,7 @@
 						name:$("#name").val(),
 		                parentId:$('#parentId :selected').val(),
 		                menuOrder:$("#menuOrder").val(),
+		                action:$("#action").val(),
 		                contentType:'module',
 		                icon:$(".ownicon1[style='display: inline-block;'] input[name='icon']").val(),
 		                menuId:$("#menuId").val(),

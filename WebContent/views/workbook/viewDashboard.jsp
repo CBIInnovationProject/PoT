@@ -27,8 +27,8 @@
 	                  <div class="x_title">
 	                    <h2>${menuName}</h2>
 	                    <ul class="nav navbar-right panel_toolbox">
-						<li><a href="#" class="form_data_alert" onclick="popup_alert_data();"><i class="fa fa-bell-slash"></i></a></li>
-	                      <li class="dropdown">
+	                    <li class="dropdown">
+	                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-download"></i>&nbsp;Download</a>
 	                        <ul class="dropdown-menu" role="menu">
 	                          <li><a href="#" onclick="exportToPDF();"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;PDF</a>
 	                          </li>
@@ -74,7 +74,7 @@ $("#myModal").on('hidden.bs.modal', function () {
 		
 var viz;
     var containerDiv = document.getElementById("vizContainer"),
-        url = "${hostName}${siteRoot}/views/${url}?&",
+        url = "${hostName}${siteRoot}/views/${url}",
         options = {
             hideTabs: true,
         	hideToolbar: true

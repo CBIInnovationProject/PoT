@@ -49,8 +49,8 @@
 							 	String icon = contentType.equalsIgnoreCase("PARENT")?"fa fa-folder-o":(contentType.equals("TABLEAU")?"fa fa-line-chart":(contentType.equals("MODULE")?"fa fa-code":"fa fa-file-text-o"));%>
 		                        <tr id="<%=menu.getId()%>">
 		                          <td><ul style="list-style-type: none;padding: 0;margin:0"><li class="dropdown"><i class="<%=icon%>"></i>&nbsp;&nbsp;<a href="#" class="dropdown-toggle name<%=menu.getId()%>" data-toggle="dropdown" aria-expanded="false" role="menu"><%= menu.getName()%></a><ul class="dropdown-menu" role="menu">
-			                          <li><a onclick="popup_detail('menuEdit.cbi?menuId=<%=menu.getId()%>')" href="#">Edit</a>
-			                          </li>
+			                          <li><a onclick="popup_detail('menuEdit.cbi?menuId=<%=menu.getId()%>')" href="#">Edit</a></li>
+			                          <li><a target="_blank" href="<%= menu.getAction()%>"><i class="fa fa-eye"></i>&nbsp;&nbsp;Preview</a></li>
 			                          <li class="divider"></li>
 			                          <li><a onclick="doDelete('<%=menu.getId()%>','<%= menu.getName()%>')" href="#"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remove</a>
 			                          </li>
