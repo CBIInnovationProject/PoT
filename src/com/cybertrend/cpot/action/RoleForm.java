@@ -59,7 +59,7 @@ public class RoleForm extends DefaultAction{
 				role.setUpdateBy(getCurrentUser(request).getId());
 				role.setName(request.getParameter("name"));
 				role.setDescription(request.getParameter("description"));
-				role.setSiteId(getCurrentCredentials(request).getSite().getId());
+				role.setSiteId(getCurrentSite(request).getId());
 				PrintWriter out = response.getWriter();
 				if(request.getParameter("roleId")!=null&&!"".equalsIgnoreCase(request.getParameter("roleId").trim())) {
 					role.setId(request.getParameter("roleId"));
@@ -83,7 +83,7 @@ public class RoleForm extends DefaultAction{
 				logger.info("Activity : "+action);
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
-				List<Role> roles = RoleDAO.getList(getCurrentCredentials(request).getSite().getId());
+				List<Role> roles = RoleDAO.getList(getCurrentSite(request).getId());
 				request.setAttribute("roles", roles);
 			}
 			else {
@@ -102,7 +102,7 @@ public class RoleForm extends DefaultAction{
 				logger.info("Activity : "+action);
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				Role role = RoleDAO.getRoleById(request.getParameter("roleId"));
-				List<Menu> menus = MenuDAO.getMenuParents(getCurrentCredentials(request).getSite().getId());
+				List<Menu> menus = MenuDAO.getMenuParents(getCurrentSite(request).getId());
 				request.setAttribute("menus", menus);
 				request.setAttribute("role", role);
 				if(request.getParameter("menuId")!=null&&request.getParameter("menuId").length()>0){

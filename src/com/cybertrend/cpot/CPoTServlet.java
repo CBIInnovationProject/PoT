@@ -195,10 +195,6 @@ public class CPoTServlet extends HttpServlet {
 				WorkbookForm.execute(request, response, action);
 			} 
 			
-			else if (action.equals("comments.cbi")) {
-				request.getRequestDispatcher("/views/workbook/comments.jsp").forward(request, response);
-			} 
-			
 			else if (action.equals("settings.cbi")) {
 				AccountForm.execute(request, response, action);
 				request.getRequestDispatcher("/views/settings/account.jsp").forward(request, response);

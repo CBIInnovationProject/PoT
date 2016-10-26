@@ -30,7 +30,7 @@ public class MenuForm extends DefaultAction {
 				logger.info("Activity : "+action);
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
-				request.setAttribute("parentMenus", MenuDAO.getListParentMenu(getCurrentCredentials(request).getSite().getId()));
+				request.setAttribute("parentMenus", MenuDAO.getListParentMenu(getCurrentSite(request).getId()));
 				request.setAttribute("dashboards", DashboardDAO.getListDashboards());
 				if(request.getParameter("menuId")!=null) {
 					Menu menu = MenuDAO.getMenuById(request.getParameter("menuId"));
@@ -65,7 +65,7 @@ public class MenuForm extends DefaultAction {
 			menu.setIcon(request.getParameter("icon").split("-")[0]+" "+request.getParameter("icon"));
 			menu.setWorkbookId(dashboard!=null?dashboard.getWorkbookId():null);
 			menu.setViewId(dashboard!=null?dashboard.getId():null);
-			menu.setSiteId(getCurrentCredentials(request).getSite().getId());
+			menu.setSiteId(getCurrentSite(request).getId());
 			PrintWriter out = response.getWriter();
 			if(request.getParameter("menuId")!=null&&!"".equalsIgnoreCase(request.getParameter("menuId").trim())) {
 				menu.setId(request.getParameter("menuId"));
@@ -90,7 +90,7 @@ public class MenuForm extends DefaultAction {
 				logger.info("Activity : "+action);
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
-				List<Menu> menus = MenuDAO.getList(getCurrentCredentials(request).getSite().getId());
+				List<Menu> menus = MenuDAO.getList(getCurrentSite(request).getId());
 				request.setAttribute("menus", menus);
 			}
 			else {

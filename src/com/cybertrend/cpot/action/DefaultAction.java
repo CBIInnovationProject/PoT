@@ -17,6 +17,7 @@ import com.cybertrend.cpot.entity.User;
 import com.cybertrend.cpot.service.TableauService;
 import com.cybertrend.cpot.util.ReadConfig;
 
+import tableau.api.rest.bindings.SiteType;
 import tableau.api.rest.bindings.TableauCredentialsType;
 
 public class DefaultAction{
@@ -27,6 +28,10 @@ public class DefaultAction{
 	
 	public static TableauCredentialsType getCurrentCredentials(HttpServletRequest request){
 		return (TableauCredentialsType) request.getSession().getAttribute(Constants.TABLEAU_CREDENTIALS);
+	}
+	
+	public static SiteType getCurrentSite(HttpServletRequest request){
+		return getCurrentCredentials(request).getSite();
 	}
 	
 //	public static List<WorkbookType> getCurrentWorkbookList(HttpServletRequest request){

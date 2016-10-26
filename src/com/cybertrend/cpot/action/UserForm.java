@@ -32,7 +32,7 @@ public class UserForm extends DefaultAction{
 				logger.info("Activity : "+action);
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
-				request.setAttribute("roles", RoleDAO.getList(getCurrentCredentials(request).getSite().getId()));
+				request.setAttribute("roles", RoleDAO.getList(getCurrentSite(request).getId()));
 				request.setAttribute("userTableaus", getTableauService().invokeQueryUsersOnSite(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.users.max").trim()), 0).getUsers().getUser());
 			}
 			else {
@@ -62,12 +62,12 @@ public class UserForm extends DefaultAction{
 				user.setZip(request.getParameter("zip"));
 				user.setEmail(request.getParameter("email"));
 				user.setPhone(request.getParameter("phone"));
-				user.setSiteId(getCurrentCredentials(request).getSite().getId());
+				user.setSiteId(getCurrentSite(request).getId());
 				user.setThemes(ThemesDAO.getThemesById("1"));
-				TableauCredentialsType credentials = getTableauService().invokeSignIn(user.getUsername(), request.getParameter("password"), getCurrentCredentials(request).getSite().getContentUrl()).getCredentials();
+				TableauCredentialsType credentials = getTableauService().invokeSignIn(user.getUsername(), request.getParameter("password"), getCurrentSite(request).getContentUrl()).getCredentials();
 				PrintWriter out = response.getWriter();
 				if(credentials!=null){
-					user.setSiteUrl(getCurrentCredentials(request).getSite().getContentUrl());
+					user.setSiteUrl(getCurrentSite(request).getContentUrl());
 					out.println(UserDAO.save(user));
 				} else {
 					out.print("ERROR : invalid Password!!");
@@ -90,7 +90,7 @@ public class UserForm extends DefaultAction{
 				logger.info("Activity : "+action);
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
-				List<User> users = UserDAO.getList(getCurrentCredentials(request).getSite().getId());
+				List<User> users = UserDAO.getList(getCurrentSite(request).getId());
 				request.setAttribute("users", users);
 			}
 			else {

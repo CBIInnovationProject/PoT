@@ -117,7 +117,7 @@ public class WorkbookForm extends DefaultAction{
 				dashboard.setCreateBy(getCurrentUser(request).getUsername());
 				dashboard.setCreateDate(new Timestamp(System.currentTimeMillis()));
 				dashboard.setUrl(request.getParameter("url"));
-				dashboard.setSiteId(getCurrentCredentials(request).getSite().getId());
+				dashboard.setSiteId(getCurrentSite(request).getId());
 				dashboard.setWorkbookId(request.getParameter("workbookId"));
 				DashboardDAO.add(dashboard);
 			}
