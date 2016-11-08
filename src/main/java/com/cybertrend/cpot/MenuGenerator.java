@@ -31,7 +31,10 @@ public class MenuGenerator extends DefaultAction {
 			treeMenu = treeMenu+String.format(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getUl(), menu.getIcon(),menu.getName());
 			for(Menu menu2: menus){
 				if(authMenu(menu2, request)){
-					treeMenu = treeMenu + leafMenu(menu2, request);
+					if(MenuDAO.getMenusByParentId(menu2.getId()).size() > 0)
+						treeMenu = treeMenu + leafMenu(menu2, request).replace("<li class=\"dropdown\">", "<li class=\"dropdown-submenu\">");
+					else
+						treeMenu = treeMenu + leafMenu(menu2, request);
 				}
 			} treeMenu = treeMenu + "</ul></li>";
 		} else if (menu.getContentType()!=null) {

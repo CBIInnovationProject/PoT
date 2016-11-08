@@ -104,6 +104,7 @@ $('.select2').select2();
 							</div>
 							<input type="hidden" name="contentType" id="contentType" value="tableau" />
 						<% } else if (menuView.getContentType()!=null && menuView.getContentType().trim().equals("module")) {%>
+							<input type="hidden" name="contentType" id="contentType" value="module" />
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Action Name<span class="required">*</span>
 								</label>
