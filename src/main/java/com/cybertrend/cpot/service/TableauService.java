@@ -436,7 +436,7 @@ public class TableauService {
 			data.append(URLEncoder.encode(remoteAddr, "UTF-8"));
 
 			// Send the request
-			URL url = new URL("http://" + wgserver + "/trusted");
+			URL url = new URL(wgserver + "/trusted");
 			URLConnection conn = url.openConnection();
 			conn.setDoOutput(true);
 			out = new OutputStreamWriter(conn.getOutputStream());

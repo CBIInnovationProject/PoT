@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.cybertrend.cpot.Interceptor;
 import com.cybertrend.cpot.dao.ThemesDAO;
 import com.cybertrend.cpot.entity.Menu;
+import com.cybertrend.cpot.util.ReadConfig;
 
 public class ViewDashboard extends DefaultAction{
 	static Logger logger = Logger.getLogger(ViewDashboard.class);
@@ -27,6 +28,7 @@ public class ViewDashboard extends DefaultAction{
 				Menu menu = getMenuAction(action, request);
 				request.setAttribute("menuName", menu.getName());
 				request.setAttribute("url", menu.getContent());
+				request.setAttribute("trustedTicket", getTableauService().getTrustedTicket(ReadConfig.get("tableau.server.host"), getCurrentUser(request).getUsername(), request.getRemoteAddr()));
 				request.getRequestDispatcher(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getPath()+"/workbook/viewDashboard.jsp").forward(request, response);
 			} 
 		} 
