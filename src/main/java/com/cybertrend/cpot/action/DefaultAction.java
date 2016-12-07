@@ -17,8 +17,8 @@ import tableau.api.rest.bindings.TableauCredentialsType;
 
 public class DefaultAction{
 
-	public static TableauService getTableauService() {
-		return TableauService.instance();
+	public static TableauService getTableauService(HttpServletRequest request) {
+		return TableauService.instance(request);
 	}
 	
 	public static TableauCredentialsType getCurrentCredentials(HttpServletRequest request){

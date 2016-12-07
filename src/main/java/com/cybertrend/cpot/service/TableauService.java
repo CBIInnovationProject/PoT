@@ -22,6 +22,7 @@ import com.cybertrend.cpot.util.ReadConfig;
 import com.google.common.io.Files;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import javax.xml.XMLConstants;
@@ -110,19 +111,19 @@ public class TableauService {
     	
     }
     
-    public static TableauService instance(){
+    public static TableauService instance(HttpServletRequest request){
     	if (INSTANCE == null) {
             INSTANCE = new TableauService();
-            initialize();
+            initialize(request);
         }
         return INSTANCE;
     }
     
-    public static void initialize() {
+    public static void initialize(HttpServletRequest request) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(TsRequest.class, TsResponse.class);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(new URL(ReadConfig.get("tableau.server.schema.url")));
+            Schema schema = schemaFactory.newSchema(request.getServletContext().getResource(ReadConfig.get("tableau.server.schema.url")));
             s_jaxbMarshaller = jaxbContext.createMarshaller();
             s_jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             s_jaxbUnmarshaller.setSchema(schema);

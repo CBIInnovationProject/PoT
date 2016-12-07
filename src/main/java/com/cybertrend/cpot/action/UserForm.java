@@ -33,7 +33,7 @@ public class UserForm extends DefaultAction{
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				getMenuAction(action, request);
 				request.setAttribute("roles", RoleDAO.getList(getCurrentSite(request).getId()));
-				request.setAttribute("userTableaus", getTableauService().invokeQueryUsersOnSite(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.users.max").trim()), 0).getUsers().getUser());
+				request.setAttribute("userTableaus", getTableauService(request).invokeQueryUsersOnSite(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.users.max").trim()), 0).getUsers().getUser());
 			}
 			else {
 				request.getRequestDispatcher("/views/fragments/do-not-have-access.jsp").forward(request, response);
@@ -64,7 +64,7 @@ public class UserForm extends DefaultAction{
 				user.setPhone(request.getParameter("phone"));
 				user.setSiteId(getCurrentSite(request).getId());
 				user.setThemes(ThemesDAO.getThemesById("1"));
-				TableauCredentialsType credentials = getTableauService().invokeSignIn(user.getUsername(), request.getParameter("password"), getCurrentSite(request).getContentUrl()).getCredentials();
+				TableauCredentialsType credentials = getTableauService(request).invokeSignIn(user.getUsername(), request.getParameter("password"), getCurrentSite(request).getContentUrl()).getCredentials();
 				PrintWriter out = response.getWriter();
 				if(credentials!=null){
 					user.setSiteUrl(getCurrentSite(request).getContentUrl());

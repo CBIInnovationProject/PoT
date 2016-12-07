@@ -33,10 +33,10 @@ public class Login extends DefaultAction{
 		String username = user.getUsername();
 		String password = StringUtil.decodeBase64(request.getParameter("password"));
 		String contentUrl = (user.getSiteUrl()+" ").trim();
-		TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
+		TableauCredentialsType credentials = getTableauService(request).invokeSignIn(username, password, contentUrl).getCredentials();
 		request.getSession().setAttribute(Constants.USER_GA, user);
 		request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
-//		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService().invokeQueryWorkbooks(credentials, Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
+//		request.getSession().setAttribute(Constants.TABLEAU_WORKBOOKS, getTableauService(request).invokeQueryWorkbooks(credentials, Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 	}
 	
 	public static void selectSite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -45,13 +45,13 @@ public class Login extends DefaultAction{
 
 		if(username.trim().equals(ReadConfig.get("tableau.admin.default"))){
 			UserDAO.delete("username", username.trim());
-			TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, "").getCredentials();
-			List<SiteType> sites = getTableauService().invokeQuerySites(credentials).getSite();
+			TableauCredentialsType credentials = getTableauService(request).invokeSignIn(username, password, "").getCredentials();
+			List<SiteType> sites = getTableauService(request).invokeQuerySites(credentials).getSite();
 			User [] userList = new User[sites.size()];
 			for(int i = 0; i<userList.length; i++){
 				userList[i] = new User();
-				userList[i].setUsername(getTableauService().invokeGetUser(credentials, credentials.getUser().getId()).getName());
-				userList[i].setFullName(getTableauService().invokeGetUser(credentials, credentials.getUser().getId()).getFullName());
+				userList[i].setUsername(getTableauService(request).invokeGetUser(credentials, credentials.getUser().getId()).getName());
+				userList[i].setFullName(getTableauService(request).invokeGetUser(credentials, credentials.getUser().getId()).getFullName());
 				userList[i].setSiteUrl(sites.get(i).getContentUrl());
 				userList[i].setSiteId(sites.get(i).getId());
 				userList[i].setRole(RoleDAO.getRoleById("0"));
@@ -70,7 +70,7 @@ public class Login extends DefaultAction{
 				response.sendRedirect("landingPage.cbi");
 				User user = UserDAO.getUserById(users.get(0).getId());
 				String contentUrl = (user.getSiteUrl()+" ").trim();
-				TableauCredentialsType credentials = getTableauService().invokeSignIn(username, password, contentUrl).getCredentials();
+				TableauCredentialsType credentials = getTableauService(request).invokeSignIn(username, password, contentUrl).getCredentials();
 				request.getSession().setAttribute(Constants.USER_GA, user);
 				request.getSession().setAttribute(Constants.TABLEAU_CREDENTIALS, credentials);
 			}

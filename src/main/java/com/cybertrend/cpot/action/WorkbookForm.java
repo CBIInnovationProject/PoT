@@ -27,7 +27,7 @@ public class WorkbookForm extends DefaultAction{
 			request.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
-			request.setAttribute("workbooks", getTableauService().invokeQueryWorkbooks(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
+			request.setAttribute("workbooks", getTableauService(request).invokeQueryWorkbooks(getCurrentCredentials(request), Integer.parseInt(ReadConfig.get("tableau.workbooks.max").trim()), 0).getWorkbooks().getWorkbook());
 			request.setAttribute("credential", getCurrentCredentials(request));
 			if(request.getParameter("workbookId")!=null){
 				if(request.getParameter("url")!=null){
@@ -69,14 +69,14 @@ public class WorkbookForm extends DefaultAction{
 			logger.info("Current Date :"+new Timestamp(System.currentTimeMillis()) );
 			logger.info("Activity : "+action);
 			logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
-			WorkbookType workbookType = getTableauService().invokeGetWorkbook(getCurrentCredentials(request), request.getParameter("workbookId").toString()) ;
+			WorkbookType workbookType = getTableauService(request).invokeGetWorkbook(getCurrentCredentials(request), request.getParameter("workbookId").toString()) ;
 			WorkbookTableau workbook = new WorkbookTableau();
 			workbook.setWorkbookType(workbookType);
-			workbook.setImage(getTableauService().invokeQueryWorkbookImage(getCurrentCredentials(request), workbookType.getId()));
-			UserType user = getTableauService().invokeGetUser(getCurrentCredentials(request), workbookType.getOwner().getId());
+			workbook.setImage(getTableauService(request).invokeQueryWorkbookImage(getCurrentCredentials(request), workbookType.getId()));
+			UserType user = getTableauService(request).invokeGetUser(getCurrentCredentials(request), workbookType.getOwner().getId());
 			request.setAttribute("workbook", workbook);
 			request.setAttribute("owner", user);
-			request.setAttribute("views", getTableauService().invokeQueryViews(getCurrentCredentials(request), workbookType.getId(), Integer.parseInt(ReadConfig.get("tableau.views.max").trim()), 0).getView());
+			request.setAttribute("views", getTableauService(request).invokeQueryViews(getCurrentCredentials(request), workbookType.getId(), Integer.parseInt(ReadConfig.get("tableau.views.max").trim()), 0).getView());
 			request.setAttribute("createDate", workbookType.getCreatedAt().toString().replace("T", " ").replace("Z", " "));
 			request.setAttribute("updateDate", workbookType.getUpdatedAt().toString().replace("T", " ").replace("Z", " "));
 			
@@ -96,7 +96,7 @@ public class WorkbookForm extends DefaultAction{
 			logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 			request.setAttribute("menuName", "<a href=\"workbook.cbi\">Workbook</a> <i class=\"fa fa-angle-double-right\"></i> "+request.getParameter("url").split("/")[1]+"");
 			request.setAttribute("url", request.getParameter("url"));
-			request.setAttribute("trustedTicket", getTableauService().getTrustedTicket(ReadConfig.get("tableau.server.host"), getCurrentUser(request).getUsername(), request.getRemoteAddr()));
+			request.setAttribute("trustedTicket", getTableauService(request).getTrustedTicket(ReadConfig.get("tableau.server.host"), getCurrentUser(request).getUsername(), request.getRemoteAddr()));
 			request.getRequestDispatcher("/views/workbook/viewDashboard.jsp").forward(request, response);
 		}
 	}
