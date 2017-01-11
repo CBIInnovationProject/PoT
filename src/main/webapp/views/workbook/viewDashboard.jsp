@@ -74,7 +74,7 @@ $("#myModal").on('hidden.bs.modal', function () {
 		
 var viz;
     var containerDiv = document.getElementById("vizContainer"),
-        url = "${hostName}/trusted/${trustedTicket}${siteRoot}/views/${url}",
+        url = "${url}",
         options = {
             hideTabs: true,
         	hideToolbar: true

@@ -419,7 +419,7 @@ public class TableauService {
     /*
      * Get Trusted Ticket
      */
-    public static String getTrustedTicket(String wgserver, String user, String remoteAddr) {
+    public static String getTrustedTicket(String wgserver, String user, String remoteAddr, String targetSite) {
 
 		String output = null;
 
@@ -435,6 +435,10 @@ public class TableauService {
 			data.append(URLEncoder.encode("client_ip", "UTF-8"));
 			data.append("=");
 			data.append(URLEncoder.encode(remoteAddr, "UTF-8"));
+			data.append("&");
+			data.append(URLEncoder.encode("target_site", "UTF-8"));
+			data.append("=");
+			data.append(URLEncoder.encode(targetSite, "UTF-8"));
 
 			// Send the request
 			URL url = new URL(wgserver + "/trusted");
@@ -476,6 +480,27 @@ public class TableauService {
 
 		return output;
 
+	}
+    
+    /*
+     * Generate Dashboard URL 
+     */
+    public static String getDashboardURL(String clientRemoteAddress,
+			String user, String siteRoot, String destinationView, String targetSite) {
+		String output = null;
+		String wgserver = ReadConfig.get("tableau.server.host");
+		String ticket = getTrustedTicket(wgserver, user, clientRemoteAddress, targetSite);
+
+		if (!ticket.equals("-1")) {
+			output = wgserver + "/trusted/" + ticket + siteRoot + "/views/"
+					+ destinationView;
+		}
+		else {
+			output = wgserver+ siteRoot + "/views/"
+					+ destinationView;
+//			output = "unable to get tableau view URL";
+		}
+		return output;
 	}
     
     /*

@@ -27,8 +27,7 @@ public class ViewDashboard extends DefaultAction{
 				logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 				Menu menu = getMenuAction(action, request);
 				request.setAttribute("menuName", menu.getName());
-				request.setAttribute("url", menu.getContent());
-				request.setAttribute("trustedTicket", getTableauService(request).getTrustedTicket(ReadConfig.get("tableau.server.host"), getCurrentUser(request).getUsername(), request.getRemoteAddr()));
+				request.setAttribute("url", getDashboardURL(request, menu.getContent()));
 				request.getRequestDispatcher(ThemesDAO.getThemesById(getCurrentUser(request).getThemes().getId()).getPath()+"/workbook/viewDashboard.jsp").forward(request, response);
 			} 
 		} 

@@ -95,8 +95,7 @@ public class WorkbookForm extends DefaultAction{
 			logger.info("Activity : "+action);
 			logger.info("Current user login :"+getCurrentUser(request).getUsername()+" "+getCurrentUser(request).getId());
 			request.setAttribute("menuName", "<a href=\"workbook.cbi\">Workbook</a> <i class=\"fa fa-angle-double-right\"></i> "+request.getParameter("url").split("/")[1]+"");
-			request.setAttribute("url", request.getParameter("url"));
-			request.setAttribute("trustedTicket", getTableauService(request).getTrustedTicket(ReadConfig.get("tableau.server.host"), getCurrentUser(request).getUsername(), request.getRemoteAddr()));
+			request.setAttribute("url", getDashboardURL(request, request.getParameter("url")));
 			request.getRequestDispatcher("/views/workbook/viewDashboard.jsp").forward(request, response);
 		}
 	}

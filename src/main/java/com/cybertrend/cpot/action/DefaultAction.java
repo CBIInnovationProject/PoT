@@ -70,4 +70,12 @@ public class DefaultAction{
 	public static Role getCurrentRole(HttpServletRequest request) throws SQLException {
 		return getCurrentUser(request).getRole();
 	}
+	
+	private static String getSiteRoot(HttpServletRequest request) {
+		return getCurrentCredentials(request).getSite().getContentUrl().trim().equals("")?"":("/t/"+getCurrentCredentials(request).getSite().getContentUrl().trim());
+	}
+	
+	public static String getDashboardURL(HttpServletRequest request, String content){
+		return getTableauService(request).getDashboardURL(request.getRemoteAddr(), getCurrentUser(request).getUsername(), getSiteRoot(request), content, getCurrentCredentials(request).getSite().getContentUrl());
+	}
 }
