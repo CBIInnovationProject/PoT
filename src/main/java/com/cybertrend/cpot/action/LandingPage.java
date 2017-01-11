@@ -18,8 +18,8 @@ public class LandingPage extends DefaultAction{
 			servletContext.getRequestDispatcher("/loginForm.jsp").forward(request, response);
 		}
 		else {
-			servletContext.setAttribute("treeMenu", MenuGenerator.treeMenu(request));
-			servletContext.setAttribute("user", getCurrentUser(request));
+			request.getSession().setAttribute("treeMenu", MenuGenerator.treeMenu(request));
+			request.getSession().setAttribute("user", getCurrentUser(request));
 			servletContext.setAttribute("hostName", getHostName());
 			if(getCurrentCredentials(request)!=null) { 
 				servletContext.setAttribute("siteRoot", getCurrentSite(request).getContentUrl().trim().equals("")?"":("/t/"+getCurrentSite(request).getContentUrl().trim()));
